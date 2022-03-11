@@ -1,0 +1,1 @@
+Warning (10268): Verilog HDL information at cache_8K_2S.sv(101): always construct contains both blocking and non-blocking assignments File: E:/NeonFox_SDRAM/cache_8K_2S.sv Line: 101

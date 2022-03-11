@@ -1,0 +1,31 @@
+NeonFox Revision 1:
+Created quartus project (18.1).
+Initial cache and memory controller testing done separately.
+Fixed bug memory controller that caused banks to be activated immediately before refresh.
+Fixed bug in cache controller that caused a stall after reset and main memory initialization.
+Fixed bug in cache controller that caused first write (from main memory) to happen at the wrong address.
+Fixed bug in CPU decoder module that caused ADD instructions to be inserted instead of NOPs after reset or P miss.
+Fixed bug in CPU decoder module that caused the first instruction after a P miss to be executed twice. This bug may be present in RIPTIDE 2 and 3.
+Fixed bug in CPU PC module that caused incorrect address tracking after P miss. This bug may be present in RIPTIDE 2 and 3.
+Fixed bug in CPU PC module that caused incorrect branch targets if P miss happens on cycle following a branch is taken. This bug may be present in RIPTIDE 2 and 3.
+Fixed bug in CPU PC module that caused branch target to be executed twice if a branch is taken during P miss. This bug may be present in RIPTIDE 2 and 3.
+
+Revision 2:
+Optimized out cache LRU memory.
+Updated MSC to support new cache controller.
+Removed hex display registers in top level and used MSC page registers to drive hex displays and LEDs (paging not used).
+Replaced MC6847_gen3 with MC6847_gen4 and updated VGA module for HDMI output.
+Fixed bug in MC6847_gen4 module. The fix was copied from the MC6847_gen3 module from the RIPTIDE-III project.
+Fixed bug in NeonFox (Missing hazard detection for CALL or JMP after writing CAH or CAL).
+Fixed bug in hex display driver (seg_sel was inverted).
+Fixed bug in register file (independent forwarding for high and low bytes).
+Fixed bug in ALU (LIM H was not working).
+Fixed bug in PC (Missing some branch hazard checks for CALL and JMP).
+Fixed multiple bugs in memory controller, some performance issues still need to be fixed (activate bank before IO machine becomes idle).
+Fixed bug in PC module (A_next_I need to be stopped by hazard).
+Fixed bug in PC unit (D miss does not stop the CPU).
+Fixed bug in SDRAM controller (precharge timer cleared wrong flag).
+Fixed bug in SDRAM controller (timing issue with burst offset counters in IO state machine).
+Fixed bug in cache controller (incorrect mem_wren output).
+Fixed bug in register file (wrong DIO timing).
+Fixed bug in SDRAM controller (Timing issue in memory writes).

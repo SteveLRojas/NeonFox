@@ -1,0 +1,166 @@
+Notes on XenonGecko
+
+Resolution is 640 * 480 (800 * 525 total pixels).
+80 * 60 tiles, 8 * 8 pixels per tile.
+4800 total tiles in attribute memory.
+4096 tiles in pattern memory.
+
+2 bytes per tile in attribute memory: 4 bits pallette ID + 12 bits pattern index.
+32 bytes per tile in pattern memory: 4 bytes per line, 4 bits per pixel.
+
+9600 bytes of attribute memory.
+131072 bytes of pattern memory.
+
+16 palettes, 16 entries per palette.
+3 bytes per palette entry.
+768 bytes of palette memory (not in SDRAM).
+
+160 bytes of attribute memory fetched for every 8 lines.
+320 bytes of pattern memory fetched per line.
+
+340 bytes fetched per line.
+163200 bytes fetched per frame, 60 frames per second.
+9792000 bytes fetched per second.
+
+Implementation details
+
+The SDRAM controller on the NeonFox platform has a bus width of 16 bits, and a burst length of 4 words for a minimum transfer size of 8 bytes.
+The pattern data is read out of order, and for each line in a tile 4 bytes have to be fetched. This would not be efficient since 4 bytes is less than the minimum transfer size.
+In order to fetch pattern data efficiently 2 lines must be fetch and buffered concurrently. To make this feasible, data for each tile in pattern memory must be stored sequentially.
+
+Buffering strategy
+
+To make efficient use of the M9K blocks in Cyclone IV FPGAs the buffer size must be a multiple of 1024 words, or slightly smaller.
+Buffering the pattern data for a single line takes 320 bytes, but we must buffer lines in pairs which requires 640 bytes.
+The buffer must also hold 160 bytes of attribute memory for each row of tiles, for a total buffer size of 800 bytes. This leaves too much unused space, so two rows of tiles are buffered simultaneously.
+Buffering two lines of pattern memory and two rows of tile attributes requires 960 bytes of buffer memory.
+It will be very convenient to buffer two sets of pattern data, so that when one is active the other one can be updated. This requires 1280 bytes of buffer space.
+Buffering 2 rows of tile attributes and 2 lines of pattern memory requires 1600 bytes of buffer memory. If we implement this with M9K blocks we are left with 448 bytes free. Hopefully we will find a use for these later (maybe for sprites?).
+
+Buffer update process
+
+Since we have two full rows of tile attribute memory in the buffer, updating this portion of the buffer is simple. Only one row of tiles can be active at a time, which provides a convenient opportunity to update the row that is not active. Updating the tile attribute memory is further simplified by the fact that the tile attribute information is only needed for fetching the pattern data, and therefore does not have to be exposed to other modules. As soon as the memory fetch unit is done using a row of tile attributes it can switch to the other row, and simultaneously begin fetching the next row and writing it to the inactive row int the buffer.
+
+Updating the pattern data is more complicated, since the data must be made available otside of the memory fetch unit. Fortunately we once again have two sets of data to work with, so while one set is active (and exposed outside the memory fetch unit) the other set can be updated. We can divide the buffer in two sections, each with 2 lines of pattern memory and one row of tile attribute memory.
+
+Example update flow
+Here we make the following assumptions:
+	The first set (set 0) of tile attribute memory is valid and active.
+	We are not switching to a new row of tiles (the first set of tile attributes remains active).
+	The second set (set 1) of tile attributes is inactive and valid (has already been updated).
+	The second set (set 1) of pattern memory is valid, active, and about to become inactive.
+	The first set (set 0) of pattern memory is inactive and valid (has already been updated).
+
+Legend:
+	* indicates the start of a new time step.
+	# indicates a concurrent operation (not a new time step).
+	@ indicates an event that happens at some unknown iteration of a repeating process.
+
+Process flow:
+	* Set 1 of pattern memory becomes inactive
+	# Set 0 of pattern memory becomes active and is exposed to other modules.
+	# Updating of set 1 of pattern memory begins using data from set 0 of attribute memory.
+	* A pattern index is read from set 0 of attribute memory.
+	For each tile in the current row:
+		* The pattern index is used to begin fetching 2 lines from a tile.
+		# the next pattern index is read from set 0 of attribute memory.
+		* the fetched pattern data is written to set 1 of the pattern memory.
+	# The memory fetch unit becomes idle.
+
+Example update flow with attribute switching
+Here we make the following assumptions:
+	Set 0 of the tile attribute memory is valid, active, and about to become inactive.
+	Set 1 of the tile attribute memory is valid, inactive, and about to become active.
+	Set 1 of the pattern memory is valid, active, and about to become inactive.
+	Set 0 of the pattern memory is valid, inactive, and about to become active.
+
+Process flow:
+	* Set 1 of pattern memory becomes inactive
+	# Set 0 of pattern memory becomes active and is exposed to other modules.
+	# Set 0 of the attribute memory becomes inactive.
+	# Set 1 of the attribute memory becomes active.
+	# Updating of set 0 of the attribute memory begins with low priority.
+	# Updating of set 1 of pattern memory begins with high priority.
+	* A pattern index is fetched from set 1 of the attribute memory.
+	For each tile in the current row:
+		* The pattern index is used to begin fetching 2 lines from a tile.
+		# The next pattern index is fetched from set 1 of the attribute memory.
+		* The fetched pattern data is written to set 1 of the pattern memory.
+	For each attribute in the next row:
+		* The next attribute entry is fetched from main memory.
+		* The fetched attribute entry is written to set 0 of the attribute memory.
+		@ This process is interrupted by a higher priority process.
+	# Set 1 of pattern memory becomes active and is exposed.
+	# Set 0 of pattern memory becomes inactive.
+	# Updating of set 0 of pattern memory begins with high priority.
+	* A pattern index is fetched from set 1 of the attribute memory.
+	For each tile in the current row:
+		* The pattern index is used to begin fetching 2 lines from a tile.
+		# The next pattern index is read from set 1 of the attribute memory.
+		* The fetched pattern data is written to set 0 of the pattern memory.
+	# Updating of set 0 of the attribute memory resumes with low priority.
+	For each attribute remaining in the next row:
+		* The next attribute entry is fetched from main memory.
+		* The fetched attribute entry is written to set 0 of the attribute memory.
+		@ This process may be interrupted again by a higher priority process.
+	# The memory fetch unit becomes idle.
+
+Buffer memory layout
+
+bank 0: 512 words available
+	320 words of pattern data.	0x000 to 0x13F
+	80 words of attribute data.	0x180 to 0x1CF
+bank 1: 512 words available
+	320 words of pattern data.	0x200 to 0x33F
+	80 words of attribute data.	0x380 to 0x3CF
+
+Main memory layout	(word address)
+	0x000000 to 0x00FFFF	pattern memory
+	0x010000 to 0x0112BF	attribute memory
+
+Pattern memory entries
+16 words (256 bits) per tile entry.
+4 pixels per word, 2 words per line in tile.
+8 lines in each tile.
+
+Entry in Memory (256 bits = 64 pixels)
+	{A[3-0]...P[3-0]}
+
+One Entry on Screen (8x8 pixels)
+   0  1  2  3  4  5  6  7
+0  A3 A2 A1 A0 B3 B2 B1 B0
+1  C3 C2 C1 C0 D  D  D  D 
+2  E  E  E  E  F  F  F  F
+3  G           H
+4  I           J
+5  K           L
+6  M           N
+7  O           P
+
+let X and Y be pixel coordinates within the tile.
+The word address is computed by:
+	Tile_offset + (Y * 2) + (X / 4)
+The nibble offset in a word is computed by
+	X % 4
+
+Example entry:
+   0  1  2  3  4  5  6  7
+0  A3 A2 A1 A0 B3 B2 B1 B0
+1  C3 C2 C1 C0 D  D  D  D 
+2  E  E  E  E  F  F  F  F
+3  G           H
+4  I           J
+5  K           L
+6  M           N
+7  O           P
+
+     0  1  2  3  4  5  6  7 
+  --------------------------
+0 |  0  7  0  0  0  7  0  0
+1 |  0  7  7  0  0  7  0  0
+2 |  0  7  0  7  0  7  0  0
+3 |  0  7  0  0  7  7  0  0
+4 |  0  7  0  7  0  7  0  7
+5 |  0  0  0  7  0  0  0  7
+6 |  0  0  0  7  0  0  0  7
+7 |  0  0  0  0  7  7  7  0
