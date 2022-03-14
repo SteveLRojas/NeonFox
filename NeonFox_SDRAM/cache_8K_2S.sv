@@ -27,8 +27,10 @@ logic[8:0] tag_rdaddr;
 logic[8:0] tag_wraddr;
 logic[20:0] b1_tag_din;
 logic[20:0] b1_tag_dout;
+logic[20:0] b1_tag_hold;
 logic[20:0] b2_tag_din;
 logic[20:0] b2_tag_dout;
+logic[20:0] b2_tag_hold;
 logic[3:0] b1_valid_din;
 logic[3:0] b1_valid_dout;
 logic[3:0] b2_valid_din;
@@ -70,10 +72,13 @@ logic b2_wren_b;
 
 logic[31:0] address_hold;
 logic[31:0] prev_address;
+//logic[15:0] prev_from_CPU;
 logic[15:0] data_hold;
 logic lru_hold;
 logic[3:0] word_valid, next_word_valid;
 logic[3:0] word_sel;
+//logic prev_CPU_ren;
+//logic prev_CPU_wren;
 logic wren_hold;
 logic b1_hit;
 logic b2_hit;
@@ -86,20 +91,25 @@ logic address_change;	//address_hold changed on last clock rising edge
 logic busy;
 logic prev_cache_wren;
 
-enum logic[2:0]
+enum logic[3:0]
 {
 	S_INIT,
 	S_PREFETCH,
 	S_FLUSH,
 	S_HIT,
+	S_WRITEBACK_REQ,
 	S_WRITEBACK_WAIT,
 	S_WRITEBACK_TRANSFER,
+	S_FETCH_REQ,
 	S_FETCH_WAIT,
 	S_FETCH_TRANSFER
 } state;
 
 always @(posedge clk)
 begin
+	//prev_from_CPU <= from_CPU;
+	//prev_CPU_wren <= CPU_wren;
+	//prev_CPU_ren <= CPU_ren;
 	if(rst | flush | prefetch)
 	begin
 		state <= S_INIT;
@@ -161,7 +171,7 @@ begin
 			begin
 				if(mem_done | (~address_change & ~(address_hold[11] ? b2_mod_dout : b1_mod_dout)))	//done transfering or data is not modified
 				begin
-					address_hold <= address_hold + 32'h01;
+					address_hold <= address_hold + 32'h04;
 					address_change <= 1'b1;
 					if(&address_hold[11:2])
 					begin
@@ -172,33 +182,29 @@ begin
 			end
 			S_HIT:
 			begin
-//				if(~miss)
-//				begin
-//					address_hold <= CPU_address;
-//					address_change <= 1'b1;
-//					data_hold <= from_CPU;
-//					wren_hold <= CPU_wren;
-//				end
-//				else
-//				begin
-//					if((lru_dout & b1_mod_dout) | (~lru_dout & b2_mod_dout))
-//						state <= S_WRITEBACK_WAIT;
-//					else
-//						state <= S_FETCH_WAIT;
-//					lru_hold <= lru_dout;
-//				end
-				address_hold <= CPU_address;
-				address_change <= 1'b1;
 				data_hold <= from_CPU;
 				wren_hold <= CPU_wren;
 				if(miss)
 				begin
 					if((lru_dout & b1_mod_dout) | (~lru_dout & b2_mod_dout))
-						state <= S_WRITEBACK_WAIT;
+						state <= S_WRITEBACK_REQ;
 					else
-						state <= S_FETCH_WAIT;
+						state <= S_FETCH_REQ;
 					lru_hold <= lru_dout;
+					b1_tag_hold <= b1_tag_dout;
+					b2_tag_hold <= b2_tag_dout;
+					//data_hold <= from_CPU;
+					//wren_hold <= CPU_wren;
 				end
+				else
+				begin
+					address_hold <= CPU_address;
+					address_change <= 1'b1;
+				end
+			end
+			S_WRITEBACK_REQ:
+			begin
+				state <= S_WRITEBACK_WAIT;
 			end
 			S_WRITEBACK_WAIT:
 			begin
@@ -208,7 +214,11 @@ begin
 			S_WRITEBACK_TRANSFER:
 			begin
 				if(~mem_ready)
-					state <= S_FETCH_WAIT;
+					state <= S_FETCH_REQ;
+			end
+			S_FETCH_REQ:
+			begin
+				state <= S_FETCH_WAIT;
 			end
 			S_FETCH_WAIT:
 			begin
@@ -247,7 +257,6 @@ begin
 	tag_rdaddr = CPU_address[10:2];
 	b1_addr_b = {address_hold[10:2], address_hold[1:0] ^ mem_offset};
 	b2_addr_b = {address_hold[10:2], address_hold[1:0] ^ mem_offset};
-	//lru_rdaddr = CPU_address[10:2];
 	lru_dout = b1_lru_dout ^ b2_lru_dout;
 	case(mem_offset)
 		2'h0: next_word_valid = word_valid | 4'b0001;
@@ -280,10 +289,6 @@ begin
 			b1_tag_en = 1'b1;
 			b2_tag_en = 1'b1;
 			tag_wren = 1'b1;
-			
-//			lru_wraddr = address_hold[10:2];
-//			lru_din = 1'b1;
-//			lru_wren = 1'b1;
 		end
 		S_PREFETCH:
 		begin
@@ -309,10 +314,6 @@ begin
 			b1_tag_en = ~address_hold[11];
 			b2_tag_en = address_hold[11];
 			tag_wren = mem_ready;
-			
-//			lru_wraddr = address_hold[10:2];
-//			lru_din = 1'b1;
-//			lru_wren = mem_ready;
 		end
 		S_FLUSH:
 		begin
@@ -335,6 +336,7 @@ begin
 			b2_wren_b = 1'b0;
 			
 			tag_wraddr = 9'hxxx;
+			tag_rdaddr = address_hold[10:2];
 			b1_tag_din = 21'hxxxxxx;
 			b2_tag_din = 21'hxxxxxx;
 			b1_valid_din = 1'bx;
@@ -346,15 +348,13 @@ begin
 			b1_tag_en = 1'bx;
 			b2_tag_en = 1'bx;
 			tag_wren = 1'b0;	//tag, LRU not modified
-			
-//			lru_wraddr = 9'hxxx;
-//			lru_din = 1'bx;
-//			lru_wren = 1'bx;
 		end
 		S_HIT:
 		begin
-			mem_req = miss;
-			mem_wren = (lru_dout & b1_mod_dout) | (~lru_dout & b2_mod_dout);	//writeback
+			//mem_req = miss;
+			//mem_wren = (lru_dout & b1_mod_dout) | (~lru_dout & b2_mod_dout);	//writeback
+			mem_req = 1'b0;
+			mem_wren = 1'bx;
 			mem_address = address_hold;
 			to_mem = 16'hxxxx;
 			
@@ -376,16 +376,39 @@ begin
 			b1_tag_en = b1_hit;
 			b2_tag_en = b2_hit;
 			tag_wren = hit;
+		end
+		S_WRITEBACK_REQ:
+		begin
+			mem_req = 1'b1;
+			mem_wren = 1'b1;
+			mem_address = lru_hold ? {b1_tag_hold[20:0], address_hold[10:0]} : {b2_tag_hold[20:0], address_hold[10:0]};
+			to_mem = lru_hold ? b1_dout_b : b2_dout_b;
 			
-//			lru_wraddr = prev_address[10:2];
-//			lru_din = b2_hit;
-//			lru_wren = hit;
+			//CPU writes during cache miss not supported for now (always miss)
+			b1_wren_a = 1'b0;
+			b2_wren_a = 1'b0;
+			b1_wren_b = 1'b0;
+			b2_wren_b = 1'b0;
+			
+			tag_wraddr = prev_address[10:2];
+			b1_tag_din = b1_tag_dout;
+			b2_tag_din = b2_tag_dout;
+			b1_valid_din = b1_valid_dout;
+			b2_valid_din = b2_valid_dout;
+			b1_mod_din = b1_mod_dout;
+			b2_mod_din = b2_mod_dout;
+			//if these are different the lru points to b1, else b2
+			b1_lru_din = b2_lru_dout ^ b2_hit;	//LRU = b2_hit
+			b2_lru_din = b1_lru_dout ^ b2_hit;
+			b1_tag_en = b1_hit;
+			b2_tag_en = b2_hit;
+			tag_wren = hit;
 		end
 		S_WRITEBACK_WAIT:
 		begin
 			mem_req = 1'b0;
 			mem_wren = 1'b1;
-			mem_address = address_hold;
+			mem_address = lru_hold ? {b1_tag_hold[20:0], address_hold[10:0]} : {b2_tag_hold[20:0], address_hold[10:0]};
 			to_mem = lru_hold ? b1_dout_b : b2_dout_b;
 			
 			//CPU writes during cache miss not supported for now (always miss)
@@ -407,16 +430,14 @@ begin
 			b1_tag_en = b1_hit;
 			b2_tag_en = b2_hit;
 			tag_wren = hit;
-			
-//			lru_wraddr = prev_address[10:2];
-//			lru_din = b2_hit;
-//			lru_wren = hit;
 		end
 		S_WRITEBACK_TRANSFER:
 		begin
-			mem_req = ~mem_ready;
-			mem_wren = 1'b0;
-			mem_address = address_hold;
+			//mem_req = ~mem_ready;
+			//mem_wren = 1'b0;
+			mem_req = 1'b0;
+			mem_wren = 1'b1;
+			mem_address = lru_hold ? {b1_tag_hold[20:0], address_hold[10:0]} : {b2_tag_hold[20:0], address_hold[10:0]};
 			to_mem = lru_hold ? b1_dout_b : b2_dout_b;
 			
 			//CPU writes during cache miss not supported for now (always miss)
@@ -438,10 +459,33 @@ begin
 			b1_tag_en = b1_hit;
 			b2_tag_en = b2_hit;
 			tag_wren = hit;
+		end
+		S_FETCH_REQ:
+		begin
+			mem_req = 1'b1;
+			mem_wren = 1'b0;
+			mem_address = address_hold;
+			to_mem = 16'hxxxx;
 			
-//			lru_wraddr = prev_address[10:2];
-//			lru_din = b2_hit;
-//			lru_wren = hit;
+			//CPU writes during cache miss not supported for now (always miss)
+			b1_wren_a = 1'b0;
+			b2_wren_a = 1'b0;
+			b1_wren_b = lru_hold & mem_ready;
+			b2_wren_b = ~lru_hold & mem_ready;
+			
+			tag_wraddr = prev_address[10:2];
+			b1_tag_din = b1_tag_dout;
+			b2_tag_din = b2_tag_dout;
+			b1_valid_din = b1_valid_dout;
+			b2_valid_din = b2_valid_dout;
+			b1_mod_din = b1_mod_dout;
+			b2_mod_din = b2_mod_dout;
+			//if these are different the lru points to b1, else b2
+			b1_lru_din = b2_lru_dout ^ b2_hit;	//LRU = b2_hit
+			b2_lru_din = b1_lru_dout ^ b2_hit;
+			b1_tag_en = b1_hit;
+			b2_tag_en = b2_hit;
+			tag_wren = hit;
 		end
 		S_FETCH_WAIT:
 		begin
@@ -469,10 +513,6 @@ begin
 			b1_tag_en = b1_hit;
 			b2_tag_en = b2_hit;
 			tag_wren = hit;
-			
-//			lru_wraddr = prev_address[10:2];
-//			lru_din = b2_hit;
-//			lru_wren = hit;
 		end
 		S_FETCH_TRANSFER:
 		begin
@@ -500,10 +540,6 @@ begin
 			b1_tag_en = lru_hold;
 			b2_tag_en = ~lru_hold;
 			tag_wren = mem_ready;
-			
-//			lru_wraddr = address_hold[10:2];
-//			lru_din = ~lru_hold;
-//			lru_wren = mem_ready;
 		end
 	endcase	//state
 end
@@ -539,13 +575,5 @@ T_512_54 tag_inst(
 		.wraddress(tag_wraddr),
 		.wren(tag_wren),
 		.q({b2_lru_dout, b2_mod_dout, b2_valid_dout, b2_tag_dout, b1_lru_dout, b1_mod_dout, b1_valid_dout, b1_tag_dout}));
-		
-//LRU_512_1 LRU_inst(
-//		.clock(clk),
-//		.data(lru_din),
-//		.rdaddress(lru_rdaddr),
-//		.wraddress(lru_wraddr),
-//		.wren(lru_wren),
-//		.q(lru_dout));
 
 endmodule : cache_8K_2S_16

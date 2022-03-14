@@ -219,4 +219,28 @@ set_global_assignment -name EDA_TEST_BENCH_FILE VGA.v -section_id Testbench
 set_global_assignment -name EDA_TEST_BENCH_FILE VGA_RAM.qip -section_id Testbench
 set_global_assignment -name EDA_TEST_BENCH_FILE VGA_RAM.v -section_id Testbench
 set_global_assignment -name EDA_TEST_BENCH_FILE reg_file.sv -section_id Testbench
+set_location_assignment PIN_W19 -to hex_out[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to LED[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to LED[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to LED
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_out[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_out[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_out[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_out[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_out[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_out[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_out[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_out[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_out
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ps2_clk_q
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ps2_data_q
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to ps2_clk_q
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to ps2_data_q
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to seg_sel[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to seg_sel[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to seg_sel[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to seg_sel[0]
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

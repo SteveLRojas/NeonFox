@@ -6,8 +6,7 @@ reg clk;
 reg n_reset;
 reg button;
 wire[1:0] LED;
-logic[7:0] hex_low;
-logic[3:0] hex_high;
+logic[14:0] hex_indicators;
 reg RXD;
 wire TXD;
 wire sdram_clk;
@@ -225,8 +224,7 @@ assign H_en = PVP_inst.H_en;
 
 //assign button_s = PVP_inst.button_s;
 //assign rst = PVP_inst.rst;
-assign hex_low = PVP_inst.hex_low;
-assign hex_high = PVP_inst.hex_high;
+assign hex_indicators = PVP_inst.hex_indicators;
 
 assign prg_address = PVP_inst.prg_address;
 assign prg_data = PVP_inst.prg_data;

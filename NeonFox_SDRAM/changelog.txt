@@ -23,9 +23,14 @@ Fixed bug in ALU (LIM H was not working).
 Fixed bug in PC (Missing some branch hazard checks for CALL and JMP).
 Fixed multiple bugs in memory controller, some performance issues still need to be fixed (activate bank before IO machine becomes idle).
 Fixed bug in PC module (A_next_I need to be stopped by hazard).
-Fixed bug in PC unit (D miss does not stop the CPU).
+Fixed bug in hazard unit (D miss does not stop the CPU).
 Fixed bug in SDRAM controller (precharge timer cleared wrong flag).
 Fixed bug in SDRAM controller (timing issue with burst offset counters in IO state machine).
 Fixed bug in cache controller (incorrect mem_wren output).
 Fixed bug in register file (wrong DIO timing).
 Fixed bug in SDRAM controller (Timing issue in memory writes).
+
+Revision 3:
+Fixed bug in cache controller (issue with write hits).
+Fixed bug in XenonGecko (Update high nibble of bg_shift).
+Fixed bug in XenonGecko (issue with attribute shift registers).

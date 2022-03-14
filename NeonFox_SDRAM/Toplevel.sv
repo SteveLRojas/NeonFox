@@ -64,7 +64,7 @@ module NeonFox_PVP(
 		output logic tmds_clk_n,
 		
 		output wire[2:0] seg_sel,
-		output wire[6:0] hex_out
+		output wire[7:0] hex_out
 		);
 
 //Address map for IO space:
@@ -145,16 +145,19 @@ wire IO_wren;
 wire IO_ren;
 wire L_en;
 wire H_en;
+wire hex_en;
 
 reg button_s;
 reg rst;
-wire[7:0] hex_low;
-wire[3:0] hex_high;
+reg[14:0] hex_indicators;
+
+assign hex_en = (&IO_address[15:2]) & ~IO_address[1];
 
 initial
 begin
 	rst = 1'b1;
 	button_s = 1'b0;
+	hex_indicators = 15'h0000;
 end
 
 always @(posedge clk_25)
@@ -163,11 +166,20 @@ begin
 	rst <= ~reset;
 end
 
+always @(posedge clk_sys)
+begin
+	if(IO_wren & H_en & hex_en)
+		hex_indicators[14:8] <= from_cpu[14:8];
+	if(IO_wren & L_en & hex_en)
+		hex_indicators[7:0] <= from_cpu[7:0];
+end
+
 MULTIPLEXED_HEX_DRIVER_3D multi_hex(
 			.Clk(clk_25),
-			.SEG0(hex_low[3:0]),
-			.SEG1(hex_low[7:4]),
-			.SEG2(hex_high[3:0]),
+			.SEG0(hex_indicators[3:0]),
+			.SEG1(hex_indicators[7:4]),
+			.SEG2(hex_indicators[11:8]),
+			.LED(hex_indicators[14:12]),
 			.SEG_SEL(seg_sel),
 			.HEX_OUT(hex_out));
 //#############################################################################
@@ -400,7 +412,7 @@ interrupt_controller intcon_inst(
 //####### Memory Subsystem Control ############################################
 wire MSC_en;
 assign MSC_en = &IO_address[15:3] && ~IO_address[2] && IO_wren;
-assign LED = hex_low[1:0];
+assign LED = hex_indicators[1:0];
 
 MSC MSC_inst(
 		.clk(clk_sys),
@@ -408,9 +420,8 @@ MSC MSC_inst(
 		.wren(MSC_en),
 		.A(IO_address[1:0]),
 		.data(from_cpu[7:0]),
-		//.p1_page({LED, hex_high}),	//paging is not used in this platform, using these outputs to drive LEDs and hex displays.
-		.p1_page(hex_high),
-		.p2_page(hex_low),
+		.p1_page(),
+		.p2_page(),
 		.p1_reset(p_cache_rst),
 		.p1_prefetch(p_cache_prefetch),
 		.p2_reset(d_cache_rst),

@@ -107,8 +107,8 @@ tmds_clk_p                   : AA14      : output : 3.3-V LVTTL       :         
 tmds_b_p                     : AA15      : output : 3.3-V LVTTL       :         : 4         : Y              
 tmds_g_p                     : AA16      : output : 3.3-V LVTTL       :         : 4         : Y              
 GND                          : AA17      : gnd    :                   :         :           :                
-hex_out[4]                   : AA18      : output : 3.3-V LVCMOS      :         : 4         : Y              
-hex_out[0]                   : AA19      : output : 3.3-V LVCMOS      :         : 4         : Y              
+hex_out[4]                   : AA18      : output : 3.3-V LVTTL       :         : 4         : Y              
+hex_out[0]                   : AA19      : output : 3.3-V LVTTL       :         : 4         : Y              
 tmds_r_p                     : AA20      : output : 3.3-V LVTTL       :         : 4         : Y              
 TXD                          : AA21      : output : 3.3-V LVCMOS      :         : 5         : Y              
 RXD                          : AA22      : input  : 3.3-V LVCMOS      :         : 5         : Y              
@@ -130,7 +130,7 @@ tmds_b_n                     : AB15      : output : 3.3-V LVTTL       :         
 tmds_g_n                     : AB16      : output : 3.3-V LVTTL       :         : 4         : Y              
 GND                          : AB17      : gnd    :                   :         :           :                
 seg_sel[2]                   : AB18      : output : 3.3-V LVCMOS      :         : 4         : Y              
-hex_out[3]                   : AB19      : output : 3.3-V LVCMOS      :         : 4         : Y              
+hex_out[3]                   : AB19      : output : 3.3-V LVTTL       :         : 4         : Y              
 tmds_r_n                     : AB20      : output : 3.3-V LVTTL       :         : 4         : Y              
 VCCIO4                       : AB21      : power  :                   : 3.3V    : 4         :                
 GND                          : AB22      : gnd    :                   :         :           :                
@@ -223,7 +223,7 @@ GND                          : E20       : gnd    :                   :         
 RESERVED_INPUT_WITH_WEAK_PULLUP : E21       :        :                   :         : 6         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : E22       :        :                   :         : 6         :                
 ps2_data_d                   : F1        : input  : 3.3-V LVCMOS      :         : 1         : Y              
-ps2_data_q                   : F2        : output : 3.3-V LVCMOS      :         : 1         : Y              
+ps2_data_q                   : F2        : output : 3.3-V LVTTL       :         : 1         : Y              
 GND                          : F3        : gnd    :                   :         :           :                
 VCCIO1                       : F4        : power  :                   : 3.3V    : 1         :                
 GNDA3                        : F5        : gnd    :                   :         :           :                
@@ -266,7 +266,7 @@ VCCIO6                       : G19       : power  :                   : 3.3V    
 GND                          : G20       : gnd    :                   :         :           :                
 GND+                         : G21       :        :                   :         : 6         :                
 GND+                         : G22       :        :                   :         : 6         :                
-ps2_clk_q                    : H1        : output : 3.3-V LVCMOS      :         : 1         : Y              
+ps2_clk_q                    : H1        : output : 3.3-V LVTTL       :         : 1         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : H2        :        :                   :         : 1         :                
 GND                          : H3        : gnd    :                   :         :           :                
 VCCIO1                       : H4        : power  :                   : 3.3V    : 1         :                
@@ -437,9 +437,9 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : R14       :        :                   :      
 RESERVED_INPUT_WITH_WEAK_PULLUP : R15       :        :                   :         : 4         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : R16       :        :                   :         : 4         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : R17       :        :                   :         : 5         :                
-seg_sel[0]                   : R18       : output : 3.3-V LVCMOS      :         : 5         : Y              
-hex_out[1]                   : R19       : output : 3.3-V LVCMOS      :         : 5         : Y              
-hex_out[6]                   : R20       : output : 3.3-V LVCMOS      :         : 5         : Y              
+seg_sel[0]                   : R18       : output : 3.3-V LVTTL       :         : 5         : Y              
+hex_out[1]                   : R19       : output : 3.3-V LVTTL       :         : 5         : Y              
+hex_out[6]                   : R20       : output : 3.3-V LVTTL       :         : 5         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : R21       :        :                   :         : 5         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : R22       :        :                   :         : 5         :                
 GND+                         : T1        :        :                   :         : 2         :                
@@ -482,8 +482,8 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : U15       :        :                   :      
 VCCINT                       : U16       : power  :                   : 1.2V    :           :                
 VCCINT                       : U17       : power  :                   : 1.2V    :           :                
 VCCA4                        : U18       : power  :                   : 2.5V    :           :                
-seg_sel[1]                   : U19       : output : 3.3-V LVCMOS      :         : 5         : Y              
-hex_out[2]                   : U20       : output : 3.3-V LVCMOS      :         : 5         : Y              
+seg_sel[1]                   : U19       : output : 3.3-V LVTTL       :         : 5         : Y              
+hex_out[2]                   : U20       : output : 3.3-V LVTTL       :         : 5         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : U21       :        :                   :         : 5         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : U22       :        :                   :         : 5         :                
 sdram_a[1]                   : V1        : output : 3.3-V LVCMOS      :         : 2         : Y              
@@ -524,10 +524,10 @@ sdram_dq[13]                 : W13       : bidir  : 3.3-V LVCMOS      :         
 RESERVED_INPUT_WITH_WEAK_PULLUP : W14       :        :                   :         : 4         :                
 sdram_dq[15]                 : W15       : bidir  : 3.3-V LVCMOS      :         : 4         : Y              
 VCCIO4                       : W16       : power  :                   : 3.3V    : 4         :                
-LED[0]                       : W17       : output : 3.3-V LVCMOS      :         : 4         : Y              
+LED[0]                       : W17       : output : 3.3-V LVTTL       :         : 4         : Y              
 VCCIO4                       : W18       : power  :                   : 3.3V    : 4         :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : W19       :        :                   :         : 5         :                
-hex_out[5]                   : W20       : output : 3.3-V LVCMOS      :         : 5         : Y              
+hex_out[7]                   : W19       : output : 3.3-V LVTTL       :         : 5         : Y              
+hex_out[5]                   : W20       : output : 3.3-V LVTTL       :         : 5         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : W21       :        :                   :         : 5         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : W22       :        :                   :         : 5         :                
 sdram_ba[0]                  : Y1        : output : 3.3-V LVCMOS      :         : 2         : Y              
@@ -546,7 +546,7 @@ sdram_dq[12]                 : Y13       : bidir  : 3.3-V LVCMOS      :         
 VCCIO4                       : Y14       : power  :                   : 3.3V    : 4         :                
 GND                          : Y15       : gnd    :                   :         :           :                
 GND                          : Y16       : gnd    :                   :         :           :                
-LED[1]                       : Y17       : output : 3.3-V LVCMOS      :         : 4         : Y              
+LED[1]                       : Y17       : output : 3.3-V LVTTL       :         : 4         : Y              
 GND                          : Y18       : gnd    :                   :         :           :                
 VCCIO5                       : Y19       : power  :                   : 3.3V    : 5         :                
 GND                          : Y20       : gnd    :                   :         :           :                

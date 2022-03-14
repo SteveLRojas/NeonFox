@@ -104,10 +104,10 @@ module XenonGecko(
 	end
 
 	//### Background rendering logic
-	logic[7:0] bg_shift7;
-	logic[7:0] bg_shift6;
-	logic[7:0] bg_shift5;
-	logic[7:0] bg_shift4;
+	logic[4:0] bg_shift7;
+	logic[4:0] bg_shift6;
+	logic[4:0] bg_shift5;
+	logic[4:0] bg_shift4;
 	reg[7:0] bg_shift3;     //shift register for bit 3 of background palette index
 	reg[7:0] bg_shift2;     //shift register for bit 2 of background palette index
 	reg[7:0] bg_shift1;    //shift register for bit 1 of background palette index
@@ -149,22 +149,22 @@ module XenonGecko(
 			bg_shift1 <= {1'b0, bg_shift1[7:1]};
 			bg_shift2 <= {1'b0, bg_shift2[7:1]};
 			bg_shift3 <= {1'b0, bg_shift3[7:1]};
-			bg_shift4 <= {1'b0, bg_shift4[7:1]};
-			bg_shift5 <= {1'b0, bg_shift5[7:1]};
-			bg_shift6 <= {1'b0, bg_shift6[7:1]};
-			bg_shift7 <= {1'b0, bg_shift7[7:1]};
+			bg_shift4 <= {bg_shift4[4], bg_shift4[4:1]};
+			bg_shift5 <= {bg_shift5[4], bg_shift5[4:1]};
+			bg_shift6 <= {bg_shift6[4], bg_shift6[4:1]};
+			bg_shift7 <= {bg_shift7[4], bg_shift7[4:1]};
 		end
 
 		if((&vesa_col[1:0]) && active_render_area)
 		begin
-			bg_shift0 <= {pattern_data[0], pattern_data[4], pattern_data[8], pattern_data[12]};
-			bg_shift1 <= {pattern_data[1], pattern_data[5], pattern_data[9], pattern_data[13]};
-			bg_shift2 <= {pattern_data[2], pattern_data[6], pattern_data[10], pattern_data[14]};
-			bg_shift3 <= {pattern_data[3], pattern_data[7], pattern_data[11], pattern_data[15]};
-			bg_shift4[7] <= attribute_data[0];
-			bg_shift5[7] <= attribute_data[1];
-			bg_shift6[7] <= attribute_data[2];
-			bg_shift7[7] <= attribute_data[3];
+			bg_shift0[7:4] <= {pattern_data[0], pattern_data[4], pattern_data[8], pattern_data[12]};
+			bg_shift1[7:4] <= {pattern_data[1], pattern_data[5], pattern_data[9], pattern_data[13]};
+			bg_shift2[7:4] <= {pattern_data[2], pattern_data[6], pattern_data[10], pattern_data[14]};
+			bg_shift3[7:4] <= {pattern_data[3], pattern_data[7], pattern_data[11], pattern_data[15]};
+			bg_shift4[4] <= attribute_data[0];
+			bg_shift5[4] <= attribute_data[1];
+			bg_shift6[4] <= attribute_data[2];
+			bg_shift7[4] <= attribute_data[3];
 		end
 	end
 
@@ -281,6 +281,7 @@ module xgmm(
 	logic[3:0] attribute_data_hold;
 	
 	logic[6:0] buff_attribute_index;	//index into attribute buffer
+	logic[6:0] prev_buff_attribute_index;	//used to generate pattern buffer address
 	logic[4:0] attribute_offset;	//offset of tile attribute in main memory
 	logic[12:0] mem_attribute_index;	//address of attribute entry in main memory
 	logic[11:0] pattern_index;	//index into main memory pattern table
@@ -339,23 +340,26 @@ module xgmm(
 					if(update_attribute_flag)
 						state <= S_UPDATE_ATTRIBUTE_FETCH;
 					buff_attribute_index <= 7'h00;
+					prev_buff_attribute_index <= buff_attribute_index;
 					mem_wren <= 1'b0;
 				end
 				S_UPDATE_PATTERN_BEGIN:
 				begin
 					buff_attribute_index <= buff_attribute_index + 7'h01;
-					state <= S_UPDATE_PATTERN_FETCH;
+					prev_buff_attribute_index <= buff_attribute_index;
+					state <= S_UPDATE_PATTERN_NOP;
 				end
 				S_UPDATE_PATTERN_NOP:
 				begin
 					pattern_index <= from_xgr_a[11:0];
+					state <= S_UPDATE_PATTERN_FETCH;
 				end
 				S_UPDATE_PATTERN_FETCH:
 				begin
 					mem_addr <= {8'h00, pattern_index, next_line_pair[1:0], 2'b00};
 					mem_req <= 1'b1;
 					mem_wren <= 1'b0;
-					state <= S_UPDATE_PATTERN_WRITE;
+					state <= S_UPDATE_PATTERN_INDEX;
 				end
 				S_UPDATE_PATTERN_INDEX:
 				begin
@@ -368,7 +372,8 @@ module xgmm(
 					if(mem_ready & (&mem_offset))
 					begin
 						buff_attribute_index <= buff_attribute_index + 7'h01;
-						if(buff_attribute_index == 7'd79)
+						prev_buff_attribute_index <= buff_attribute_index;
+						if(prev_buff_attribute_index == 7'd79)
 						begin
 							state <= S_IDLE;
 							update_pattern_flag <= 1'b0;
@@ -443,7 +448,7 @@ module xgmm(
 			end
 			S_UPDATE_PATTERN_WRITE:
 			begin
-				xgr_address_a = {~active_pattern, buff_attribute_index, mem_offset};
+				xgr_address_a = {~active_pattern, prev_buff_attribute_index, mem_offset};
 				xgr_wren_a = mem_ready;
 			end
 			S_UPDATE_ATTRIBUTE_FETCH:
