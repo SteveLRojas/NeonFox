@@ -34,3 +34,9 @@ Revision 3:
 Fixed bug in cache controller (issue with write hits).
 Fixed bug in XenonGecko (Update high nibble of bg_shift).
 Fixed bug in XenonGecko (issue with attribute shift registers).
+Fixed bug in XenonGecko (timing issue with next_row_base).
+Fixed bug in XenonGecko (timing issue with swap_pattern and swap_attribute).
+Fixed bug in xgmm (use next attribute buffer for pattern fetching when next_line_pair is zero).
+Created xgri module.
+Created queue_16_16 module.
+Created queue_16_4 module.
