@@ -156,69 +156,6 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to tmds_g_p
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to tmds_g_n
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to tmds_clk_p
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to tmds_clk_n
-set_global_assignment -name SYSTEMVERILOG_FILE reg_file.sv
-set_global_assignment -name SYSTEMVERILOG_FILE XenonGecko.sv
-set_global_assignment -name SYSTEMVERILOG_FILE TMDS_encoder.sv
-set_global_assignment -name SYSTEMVERILOG_FILE MC6847_gen4.sv
-set_global_assignment -name SDC_FILE SDC1.sdc
-set_global_assignment -name VERILOG_FILE MSC.v
-set_global_assignment -name VERILOG_FILE VGA.v
-set_global_assignment -name SYSTEMVERILOG_FILE UART.sv
-set_global_assignment -name SYSTEMVERILOG_FILE timer.sv
-set_global_assignment -name SYSTEMVERILOG_FILE serial.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ps2_host.sv
-set_global_assignment -name SYSTEMVERILOG_FILE MULTIPLEXED_HEX_DRIVER.sv
-set_global_assignment -name SYSTEMVERILOG_FILE keyboard.sv
-set_global_assignment -name SYSTEMVERILOG_FILE interrupt_controller.sv
-set_global_assignment -name SYSTEMVERILOG_FILE NeonFox.sv
-set_global_assignment -name SYSTEMVERILOG_FILE SDRAM_TP16_I.sv
-set_global_assignment -name SYSTEMVERILOG_FILE cache_8K_2S.sv
-set_global_assignment -name SYSTEMVERILOG_FILE Toplevel.sv
-set_global_assignment -name QIP_FILE PLL0.qip
-set_global_assignment -name QIP_FILE PRG_ROM.qip
-set_global_assignment -name QIP_FILE C_2K_16.qip
-set_global_assignment -name QIP_FILE T_512_54.qip
-set_global_assignment -name QIP_FILE LRU_512_1.qip
-set_global_assignment -name QIP_FILE CHR_ROM.qip
-set_global_assignment -name QIP_FILE VGA_RAM.qip
-set_global_assignment -name SYSTEMVERILOG_FILE testbench.sv
-set_global_assignment -name QIP_FILE XG_ram.qip
-set_global_assignment -name QIP_FILE XG_palette.qip
-set_global_assignment -name EDA_TEST_BENCH_FILE C_2K_16.v -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE C_2K_16.qip -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE cache_8K_2S.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE CHR_ROM.qip -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE CHR_ROM.v -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE interrupt_controller.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE keyboard.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE LRU_512_1.qip -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE LRU_512_1.v -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE MC10_CHR16.hex -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE MC6847_gen3.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE MSC.v -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE MULTIPLEXED_HEX_DRIVER.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE NeonFox.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE NeonFox_test.mif -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE PLL0.ppf -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE PLL0.qip -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE PLL0.v -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE PRG_ROM.qip -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE PRG_ROM.v -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE ps2_host.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE sdr.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE sdr_parameters.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE SDRAM_TP16_I.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE serial.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE T_512_54.qip -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE T_512_54.v -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE testbench.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE timer.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE Toplevel.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE UART.sv -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE VGA.v -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE VGA_RAM.qip -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE VGA_RAM.v -section_id Testbench
-set_global_assignment -name EDA_TEST_BENCH_FILE reg_file.sv -section_id Testbench
 set_location_assignment PIN_W19 -to hex_out[7]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[1]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[0]
@@ -243,7 +180,72 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to seg_sel[1]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to seg_sel[0]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to seg_sel[1]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to seg_sel[0]
+set_global_assignment -name SYSTEMVERILOG_FILE CPU/reg_file.sv
+set_global_assignment -name SYSTEMVERILOG_FILE CPU/PC.sv
+set_global_assignment -name SYSTEMVERILOG_FILE CPU/NeonFox.sv
+set_global_assignment -name SYSTEMVERILOG_FILE CPU/hazard_unit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE CPU/decode_unit.sv
+set_global_assignment -name SYSTEMVERILOG_FILE CPU/ALU.sv
+set_global_assignment -name SYSTEMVERILOG_FILE XenonGecko.sv
+set_global_assignment -name SYSTEMVERILOG_FILE TMDS_encoder.sv
+set_global_assignment -name SDC_FILE SDC1.sdc
+set_global_assignment -name VERILOG_FILE MSC.v
+set_global_assignment -name SYSTEMVERILOG_FILE UART.sv
+set_global_assignment -name SYSTEMVERILOG_FILE timer.sv
+set_global_assignment -name SYSTEMVERILOG_FILE serial.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ps2_host.sv
+set_global_assignment -name SYSTEMVERILOG_FILE MULTIPLEXED_HEX_DRIVER.sv
+set_global_assignment -name SYSTEMVERILOG_FILE keyboard.sv
+set_global_assignment -name SYSTEMVERILOG_FILE interrupt_controller.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SDRAM_TP16_I.sv
+set_global_assignment -name SYSTEMVERILOG_FILE cache_8K_2S.sv
+set_global_assignment -name SYSTEMVERILOG_FILE Toplevel.sv
+set_global_assignment -name QIP_FILE PLL0.qip
+set_global_assignment -name QIP_FILE PRG_ROM.qip
+set_global_assignment -name QIP_FILE C_2K_16.qip
+set_global_assignment -name QIP_FILE T_512_54.qip
+set_global_assignment -name SYSTEMVERILOG_FILE testbench.sv
+set_global_assignment -name QIP_FILE XG_ram.qip
+set_global_assignment -name QIP_FILE XG_palette.qip
 set_global_assignment -name SYSTEMVERILOG_FILE fifo.sv
 set_global_assignment -name SYSTEMVERILOG_FILE xgmm.sv
 set_global_assignment -name SYSTEMVERILOG_FILE xgri.sv
+set_global_assignment -name EDA_TEST_BENCH_FILE C_2K_16.v -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE C_2K_16.qip -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE cache_8K_2S.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE interrupt_controller.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE keyboard.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE MSC.v -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE MULTIPLEXED_HEX_DRIVER.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE NeonFox_test.mif -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE PLL0.ppf -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE PLL0.qip -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE PLL0.v -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE PRG_ROM.qip -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE PRG_ROM.v -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE ps2_host.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE sdr.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE sdr_parameters.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE SDRAM_TP16_I.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE serial.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE T_512_54.qip -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE T_512_54.v -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE testbench.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE timer.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE Toplevel.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE UART.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE XG_palette.qip -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE XG_palette.v -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE XG_ram.qip -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE XG_ram.v -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE xgmm.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE xgri.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE XenonGecko.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE Windows95_palette.mif -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE CPU/ALU.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE CPU/decode_unit.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE CPU/hazard_unit.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE CPU/NeonFox.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE CPU/PC.sv -section_id Testbench
+set_global_assignment -name EDA_TEST_BENCH_FILE CPU/reg_file.sv -section_id Testbench
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

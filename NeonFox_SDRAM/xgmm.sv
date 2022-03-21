@@ -11,16 +11,24 @@ module xgmm(
 		input logic odd_line,
 		output logic[15:0] pattern_data,
 		output logic[3:0] attribute_data,
+		// XGRI interface
+		input logic p_full,
+		input logic a_full,
+		output logic p_pop,
+		output logic a_pop,
+		input logic[15:0] p_data,
+		input logic[15:0] a_data,
+		input logic[11:0] par,
+		input logic[12:0] aar,
 		// memory interface
 		output logic mem_req,
 		output logic mem_wren,
 		input logic mem_ready,
 		input logic[1:0] mem_offset,
-		output logic[23:0] mem_addr,
+		output logic[16:0] mem_addr,
 		output logic[15:0] to_mem,
 		input logic[15:0] from_mem);
 		
-	assign to_mem = 16'h0000;
 	enum logic[3:0] {
 	S_IDLE,
 	S_UPDATE_PATTERN_BEGIN,
@@ -29,7 +37,11 @@ module xgmm(
 	S_UPDATE_PATTERN_INDEX,
 	S_UPDATE_PATTERN_WRITE,
 	S_UPDATE_ATTRIBUTE_FETCH,
-	S_UPDATE_ATTRIBUTE_WRITE} state;
+	S_UPDATE_ATTRIBUTE_WRITE,
+	S_RI_PATTERN_WRITE_REQ,
+	S_RI_PATTERN_WRITE_TRANSFER,
+	S_RI_ATTRIBUTE_WRITE_REQ,
+	S_RI_ATTRIBUTE_WRITE_TRANSFER} state;
 
 	logic active_pattern;	//selects the active pattern buffer
 	logic active_attribute;
@@ -52,6 +64,7 @@ module xgmm(
 	logic[12:0] mem_attribute_index;	//address of attribute entry in main memory
 	logic[11:0] pattern_index;	//index into main memory pattern table
 	logic force_next_buff;	//hack to use the correct attribute buffer when rendering the first line pair of the next attribute row
+	logic[1:0] ri_pattern_offset;	//line pair counter used for writing patterns from ri
 
 	assign mem_attribute_index = next_row_base + {attribute_offset, 2'b00};
 	assign force_next_buff = ~|next_line_pair;
@@ -82,7 +95,7 @@ module xgmm(
 			update_pattern_flag <= 1'b0;
 			prev_swap_attribute <= 1'b0;
 			prev_swap_pattern <= 1'b0;
-			mem_addr <= 24'h000000;
+			mem_addr <= 17'h00000;
 			mem_req <= 1'b0;
 		end
 		else
@@ -98,18 +111,44 @@ module xgmm(
 			case(state)
 				S_IDLE:
 				begin
-					if(swap_pattern || update_pattern_flag || swap_attribute)
-						state <= S_UPDATE_PATTERN_BEGIN;
+					if(swap_pattern || update_pattern_flag || swap_attribute || update_attribute_flag || p_full || a_full)
+					begin
+						if(swap_pattern || update_pattern_flag || swap_attribute || update_attribute_flag)
+						begin
+							if(update_attribute_flag)
+							begin
+								state <= S_UPDATE_ATTRIBUTE_FETCH;
+							end
+							else	//swap_pattern || update_pattern_flag || swap_attribute
+							begin
+								state <= S_UPDATE_PATTERN_BEGIN;
+							end
+						end
+						else	//p_full || a_full
+						begin
+							if(p_full)
+							begin
+								state <= S_RI_PATTERN_WRITE_REQ;
+							end
+							else	//a_full
+							begin
+								state <= S_RI_ATTRIBUTE_WRITE_REQ;
+							end
+						end
+					end
+//					if(swap_pattern || update_pattern_flag || swap_attribute)
+//						state <= S_UPDATE_PATTERN_BEGIN;
 					if(swap_attribute)
 					begin
 						attribute_offset <= 5'h00;
 						update_attribute_flag <= 1'b1;
 					end
-					if(update_attribute_flag)
-						state <= S_UPDATE_ATTRIBUTE_FETCH;
+//					if(update_attribute_flag)
+//						state <= S_UPDATE_ATTRIBUTE_FETCH;
 					buff_attribute_index <= 7'h00;
 					prev_buff_attribute_index <= buff_attribute_index;
 					mem_wren <= 1'b0;
+					ri_pattern_offset <= 2'h0;
 				end
 				S_UPDATE_PATTERN_BEGIN:
 				begin
@@ -124,7 +163,7 @@ module xgmm(
 				end
 				S_UPDATE_PATTERN_FETCH:
 				begin
-					mem_addr <= {8'h00, pattern_index, next_line_pair[1:0], 2'b00};
+					mem_addr <= {1'b0, pattern_index, next_line_pair[1:0], 2'b00};
 					mem_req <= 1'b1;
 					mem_wren <= 1'b0;
 					state <= S_UPDATE_PATTERN_INDEX;
@@ -152,7 +191,7 @@ module xgmm(
 				end
 				S_UPDATE_ATTRIBUTE_FETCH:
 				begin
-					mem_addr <= {8'h01, 3'b000, mem_attribute_index};
+					mem_addr <= {1'b1, 3'b000, mem_attribute_index};
 					mem_wren <= 1'b0;
 					if(swap_pattern || update_pattern_flag)
 					begin
@@ -182,12 +221,54 @@ module xgmm(
 							state <= S_UPDATE_ATTRIBUTE_FETCH;
 					end
 				end
+				S_RI_PATTERN_WRITE_REQ:
+				begin
+					mem_req <= 1'b1;
+					mem_wren <= 1'b1;
+					mem_addr <= {1'b0, par, ri_pattern_offset[1:0], 2'b00};
+					if(mem_ready)
+						state <= S_RI_PATTERN_WRITE_TRANSFER;
+				end
+				S_RI_PATTERN_WRITE_TRANSFER:
+				begin
+					mem_req <= 1'b0;
+					if(~mem_ready)
+					begin
+						ri_pattern_offset <= ri_pattern_offset + 2'b01;
+						if(&ri_pattern_offset[1:0])
+							state <= S_IDLE;
+						else
+							state <= S_RI_PATTERN_WRITE_REQ;
+					end
+				end
+				S_RI_ATTRIBUTE_WRITE_REQ:
+				begin
+					mem_req <= 1'b1;
+					mem_wren <= 1'b1;
+					mem_addr <= {1'b1, 3'b000, aar};
+					if(mem_ready)
+						state <= S_RI_ATTRIBUTE_WRITE_TRANSFER;
+				end
+				S_RI_ATTRIBUTE_WRITE_TRANSFER:
+				begin
+					mem_req <= 1'b0;
+					if(~mem_ready)
+					begin
+						state <= S_IDLE;
+					end
+				end
 			endcase // state
 		end
 	end
 	
 	always_comb
 	begin
+		//default values
+		xgr_address_a = 10'hxxx;
+		xgr_wren_a = 1'b0;
+		to_mem = 16'hxxxx;
+		p_pop = 1'b0;
+		a_pop = 1'b0;
 		case(state)
 			S_IDLE:
 			begin
@@ -228,6 +309,30 @@ module xgmm(
 			begin
 				xgr_address_a = {~active_attribute, 2'b11, attribute_offset, mem_offset};
 				xgr_wren_a = mem_ready;
+			end
+			S_RI_PATTERN_WRITE_REQ:
+			begin
+				to_mem = p_data;
+				p_pop = mem_ready;
+				a_pop = 1'b0;
+			end
+			S_RI_PATTERN_WRITE_TRANSFER:
+			begin
+				to_mem = p_data;
+				p_pop = mem_ready;
+				a_pop = 1'b0;
+			end
+			S_RI_ATTRIBUTE_WRITE_REQ:
+			begin
+				to_mem = a_data;
+				p_pop = 1'b0;
+				a_pop = mem_ready;
+			end
+			S_RI_ATTRIBUTE_WRITE_TRANSFER:
+			begin
+				to_mem = a_data;
+				p_pop = 1'b0;
+				a_pop = mem_ready;
 			end
 		endcase
 	end

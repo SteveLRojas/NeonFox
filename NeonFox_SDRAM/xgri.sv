@@ -17,11 +17,6 @@ module xgri(
 		output logic[15:0] a_data,
 		output logic[11:0] par,
 		output logic[12:0] aar);
-
-	//logic[11:0] par;
-	//logic[15:0] pdr;
-	//logic[12:0] aar;
-	//logic[15:0] adr;
 	
 	logic p_empty;
 	logic p_push;
@@ -31,7 +26,7 @@ module xgri(
 	logic prev_a_empty;
 	
 	assign p_push = ri_en & ri_wren & (ri_addr == 4'h3);
-	assign a_push = ri_en & ri_wren & (ri_addr == 4'h5);
+	assign a_push = ri_en & ri_wren & (ri_addr == 4'h4);
 	
 	always_ff @(posedge clk_sys or posedge rst)
 	begin
@@ -53,14 +48,14 @@ module xgri(
 			end
 			if(a_empty & ~prev_a_empty)
 			begin
-				aar <= aar + 13'h0001;
+				aar <= aar + 13'h0004;
 			end
 		
 			if(ri_en & ri_wren)
 			begin
 				case(ri_addr)
-					4'h1: par  <= from_cpu;
-					4'h2: aar  <= from_cpu;
+					4'h1: par  <= from_cpu[11:0];
+					4'h2: aar  <= from_cpu[12:0];
 					default: ;
 				endcase
 			end

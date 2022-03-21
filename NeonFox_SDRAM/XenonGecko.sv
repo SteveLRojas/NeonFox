@@ -4,18 +4,18 @@ module XenonGecko(
 		input logic clk_250,		//HDMI clock
 		input logic rst,
 		// CPU interface
-		//input logic ri_en,
-		//input logic ri_wren,
-		//input logic ri_ren,
-		//input logic[3:0] ri_addr,
-		//input logic[15:0] from_cpu,
-		//output logic[15:0] to_cpu,
+		input logic ri_en,
+		input logic ri_wren,
+		input logic ri_ren,
+		input logic[3:0] ri_addr,
+		input logic[15:0] from_cpu,
+		output logic[15:0] to_cpu,
 		// memory interface
 		output logic mem_req,
 		output logic mem_wren,
 		input logic mem_ready,
 		input logic[1:0] mem_offset,
-		output logic[23:0] mem_addr,
+		output logic[16:0] mem_addr,
 		output logic[15:0] to_mem,
 		input logic[15:0] from_mem,
 		// HDMI interface
@@ -124,8 +124,6 @@ module XenonGecko(
 
 	assign next_line_pair = vesa_line[2:1] + 2'h1;
 	assign pattern_address = vesa_col[9:2];
-//	assign swap_pattern = active_render_rows & (vesa_col == 10'd799) & vesa_line[0];
-//	assign swap_attribute = active_render_rows & (&vesa_line[2:0]) && (vesa_col == 10'd799);
 	assign update_attribute = (vesa_col[2:0] == 3'h1);
 
 	initial
@@ -143,23 +141,6 @@ module XenonGecko(
 				next_row_base <= 13'h0000;
 			else if(&vesa_line[2:0])
 				next_row_base <= next_row_base + 13'd80;
-		
-//			if(&vesa_line[2:0])	//changing to nex attribute row
-//			begin
-//				if(next_row_base[12] & next_row_base[9] & next_row_base[7])	//next_row_base is 4800
-//					next_row_base <= 13'd0;
-//				else
-//					next_row_base <= next_row_base + 13'd80;
-//			end
-//			if(vesa_line == 10'd479)
-//			begin
-//				next_row_base <= 13'd80;
-//			end
-			
-//			if(vesa_line == 10'd479)
-//				next_row_base <= 13'h0000;
-//			else if(&vesa_line[2:0])
-//				next_row_base <= next_row_base + 13'd80;
 		end
 
 		if(active_render_area || active_draw_area)
@@ -187,9 +168,45 @@ module XenonGecko(
 		end
 	end
 
+	logic[7:0] bg_palette_index;
+	logic[7:0] vga_r;
+	logic[7:0] vga_g;
+	logic[7:0] vga_b;
+	assign bg_palette_index = {bg_shift7[0], bg_shift6[0], bg_shift5[0], bg_shift4[0], bg_shift3[0], bg_shift2[0], bg_shift1[0], bg_shift0[0]};
+		
+	logic p_full;
+	logic a_full;
+	logic p_pop;
+	logic a_pop;
+	logic[15:0] p_data;
+	logic[15:0] a_data;
+	logic[11:0] par;
+	logic[12:0] aar;
+		
+	xgri xgri_inst(
+		.clk_sys(clk_sys),
+		.rst(rst),
+		// CPU interface
+		.ri_en(ri_en),
+		.ri_wren(ri_wren),
+		.ri_ren(ri_ren),
+		.ri_addr(ri_addr),
+		.from_cpu(from_cpu),
+		.to_cpu(to_cpu),
+		// XGMM interface
+		.p_full(p_full),
+		.a_full(a_full),
+		.p_pop(p_pop),
+		.a_pop(a_pop),
+		.p_data(p_data),
+		.a_data(a_data),
+		.par(par),
+		.aar(aar));
+	
 	xgmm xgmm_inst(
 		.clk_sys(clk_sys),
 		.rst(rst),
+		// XG interface
 		.swap_pattern(swap_pattern),
 		.swap_attribute(swap_attribute),
 		.update_attribute(update_attribute),
@@ -199,6 +216,16 @@ module XenonGecko(
 		.odd_line(vesa_line[0]),
 		.pattern_data(pattern_data),
 		.attribute_data(attribute_data),
+		// XGRI interface
+		.p_full(p_full),
+		.a_full(a_full),
+		.p_pop(p_pop),
+		.a_pop(a_pop),
+		.p_data(p_data),
+		.a_data(a_data),
+		.par(par),
+		.aar(aar),
+		// SDRAM interface
 		.mem_req(mem_req),
 		.mem_wren(mem_wren),
 		.mem_ready(mem_ready),
@@ -207,26 +234,8 @@ module XenonGecko(
 		.to_mem(to_mem),
 		.from_mem(from_mem));
 		
-	logic[7:0] bg_palette_index;
-	logic[7:0] vga_r;
-	logic[7:0] vga_g;
-	logic[7:0] vga_b;
-	assign bg_palette_index = {bg_shift7[0], bg_shift6[0], bg_shift5[0], bg_shift4[0], bg_shift3[0], bg_shift2[0], bg_shift1[0], bg_shift0[0]};
 		
 	XG_palette palette(.address(bg_palette_index), .clock(clk_25), .q({vga_b, vga_g, vga_r}));
-	
-	//generate a slightly delayed clk_25
-//	logic clk_25_buf1, clk_25_buf2;
-//	logic clk_25_delayed;
-//	always @(negedge clk_sys)	//negedge of clk_sys is not alligned with clk_25 transitions
-//	begin
-//		clk_25_buf1 <= clk_25;	//clk_25_buf1 delayed by 10ns
-//	end
-//	always @(posedge clk_sys)
-//	begin
-//		clk_25_buf2 <= clk_25_buf1;	//clk_25_buf2 delayed by 20ns
-//		clk_25_delayed <= clk_25_buf2;	//clk_25_delayed is delayed by 40ns (one clk_25 cycle) + register propagation delay
-//	end
 	
 	vga_to_hdmi vga_to_hdmi_inst(
 		.clk_25(clk_25),		// VGA clock

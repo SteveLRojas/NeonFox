@@ -1,5 +1,5 @@
 Flow report for NeonFox
-Tue Mar 15 22:19:01 2022
+Sun Mar 20 20:18:22 2022
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,17 +40,17 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Tue Mar 15 22:19:01 2022       ;
+; Flow Status                        ; Successful - Sun Mar 20 20:18:22 2022       ;
 ; Quartus Prime Version              ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                      ; NeonFox                                     ;
 ; Top-level Entity Name              ; NeonFox_PVP                                 ;
 ; Family                             ; Cyclone 10 LP                               ;
 ; Device                             ; 10CL016YU484C8G                             ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 4,287 / 15,408 ( 28 % )                     ;
-;     Total combinational functions  ; 3,510 / 15,408 ( 23 % )                     ;
-;     Dedicated logic registers      ; 2,760 / 15,408 ( 18 % )                     ;
-; Total registers                    ; 2760                                        ;
+; Total logic elements               ; 4,928 / 15,408 ( 32 % )                     ;
+;     Total combinational functions  ; 3,923 / 15,408 ( 25 % )                     ;
+;     Dedicated logic registers      ; 3,278 / 15,408 ( 21 % )                     ;
+; Total registers                    ; 3278                                        ;
 ; Total pins                         ; 69 / 341 ( 20 % )                           ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 274,448 / 516,096 ( 53 % )                  ;
@@ -64,7 +64,7 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 03/15/2022 22:16:30 ;
+; Start date & time ; 03/20/2022 20:15:25 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; NeonFox             ;
 +-------------------+---------------------+
@@ -75,7 +75,7 @@ refer to the applicable agreement for further details.
 +--------------------------------------+----------------------------------------+---------------+-------------+----------------+
 ; Assignment Name                      ; Value                                  ; Default Value ; Entity Name ; Section Id     ;
 +--------------------------------------+----------------------------------------+---------------+-------------+----------------+
-; COMPILER_SIGNATURE_ID                ; 113780617491.164740419003060           ; --            ; --          ; --             ;
+; COMPILER_SIGNATURE_ID                ; 113780617491.164782892405708           ; --            ; --          ; --             ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --            ; --          ; Testbench      ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST      ; On                                     ; --            ; --          ; eda_simulation ;
 ; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; Testbench                              ; --            ; --          ; eda_simulation ;
@@ -85,17 +85,10 @@ refer to the applicable agreement for further details.
 ; EDA_TEST_BENCH_FILE                  ; C_2K_16.v                              ; --            ; --          ; Testbench      ;
 ; EDA_TEST_BENCH_FILE                  ; C_2K_16.qip                            ; --            ; --          ; Testbench      ;
 ; EDA_TEST_BENCH_FILE                  ; cache_8K_2S.sv                         ; --            ; --          ; Testbench      ;
-; EDA_TEST_BENCH_FILE                  ; CHR_ROM.qip                            ; --            ; --          ; Testbench      ;
-; EDA_TEST_BENCH_FILE                  ; CHR_ROM.v                              ; --            ; --          ; Testbench      ;
 ; EDA_TEST_BENCH_FILE                  ; interrupt_controller.sv                ; --            ; --          ; Testbench      ;
 ; EDA_TEST_BENCH_FILE                  ; keyboard.sv                            ; --            ; --          ; Testbench      ;
-; EDA_TEST_BENCH_FILE                  ; LRU_512_1.qip                          ; --            ; --          ; Testbench      ;
-; EDA_TEST_BENCH_FILE                  ; LRU_512_1.v                            ; --            ; --          ; Testbench      ;
-; EDA_TEST_BENCH_FILE                  ; MC10_CHR16.hex                         ; --            ; --          ; Testbench      ;
-; EDA_TEST_BENCH_FILE                  ; MC6847_gen3.sv                         ; --            ; --          ; Testbench      ;
 ; EDA_TEST_BENCH_FILE                  ; MSC.v                                  ; --            ; --          ; Testbench      ;
 ; EDA_TEST_BENCH_FILE                  ; MULTIPLEXED_HEX_DRIVER.sv              ; --            ; --          ; Testbench      ;
-; EDA_TEST_BENCH_FILE                  ; NeonFox.sv                             ; --            ; --          ; Testbench      ;
 ; EDA_TEST_BENCH_FILE                  ; NeonFox_test.mif                       ; --            ; --          ; Testbench      ;
 ; EDA_TEST_BENCH_FILE                  ; PLL0.ppf                               ; --            ; --          ; Testbench      ;
 ; EDA_TEST_BENCH_FILE                  ; PLL0.qip                               ; --            ; --          ; Testbench      ;
@@ -113,10 +106,20 @@ refer to the applicable agreement for further details.
 ; EDA_TEST_BENCH_FILE                  ; timer.sv                               ; --            ; --          ; Testbench      ;
 ; EDA_TEST_BENCH_FILE                  ; Toplevel.sv                            ; --            ; --          ; Testbench      ;
 ; EDA_TEST_BENCH_FILE                  ; UART.sv                                ; --            ; --          ; Testbench      ;
-; EDA_TEST_BENCH_FILE                  ; VGA.v                                  ; --            ; --          ; Testbench      ;
-; EDA_TEST_BENCH_FILE                  ; VGA_RAM.qip                            ; --            ; --          ; Testbench      ;
-; EDA_TEST_BENCH_FILE                  ; VGA_RAM.v                              ; --            ; --          ; Testbench      ;
-; EDA_TEST_BENCH_FILE                  ; reg_file.sv                            ; --            ; --          ; Testbench      ;
+; EDA_TEST_BENCH_FILE                  ; XG_palette.qip                         ; --            ; --          ; Testbench      ;
+; EDA_TEST_BENCH_FILE                  ; XG_palette.v                           ; --            ; --          ; Testbench      ;
+; EDA_TEST_BENCH_FILE                  ; XG_ram.qip                             ; --            ; --          ; Testbench      ;
+; EDA_TEST_BENCH_FILE                  ; XG_ram.v                               ; --            ; --          ; Testbench      ;
+; EDA_TEST_BENCH_FILE                  ; xgmm.sv                                ; --            ; --          ; Testbench      ;
+; EDA_TEST_BENCH_FILE                  ; xgri.sv                                ; --            ; --          ; Testbench      ;
+; EDA_TEST_BENCH_FILE                  ; XenonGecko.sv                          ; --            ; --          ; Testbench      ;
+; EDA_TEST_BENCH_FILE                  ; Windows95_palette.mif                  ; --            ; --          ; Testbench      ;
+; EDA_TEST_BENCH_FILE                  ; CPU/ALU.sv                             ; --            ; --          ; Testbench      ;
+; EDA_TEST_BENCH_FILE                  ; CPU/decode_unit.sv                     ; --            ; --          ; Testbench      ;
+; EDA_TEST_BENCH_FILE                  ; CPU/hazard_unit.sv                     ; --            ; --          ; Testbench      ;
+; EDA_TEST_BENCH_FILE                  ; CPU/NeonFox.sv                         ; --            ; --          ; Testbench      ;
+; EDA_TEST_BENCH_FILE                  ; CPU/PC.sv                              ; --            ; --          ; Testbench      ;
+; EDA_TEST_BENCH_FILE                  ; CPU/reg_file.sv                        ; --            ; --          ; Testbench      ;
 ; EDA_TEST_BENCH_MODULE_NAME           ; Testbench                              ; --            ; --          ; Testbench      ;
 ; EDA_TEST_BENCH_NAME                  ; Testbench                              ; --            ; --          ; eda_simulation ;
 ; EDA_TEST_BENCH_RUN_SIM_FOR           ; 1 ms                                   ; --            ; --          ; Testbench      ;
@@ -129,9 +132,6 @@ refer to the applicable agreement for further details.
 ; MISC_FILE                            ; PRG_ROM_bb.v                           ; --            ; --          ; --             ;
 ; MISC_FILE                            ; C_2K_16_bb.v                           ; --            ; --          ; --             ;
 ; MISC_FILE                            ; T_512_54_bb.v                          ; --            ; --          ; --             ;
-; MISC_FILE                            ; LRU_512_1_bb.v                         ; --            ; --          ; --             ;
-; MISC_FILE                            ; CHR_ROM_bb.v                           ; --            ; --          ; --             ;
-; MISC_FILE                            ; VGA_RAM_bb.v                           ; --            ; --          ; --             ;
 ; OPTIMIZATION_MODE                    ; High Performance Effort                ; Balanced      ; --          ; --             ;
 ; OUTPUT_IO_TIMING_FAR_END_VMEAS       ; Half Signal Swing                      ; --            ; --          ; --             ;
 ; OUTPUT_IO_TIMING_FAR_END_VMEAS       ; Half Signal Swing                      ; --            ; --          ; --             ;
@@ -156,12 +156,12 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:44     ; 1.1                     ; 764 MB              ; 00:01:17                           ;
-; Fitter               ; 00:01:23     ; 1.6                     ; 1592 MB             ; 00:03:09                           ;
-; Assembler            ; 00:00:03     ; 1.0                     ; 555 MB              ; 00:00:02                           ;
-; Timing Analyzer      ; 00:00:07     ; 1.8                     ; 729 MB              ; 00:00:12                           ;
-; EDA Netlist Writer   ; 00:00:03     ; 1.0                     ; 523 MB              ; 00:00:03                           ;
-; Total                ; 00:02:20     ; --                      ; --                  ; 00:04:43                           ;
+; Analysis & Synthesis ; 00:00:49     ; 1.1                     ; 775 MB              ; 00:01:22                           ;
+; Fitter               ; 00:01:43     ; 1.7                     ; 1654 MB             ; 00:03:56                           ;
+; Assembler            ; 00:00:03     ; 1.0                     ; 555 MB              ; 00:00:03                           ;
+; Timing Analyzer      ; 00:00:09     ; 1.9                     ; 736 MB              ; 00:00:13                           ;
+; EDA Netlist Writer   ; 00:00:04     ; 1.0                     ; 528 MB              ; 00:00:03                           ;
+; Total                ; 00:02:48     ; --                      ; --                  ; 00:05:37                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

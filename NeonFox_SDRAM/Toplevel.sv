@@ -68,21 +68,25 @@ module NeonFox_PVP(
 		);
 
 //Address map for IO space:
-// 0x0000 to 0x0FFF	video memory (read write)
-// 0x1000 to 0xFFED	unused
+// 0x0000 to 0x0FFF	unused
+// 0x1000 to 0xFFDF	unused
+// 0xFFE0 to 0xFFE7	XGRI (read write)
+// 0xFFE8 to 0xFFED	unused
 // 0xFFEE to 0xFFEF	interrupt controller (read write)
 // 0xFFF0 to 0xFFF3	timer module (read write)
 // 0xFFF4 to 0xFFF5	keyboard module (read write)
-// 0xFFF6 to 0xFFF7	video mode register (write only)
+// 0xFFF6 to 0xFFF7	unused
 // 0xFFF8 to 0xFFFB	memory subsystem control registers	(write only)
-// 0xFFFC to 0xFFFD	reserved
+// 0xFFFC to 0xFFFD	hex display
 // 0xFFFE to 0xFFFF	RS-232 module	(read write)
 
 //Address map for data space:
-// 0x00000000 to 0xFFFFFFFF	active data memory page (cached)
+// 0x00000000 to 0x00FFFFFF	32MB main memory (cached)
+// 0x01000000 to 0xFFFFFFFF	Not implemented (cached)
 
 //Address map for program space:
-// 0x00000000 to 0xFFFFFFFF	active program memory page (cached)
+// 0x00000000 to 0x00FFFFFF	32MB main memory (cached)
+// 0x01000000 to 0xFFFFFFFF	Not implemented (cached)
 
 // MSC Address map
 // 0x0 program space control register
@@ -265,7 +269,7 @@ wire init_ready;
 wire[15:0] init_data;
 wire[11:0] init_address;
 
-logic[23:0] p3_address;
+logic[16:0] p3_address;
 logic[15:0] p3_to_mem;
 logic p3_req;
 logic p3_wren;
@@ -289,7 +293,7 @@ SDRAM_TP16_I SDRAM_controller(
 		.p2_ready(p2_ready),
 		.p2_offset(p2_offset),
 		
-		.p3_address(p3_address),
+		.p3_address({7'h01, p3_address}),
 		.p3_to_mem(p3_to_mem),
 		.p3_req(p3_req),
 		.p3_wren(p3_wren),
@@ -434,20 +438,22 @@ MSC MSC_inst(
 //#############################################################################
 
 //####### VGA Module ##########################################################
-//wire VGA_MS;
-wire VGA_En;
-//wire VGA_WrEn;
-wire[7:0] from_VGA;
-//assign VGA_MS = (&IO_address[15:4]) & (~IO_address[3]) & (&IO_address[2:1]) & IO_wren;
-//assign VGA_En = ~(|IO_address[15:12]);
-//assign VGA_WrEn = VGA_En & IO_wren;
-assign VGA_En = 1'b0;
-assign from_VGA = 8'h00;
+wire XG_En;
+wire[15:0] from_XG;
+assign XG_En = (&IO_address[15:5]) & ~IO_address[4];
+
 XenonGecko XG_inst(
 		.clk_sys(clk_sys),		//ri and memory clock
 		.clk_25(clk_25),		//VGA clock
 		.clk_250(clk_250),		//HDMI clock
 		.rst(rst),
+		// CPU interface
+		.ri_en(XG_En),
+		.ri_wren(IO_wren),
+		.ri_ren(IO_ren),
+		.ri_addr(IO_address[3:0]),
+		.from_cpu(from_cpu),
+		.to_cpu(from_XG),
 		// memory interface
 		.mem_req(p3_req),
 		.mem_wren(p3_wren),
@@ -468,7 +474,7 @@ XenonGecko XG_inst(
 //#############################################################################
 
 //####### IO Multiplexer ######################################################
-reg prev_VGA_en;
+reg prev_XG_en;
 reg prev_keyboard_en;
 reg prev_serial_en;
 reg prev_timer_en;
@@ -476,26 +482,26 @@ reg prev_intcon_en;
 
 always @(posedge clk_sys)
 begin
-	prev_VGA_en <= VGA_En;
+	prev_XG_en <= XG_En;
 	prev_keyboard_en <= keyboard_en;
 	prev_serial_en <= serial_en;
 	prev_timer_en <= timer_en;
 	prev_intcon_en <= intcon_en;
 end
 
-wire[7:0] m_from_VGA;
+wire[7:0] m_from_XG;
 wire[7:0] m_from_keyboard;
 wire[7:0] m_from_serial;
 wire[7:0] m_from_timer;
 wire[7:0] m_from_intcon;
 
-assign m_from_VGA = from_VGA & {8{prev_VGA_en}};
+assign m_from_XG = from_XG[7:0] & {8{prev_XG_en}};
 assign m_from_keyboard = from_keyboard & {8{prev_keyboard_en}};
 assign m_from_serial = from_serial & {8{prev_serial_en}};
 assign m_from_timer = from_timer & {8{prev_timer_en}};
 assign m_from_intcon = from_intcon & {8{prev_intcon_en}};
-assign IO_to_cpu[7:0] = m_from_VGA | m_from_keyboard | m_from_serial | m_from_timer | m_from_intcon;
-assign IO_to_cpu[15:8] = 8'h00;
+assign IO_to_cpu[7:0] = m_from_XG | m_from_keyboard | m_from_serial | m_from_timer | m_from_intcon;
+assign IO_to_cpu[15:8] = from_XG[15:8];
 //#############################################################################
 
 //####### CPU Core ############################################################

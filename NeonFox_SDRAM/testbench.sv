@@ -37,7 +37,7 @@ wire p2_ready;
 wire[1:0] p2_offset;
 wire[15:0] p2_to_mem;
 
-logic[23:0] p3_address;
+logic[16:0] p3_address;
 logic[15:0] p3_to_mem;
 logic p3_req;
 logic p3_wren;
