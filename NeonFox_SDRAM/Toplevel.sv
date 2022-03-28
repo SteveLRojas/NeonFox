@@ -447,6 +447,8 @@ XenonGecko XG_inst(
 		.clk_25(clk_25),		//VGA clock
 		.clk_250(clk_250),		//HDMI clock
 		.rst(rst),
+		.hsync(hsync),
+		.vsync(vsync),
 		// CPU interface
 		.ri_en(XG_En),
 		.ri_wren(IO_wren),

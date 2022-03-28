@@ -229,10 +229,11 @@ begin
 			begin
 				if(~mem_ready)
 				begin
-					state = S_HIT;
+					state <= S_HIT;
 					address_hold <= CPU_address;
 				end
 			end
+			default: ;
 		endcase // state
 	end
 end
@@ -540,6 +541,31 @@ begin
 			b1_tag_en = lru_hold;
 			b2_tag_en = ~lru_hold;
 			tag_wren = mem_ready;
+		end
+		default:
+		begin
+         mem_req = 1'bx;
+			mem_wren = 1'bx;
+			mem_address = 32'hxxxxxxxx;
+			to_mem = 16'hxxxx;
+			
+			b1_wren_a = 1'bx;
+			b2_wren_a = 1'bx;
+			b1_wren_b = 1'bx;
+			b2_wren_b = 1'bx;
+			
+			tag_wraddr = 9'hxxx;
+			b1_tag_din = 21'hxxxxxx;
+			b2_tag_din = 21'hxxxxxx;
+			b1_valid_din = 4'hx;
+			b2_valid_din = 4'hx;
+			b1_mod_din = 1'bx;
+			b2_mod_din = 1'bx;
+			b1_lru_din = 1'bx;	//LRU = 1, bank 1
+			b2_lru_din = 1'bx;
+			b1_tag_en = 1'bx;
+			b2_tag_en = 1'bx;
+			tag_wren = 1'bx;
 		end
 	endcase	//state
 end

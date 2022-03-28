@@ -52,3 +52,10 @@ Disconnected pc_stall signal from decoder. pc_stall is now unused.
 Cleaned project files.
 Split CPU into multiple files.
 Created folder for CPU files.
+
+Revision 5:
+Added missing default case in cache_8K_2S module. Quartus does not generate a warning for this even though it is in an always_comb block...
+Split always block in call_stack.
+Found possible bug in call stack (internal processing of push is stopped when module is not enabled). This can unexpectedly increase the latency of the module.
+Added hsync and vsync outputs to XenonGecko.
+Fixed bug in PC module (instructions skipped when hazard happens during p_cache miss).

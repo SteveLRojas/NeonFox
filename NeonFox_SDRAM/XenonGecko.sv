@@ -3,6 +3,8 @@ module XenonGecko(
 		input logic clk_25,		//VGA clock
 		input logic clk_250,		//HDMI clock
 		input logic rst,
+		output logic hsync,
+		output logic vsync,   //these are active low
 		// CPU interface
 		input logic ri_en,
 		input logic ri_wren,
@@ -38,7 +40,7 @@ module XenonGecko(
 	//logic[7:0] rows_render_delay;
 	//logic active_draw_rows;
 	logic active_draw_area;
-	logic hsync, vsync;	//active low
+	//logic hsync, vsync;	//active low
 	logic[7:0] vsync_render_delay;
 	logic[7:0] hsync_render_delay;
 	logic draw_vsync;

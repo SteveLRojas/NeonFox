@@ -380,6 +380,8 @@ button = 1'b1;
 RXD = 1'b1;
 
 #20 n_reset = 1'b1;	//release reset
+#177134 n_reset = 1'b0;
+#20 n_reset = 1'b1;
 //#20 button = 3'b111;	//release halt
 //#1000 n_reset = 1'b0;
 //#20 n_reset = 1'b1;

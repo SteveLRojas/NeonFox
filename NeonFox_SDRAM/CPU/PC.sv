@@ -27,7 +27,7 @@ module PC(
 	//jmp, ret
 	//int, A_miss_next
 reg decoder_prev_hazard;
-reg pc_prev_hazard;
+reg p_miss_override;
 reg p_miss;
 reg prev_p_miss;
 logic prev_branch_taken;
@@ -66,7 +66,7 @@ begin
 	if(rst)
 	begin
 		decoder_prev_hazard <= 1'b0;
-		pc_prev_hazard <= 1'b0;
+		p_miss_override <= 1'b0;
 		p_miss <= 1'b0;
 		prev_p_miss <= 1'b0;
 		A_miss <= 32'h0000;
@@ -77,7 +77,7 @@ begin
 	end
 	else
 	begin
-		pc_prev_hazard <= hazard;
+		p_miss_override <= (hazard & ~p_miss) | (p_miss_override & hazard);	//set if hazard before p_miss, cleared when no hazard
 		p_miss <= p_cache_miss;
 		prev_p_miss <= p_miss;
 		if(~p_miss | prev_branch_taken)
@@ -122,15 +122,15 @@ end
 // 1: ((pc_jmp | pc_call) & ~branch_hazard)
 // 2: pc_ret
 // 3: take_brx
-// 4: (~hazard & ~(p_miss & ~pc_prev_hazard))
-// 5: ((p_miss & ~pc_prev_hazard) & ~prev_p_miss & ~prev_branch_taken)
+// 4: (~hazard & ~(p_miss & ~p_miss_override))
+// 5: ((p_miss & ~p_miss_override) & ~prev_p_miss & ~prev_branch_taken)
 //Note that 4 and 5 above are mutually exclusive.
 // Alternative mux priority:
 // 0: interrupt
 // 1: ((pc_jmp | pc_call) & ~branch_hazard)
 // 2: pc_ret
 // 3: take_brx
-// 4: (~hazard & ~(p_miss & ~pc_prev_hazard))
+// 4: (~hazard & ~(p_miss & ~p_miss_override))
 // 5: (p_miss & ~prev_p_miss & ~prev_branch_taken)
 //Note that mutual exclusivity between 4 and 5 is sacrificed to obtain a simpler expression for 5
 always @(posedge clk or posedge rst)
@@ -139,9 +139,9 @@ begin
 	begin
 		PC_reg <= 16'h0000;
 	end
-	else if(interrupt | (p_miss & ~prev_p_miss & ~prev_branch_taken) | ((pc_jmp | pc_call) & ~branch_hazard) | pc_ret | take_brx | (~hazard & ~(p_miss & ~pc_prev_hazard)))
+	else if(interrupt | (p_miss & ~prev_p_miss & ~prev_branch_taken) | ((pc_jmp | pc_call) & ~branch_hazard) | pc_ret | take_brx | (~hazard & ~(p_miss & ~p_miss_override)))
 	begin
-		if(interrupt | ((pc_jmp | pc_call) & ~branch_hazard) | pc_ret | ~(take_brx | (~hazard & ~(p_miss & ~pc_prev_hazard))))
+		if(interrupt | ((pc_jmp | pc_call) & ~branch_hazard) | pc_ret | ~(take_brx | (~hazard & ~(p_miss & ~p_miss_override))))
 		begin
 			if(interrupt | ~(((pc_jmp | pc_call) & ~branch_hazard) | pc_ret))
 			begin
@@ -166,13 +166,13 @@ begin
 				end
 			end
 		end
-		else	//(take_brx) | (~hazard & ~(p_miss & ~pc_prev_hazard))
+		else	//(take_brx) | (~hazard & ~(p_miss & ~p_miss_override))
 		begin
 			if(take_brx)
 			begin
 				PC_reg <= A_pipe0 + {{22{I_field[9]}}, I_field};
 			end
-			else	//(~hazard & ~(p_miss & ~pc_prev_hazard))
+			else	//(~hazard & ~(p_miss & ~p_miss_override))
 			begin
 				PC_reg <= PC_reg + 32'h01;
 			end
@@ -196,16 +196,22 @@ begin
 	begin
 		address <= 4'b0000;
 	end
-	else if(en)
+	else if(en & (push | pop))
 	begin
-		input_buf <= data_in;
+		address <= address + {{3{pop}}, 1'b1};
+	end
+end
+
+always @(posedge clk)
+begin
+    if(en)
+    begin
+      input_buf <= data_in;
 		prev_push <= push;
 		output_buf <= stack_mem[address];
 		if(prev_push)
 			stack_mem[address] <= input_buf;
-		if(push | pop)
-			address <= address + {{3{pop}}, 1'b1};
-	end
+    end
 end
 assign data_out = output_buf;
 endmodule
