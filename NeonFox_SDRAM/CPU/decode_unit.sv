@@ -1,6 +1,8 @@
 module decode_unit(
 		input logic clk,
 		input logic rst,
+		input logic jmp_rst,
+		input logic brx_rst,
 		input logic hazard,
 		input logic p_cache_miss,
 		input logic[15:0] prg_data,
@@ -71,21 +73,8 @@ begin
 		end
 	end
 	
-	if(rst)
-	begin
-		pc_jmp <= 1'b0;
-		pc_brx <= 1'b0;
-		pc_call <= 1'b0;
-		pc_ret <= 1'b0;
-		regf_wren <= 1'b0;
-		data_wren <= 1'b0;
-		data_ren <= 1'b0;
-		IO_wren <= 1'b0;
-		IO_ren <= 1'b0;
-		status_ren <= 1'b0;
-		alu_op <= 4'h0;
-	end
-	else if(~hazard)
+	//see reset logic below
+	if(~hazard)
 	begin
 		I_field <= I_reg[9:0];
 		H_en <= I_reg[11];
@@ -382,6 +371,29 @@ begin
 				pc_ret <= 1'b0;
 			end
 		endcase
+	end
+	if(rst)
+	begin
+		regf_wren <= 1'b0;
+		data_wren <= 1'b0;
+		data_ren <= 1'b0;
+		IO_wren <= 1'b0;
+		IO_ren <= 1'b0;
+		status_ren <= 1'b0;
+		alu_op <= 4'h0;
+	end
+	if(rst | jmp_rst)
+	begin
+		pc_jmp <= 1'b0;
+		pc_call <= 1'b0;
+	end
+	if(rst | brx_rst)
+	begin
+		pc_brx <= 1'b0;
+	end
+	if(rst | pc_ret)
+	begin
+		pc_ret <= 1'b0;
 	end
 end
 endmodule : decode_unit

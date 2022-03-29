@@ -59,3 +59,9 @@ Split always block in call_stack.
 Found possible bug in call stack (internal processing of push is stopped when module is not enabled). This can unexpectedly increase the latency of the module.
 Added hsync and vsync outputs to XenonGecko.
 Fixed bug in PC module (instructions skipped when hazard happens during p_cache miss).
+Fixed A_miss update logic in PC module.
+Fixed p_miss_override logic in PC module.
+Added jmp_rst output to PC module.
+Added jmp_rst input to decoder module.
+Added brx_rst input to decoder module.
+Separated reset logic for each branch type in the decoder. This is needed to prevent branches from being taken multiple times during pipeline stalls.

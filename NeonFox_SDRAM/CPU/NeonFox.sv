@@ -51,7 +51,8 @@ logic pc_ret, pc_ret1;
 logic hazard;
 logic branch_hazard;
 logic take_brx, take_brx1;
-logic PC_stall;
+logic jmp_rst;
+//logic PC_stall;
 
 logic decoder_rst;
 logic data_wren0, data_wren1, data_wren2;
@@ -221,7 +222,8 @@ PC PC_inst(
 		.I_field(I_field),
 		.n(n), .z(z), .p(p),
 		.take_brx(take_brx),
-		.PC_stall(PC_stall),
+		.jmp_rst(jmp_rst),
+		//.PC_stall(PC_stall),
 		.prg_address(prg_address));
 
 //##### DECODER #####
@@ -229,6 +231,8 @@ decode_unit decoder_inst(
 		.clk(clk),
 		//.rst(decoder_rst | PC_stall),
 		.rst(decoder_rst),
+		.jmp_rst(jmp_rst),
+		.brx_rst(take_brx),
 		.hazard(hazard),
 		.p_cache_miss(p_cache_miss),
 		.prg_data(prg_data),

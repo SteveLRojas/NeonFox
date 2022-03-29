@@ -63,14 +63,14 @@ wire H_en;
 //reg[3:0] button_s;
 //reg rst;
 
-//wire p_cache_rst;
-//wire p_cache_flush;
-//wire p_cache_prefetch;
+wire p_cache_rst;
+wire p_cache_flush;
+wire p_cache_prefetch;
 wire p_cache_miss;
 
-//wire d_cache_rst;
-//wire d_cache_flush;
-//wire d_cache_prefetch;
+wire d_cache_rst;
+wire d_cache_flush;
+wire d_cache_prefetch;
 wire d_cache_writeback;
 wire d_read_miss;
 wire d_write_miss;
@@ -151,6 +151,11 @@ logic pc_call, pc_call1;
 logic pc_ret, pc_ret1;
 logic take_brx, take_brx1;
 logic PC_stall;
+
+logic[15:0] aux0;
+logic[15:0] aux1;
+logic[15:0] aux2;
+logic[15:0] aux3;
 
 //logic[15:0] DIO_in;
 //logic data_wren0, data_wren1, data_wren2;
@@ -233,9 +238,9 @@ assign p1_req = PVP_inst.p1_req;
 assign p1_ready = PVP_inst.p1_ready;
 assign p1_offset = PVP_inst.p1_offset;
 assign from_mem = PVP_inst.from_mem;
-//assign p_cache_rst = PVP_inst.p_cache_rst;
-//assign p_cache_flush = PVP_inst.p_cache_flush;
-//assign p_cache_prefetch = PVP_inst.p_cache_prefetch;
+assign p_cache_rst = PVP_inst.p_cache_rst;
+assign p_cache_flush = PVP_inst.p_cache_flush;
+assign p_cache_prefetch = PVP_inst.p_cache_prefetch;
 assign p_cache_miss = PVP_inst.p_cache_miss;
 
 assign data_address = PVP_inst.data_address;
@@ -248,9 +253,9 @@ assign p2_wren = PVP_inst.p2_wren;
 assign p2_ready = PVP_inst.p2_ready;
 assign p2_offset = PVP_inst.p2_offset;
 assign p2_to_mem = PVP_inst.p2_to_mem;
-//assign d_cache_rst = PVP_inst.d_cache_rst;
-//assign d_cache_flush = PVP_inst.d_cache_flush;
-//assign d_cache_prefetch = PVP_inst.d_cache_prefetch;
+assign d_cache_rst = PVP_inst.d_cache_rst;
+assign d_cache_flush = PVP_inst.d_cache_flush;
+assign d_cache_prefetch = PVP_inst.d_cache_prefetch;
 assign d_read_miss = PVP_inst.d_read_miss;
 assign d_write_miss = PVP_inst.d_write_miss;
 
@@ -344,6 +349,10 @@ assign branch_hazard = PVP_inst.CPU_inst.branch_hazard;
 assign take_brx = PVP_inst.CPU_inst.take_brx;
 assign take_brx1 = PVP_inst.CPU_inst.take_brx1;
 assign PC_stall = PVP_inst.CPU_inst.PC_stall;
+assign aux0 = PVP_inst.CPU_inst.reg_file_inst.aux0;
+assign aux1 = PVP_inst.CPU_inst.reg_file_inst.aux1;
+assign aux2 = PVP_inst.CPU_inst.reg_file_inst.aux2;
+assign aux3 = PVP_inst.CPU_inst.reg_file_inst.aux3;
 
 assign decoder_rst = PVP_inst.CPU_inst.decoder_rst;
 //assign data_wren0 = PVP_inst.CPU_inst.data_wren0;
@@ -380,10 +389,7 @@ button = 1'b1;
 RXD = 1'b1;
 
 #20 n_reset = 1'b1;	//release reset
-#177134 n_reset = 1'b0;
-#20 n_reset = 1'b1;
-//#20 button = 3'b111;	//release halt
-//#1000 n_reset = 1'b0;
+//#177134 n_reset = 1'b0;
 //#20 n_reset = 1'b1;
 end
 endmodule

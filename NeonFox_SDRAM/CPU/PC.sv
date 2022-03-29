@@ -19,7 +19,8 @@ module PC(
 		input logic[9:0] I_field,
 		input logic n, z, p,
 		output logic take_brx,
-		output logic PC_stall,
+		output logic jmp_rst,
+		//output logic PC_stall,
 		output logic[31:0] prg_address);
 // PC sources:
 	//PC + 1
@@ -27,6 +28,7 @@ module PC(
 	//jmp, ret
 	//int, A_miss_next
 reg decoder_prev_hazard;
+reg pc_prev_hazard;
 reg p_miss_override;
 reg p_miss;
 reg prev_p_miss;
@@ -43,8 +45,9 @@ logic stack_push;
 logic stack_pop;
 
 assign take_brx = pc_brx & (pc_brxt ^ |({p, z, n, 1'b0} & (1 << {H_en, L_en}))) & ~branch_hazard;
+assign jmp_rst = (pc_jmp | pc_call) & ~branch_hazard;
 assign stack_in = interrupt ? A_pipe0 : A_next_I;
-assign stack_en = ~prev_data_hazard | interrupt;
+assign stack_en = ~prev_data_hazard | interrupt;	//???
 assign stack_push = (pc_call & ~branch_hazard) | interrupt;
 assign stack_pop = pc_ret & ~interrupt;
 
@@ -55,9 +58,9 @@ begin
 	if(~hazard)
 		A_next_I <= PC_reg;
 	prev_data_hazard <= data_hazard;
-	prev_branch_taken <= pc_jmp | (take_brx) | pc_call | pc_ret;
-	PC_stall <= (prev_branch_taken & p_miss) | (PC_stall & p_miss);	// ???
-	if(pc_jmp & ~interrupt)
+	prev_branch_taken <= ((pc_jmp | pc_call) & ~branch_hazard) | take_brx | pc_ret;
+	//PC_stall <= (prev_branch_taken & p_miss) | (PC_stall & p_miss);	// ???
+	if(pc_jmp & (~branch_hazard) & (~interrupt))
 		last_callx_addr <= stack_in;
 end
 
@@ -66,6 +69,7 @@ begin
 	if(rst)
 	begin
 		decoder_prev_hazard <= 1'b0;
+		pc_prev_hazard <= 1'b0;
 		p_miss_override <= 1'b0;
 		p_miss <= 1'b0;
 		prev_p_miss <= 1'b0;
@@ -77,7 +81,8 @@ begin
 	end
 	else
 	begin
-		p_miss_override <= (hazard & ~p_miss) | (p_miss_override & hazard);	//set if hazard before p_miss, cleared when no hazard
+		pc_prev_hazard <= hazard;
+		p_miss_override <= (pc_prev_hazard & ~p_miss) | (p_miss_override & hazard);	//set if pc_prev_hazard before p_miss, cleared when no hazard
 		p_miss <= p_cache_miss;
 		prev_p_miss <= p_miss;
 		if(~p_miss | prev_branch_taken)
@@ -88,9 +93,12 @@ begin
 			//	A_miss <= PC_reg;
 			A_miss_next <= PC_reg;
 		end
-		if(~p_miss)
+		if(~p_miss | (prev_branch_taken & ~prev_p_miss))	//check prev_p_miss to make sure the instruction after the branch has been fetched before changing address
 		begin
-			A_miss <= A_miss_next;
+			if(~p_miss)
+				A_miss <= A_miss_next;
+			else
+				A_miss <= PC_reg;
 		end
 
 		if(~p_cache_miss)
