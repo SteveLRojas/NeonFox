@@ -20,7 +20,7 @@ module hazard_unit(
 		input logic d_cache_read_miss,
 		input logic d_cache_write_miss,
 		output logic hazard,
-		output logic data_hazard,
+		//output logic data_hazard,
 		output logic branch_hazard,
 		output logic decoder_rst);
 logic rst_hold;
@@ -30,8 +30,6 @@ logic status_hazard;
 logic IO_hazard, IO_hazard1, IO_hazard2;
 logic data_hazard_read1, data_hazard_read2;
 logic data_hazard_read;
-//logic data_hazard_read_miss;
-//logic data_hazard_write_miss;
 logic branch_hazard_ca;
 logic branch_hazard_nzp;
 
@@ -48,8 +46,6 @@ assign IO_hazard = IO_hazard1 | IO_hazard2;
 assign data_hazard_read1 = data_ren & (data_select1 | data_wren1);
 assign data_hazard_read2 = data_ren & (data_select2 | data_wren2);
 assign data_hazard_read = data_hazard_read1 | data_hazard_read2;
-//assign data_hazard_read_miss = IO_ren & d_cache_read_miss;
-//assign data_hazard_write_miss = IO_wren2 & d_cache_write_miss;
 assign hazard = IO_hazard | data_hazard_read | d_cache_read_miss | d_cache_write_miss | halt | branch_hazard | status_hazard;
-assign data_hazard = d_cache_write_miss;
+//assign data_hazard = d_cache_write_miss;
 endmodule : hazard_unit

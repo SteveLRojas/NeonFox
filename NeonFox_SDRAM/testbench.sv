@@ -150,12 +150,23 @@ logic pc_brxt;
 logic pc_call, pc_call1;
 logic pc_ret, pc_ret1;
 logic take_brx, take_brx1;
-logic PC_stall;
+//logic PC_stall;
 
 logic[15:0] aux0;
 logic[15:0] aux1;
 logic[15:0] aux2;
 logic[15:0] aux3;
+
+logic[15:0] r0;
+logic[15:0] r1;
+logic[15:0] r2;
+logic[15:0] r3;
+
+logic[15:0] dal;
+logic[15:0] dah;
+logic[15:0] ial;
+logic[15:0] cal;
+logic[15:0] cah;
 
 //logic[15:0] DIO_in;
 //logic data_wren0, data_wren1, data_wren2;
@@ -348,11 +359,23 @@ assign hazard = PVP_inst.CPU_inst.hazard;
 assign branch_hazard = PVP_inst.CPU_inst.branch_hazard;
 assign take_brx = PVP_inst.CPU_inst.take_brx;
 assign take_brx1 = PVP_inst.CPU_inst.take_brx1;
-assign PC_stall = PVP_inst.CPU_inst.PC_stall;
+//assign PC_stall = PVP_inst.CPU_inst.PC_stall;
 assign aux0 = PVP_inst.CPU_inst.reg_file_inst.aux0;
 assign aux1 = PVP_inst.CPU_inst.reg_file_inst.aux1;
 assign aux2 = PVP_inst.CPU_inst.reg_file_inst.aux2;
 assign aux3 = PVP_inst.CPU_inst.reg_file_inst.aux3;
+
+assign r0 = PVP_inst.CPU_inst.reg_file_inst.r0;
+assign r1 = PVP_inst.CPU_inst.reg_file_inst.r1;
+assign r2 = PVP_inst.CPU_inst.reg_file_inst.r2;
+assign r3 = PVP_inst.CPU_inst.reg_file_inst.r3;
+
+assign dal = PVP_inst.CPU_inst.reg_file_inst.dal;
+assign dah = PVP_inst.CPU_inst.reg_file_inst.dah;
+assign ial = PVP_inst.CPU_inst.reg_file_inst.ial;
+
+assign cal = PVP_inst.CPU_inst.reg_file_inst.cal;
+assign cah = PVP_inst.CPU_inst.reg_file_inst.cah;
 
 assign decoder_rst = PVP_inst.CPU_inst.decoder_rst;
 //assign data_wren0 = PVP_inst.CPU_inst.data_wren0;

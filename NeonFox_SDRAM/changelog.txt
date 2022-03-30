@@ -65,3 +65,6 @@ Added jmp_rst output to PC module.
 Added jmp_rst input to decoder module.
 Added brx_rst input to decoder module.
 Separated reset logic for each branch type in the decoder. This is needed to prevent branches from being taken multiple times during pipeline stalls.
+
+Revision 6:
+Added hold logic for branch signals in NeonFox. This is needed to ensure that the decoder is reset one cycle after a branch even if a hazard was present during the branch.

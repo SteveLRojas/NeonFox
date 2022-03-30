@@ -1,0 +1,22 @@
+{
+	"system" : {
+		"platform" : "windows64",
+		"os_name" : "Windows 8.1",
+		"os_version" : "6.3"
+	},
+	"error" : {
+		"executable" : "quartus",
+		"comment" : "Who knows?",
+		"error_message" : "\nQuartus Prime requested that Windows query job info, but Windows could not do so.\nPlease report the full text of this message to Intel so we can investigate its causes.\nIn the meantime, may wish to take the following steps to work around the problem:\n   * Disabled parallel compilation if it is enabled\n   * Ensure you have sufficient memory to run Quartus.\n   * Ensure all service packs and patches from Microsoft are installed\n\nTechnical details:\n   * API: result\n   * OS code: 5 (Access is denied.)\n",
+		"source_file" : "/quartus/ccl/thr/thr_process.cpp",
+		"line" : "475",
+		"stack_trace" : "\t0x7ffde3c524c8: ccl_thr + 0x24c8 (thr_os_error + 0xb8)\n\t0x7ffde3c52f1d: ccl_thr + 0x2f1d (thr_windows_error + 0xad)\n\t0x7ffde3c51c87: ccl_thr + 0x1c87 (thr_process_create_and_save_job + 0x6b7)\n\t0x7ffdb5933949: ccl_ipc + 0x3949 (?run@IPC_COMMAND@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0_NPEAK01@Z + 0x419)\n\t0x7ffdbf5354e1: sys_flow + 0x54e1 (?flow_call_cmd_thread@@YAPEAXPEAX@Z + 0x1c1)\n\t0x7ffde3ce467e: CCL_MSG + 0x1467e (?msg_thread_wrapper@@YAPEAXP6APEAXPEAX@Z0@Z + 0x6e)\n\t0x7ffde3de6660: ccl_mem + 0x16660 (?mem_thread_wrapper@@YAPEAXP6APEAXPEAX@Z0@Z + 0x70)\n\t0x7ffde3c52791: ccl_thr + 0x2791 (thr_thread_begin + 0xa1)\n\t0x7ffdf05013d1: KERNEL32 + 0x13d1 (BaseThreadInitThunk + 0x21)\n\t0x7ffdf27254e3: ntdll + 0x154e3 (RtlUserThreadStart + 0x33)\n",
+		"subsystem" : "THR"
+	},
+	"quartus" : {
+		"quartus_bits" : "64",
+		"version" : "18.1.0",
+		"build" : "625",
+		"edition" : "Lite Edition"
+	}
+}

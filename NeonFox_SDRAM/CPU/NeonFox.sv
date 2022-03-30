@@ -43,14 +43,14 @@ logic[7:0] I_field1;
 logic[3:0] alu_op, alu_op1;
 logic n, z, p;
 
-logic pc_jmp, pc_jmp1;
+logic pc_jmp, pc_jmp1, pc_jmp_hold;
 logic pc_brx;
 logic pc_brxt;
-logic pc_call, pc_call1;
-logic pc_ret, pc_ret1;
+logic pc_call, pc_call1, pc_call_hold;
+logic pc_ret, pc_ret1, pc_ret_hold;
 logic hazard;
 logic branch_hazard;
-logic take_brx, take_brx1;
+logic take_brx, take_brx1, take_brx_hold;
 logic jmp_rst;
 //logic PC_stall;
 
@@ -71,6 +71,7 @@ assign IO_ren = IO_ren0 & ~(IO_select1 | IO_select2);
 assign data_out = alu_out;
 assign H_en = H_en2 | ~L_en2;	//both H_en and L_en low from the decoder indicate high and low bytes are swapped (both enabled).
 assign L_en = L_en2 | ~H_en2;
+assign data_hazard = d_cache_write_miss;
 
 always @(posedge clk)
 begin
@@ -95,10 +96,10 @@ begin
 		regf_wren1 <= 1'b0;
 		regf_wren2 <= 1'b0;
 		alu_op1 <= 4'b0111;
-		pc_jmp1 <= 1'b0;
-		pc_call1 <= 1'b0;
-		pc_ret1 <= 1'b0;
-		take_brx1 <= 1'b0;
+		
+		
+		
+		
 		data_wren1 <= 1'b0;
 		data_wren2 <= 1'b0;
 		IO_wren1 <= 1'b0;
@@ -117,10 +118,10 @@ begin
 		begin
 			regf_wren1 <= 1'b0;
 			alu_op1 <= 4'b0111;
-			pc_jmp1 <= 1'b0;
-			pc_call1 <= 1'b0;
-			pc_ret1 <= 1'b0;
-			take_brx1 <= 1'b0;
+			
+			
+			
+			
 			data_wren1 <= 1'b0;
 			IO_wren1 <= 1'b0;
 			address_select1 <= 1'b0;
@@ -131,10 +132,10 @@ begin
 		begin
 			regf_wren1 <= regf_wren;
 			alu_op1 <= alu_op;
-			pc_jmp1 <= pc_jmp;
-			pc_call1 <= pc_call;
-			pc_ret1 <= pc_ret;
-			take_brx1 <= take_brx;
+			
+			
+			
+			
 			data_wren1 <= data_wren0;
 			IO_wren1 <= IO_wren0;
 			address_select1 <= address_select;
@@ -147,6 +148,46 @@ begin
 		address_select2 <= address_select1;
 		data_select2 <= data_select1;
 		IO_select2 <= IO_select1;
+	end
+end
+
+always_ff @(posedge clk or posedge reset)
+begin
+	if(reset)
+	begin
+		pc_jmp1 <= 1'b0;
+		pc_jmp_hold <= 1'b0;
+		pc_call1 <= 1'b0;
+		pc_call_hold <= 1'b0;
+		pc_ret1 <= 1'b0;
+		pc_ret_hold <= 1'b0;
+		take_brx1 <= 1'b0;
+		take_brx_hold <= 1'b0;
+	end
+	else
+	begin
+		if(hazard | data_hazard)
+		begin
+			pc_jmp_hold <= pc_jmp | pc_jmp_hold;
+			pc_jmp1 <= 1'b0;
+			pc_call_hold <= pc_call | pc_call_hold;
+			pc_call1 <= 1'b0;
+			pc_ret_hold <= pc_ret | pc_ret_hold;
+			pc_ret1 <= 1'b0;
+			take_brx_hold <= take_brx | take_brx_hold;
+			take_brx1 <= 1'b0;
+		end
+		else
+		begin
+			pc_jmp_hold <= 1'b0;
+			pc_jmp1 <= pc_jmp | pc_jmp_hold;
+			pc_call_hold <= 1'b0;
+			pc_call1 <= pc_call | pc_call_hold;
+			pc_ret_hold <= 1'b0;
+			pc_ret1 <= pc_ret | pc_ret_hold;
+			take_brx_hold <= 1'b0;
+			take_brx1 <= take_brx | take_brx_hold;
+		end
 	end
 end
 
@@ -280,7 +321,7 @@ hazard_unit hazard_inst(
 		.d_cache_read_miss(d_cache_read_miss),
 		.d_cache_write_miss(d_cache_write_miss),
 		.hazard(hazard),
-		.data_hazard(data_hazard),
+		//.data_hazard(data_hazard),
 		.branch_hazard(branch_hazard),
 		.decoder_rst(decoder_rst));
 endmodule : NeonFox
