@@ -22,11 +22,22 @@ module xgri(
 	logic p_push;
 	logic a_empty;
 	logic a_push;
-	logic prev_p_empty;
-	logic prev_a_empty;
+	//logic prev_p_empty;
+	//logic prev_a_empty;
+	logic prev_p_pop;
+	logic prev_a_pop;
+	logic[1:0] p_burst;
 	
 	assign p_push = ri_en & ri_wren & (ri_addr == 4'h3);
 	assign a_push = ri_en & ri_wren & (ri_addr == 4'h4);
+	
+	always_ff @(posedge clk_sys)
+	begin
+		if(p_empty)
+			p_burst <= 2'b00;
+		else if(prev_p_pop & ~p_pop)
+			p_burst <= p_burst + 2'b01;
+	end
 	
 	always_ff @(posedge clk_sys or posedge rst)
 	begin
@@ -35,18 +46,24 @@ module xgri(
 			par <= 12'h000;
 			aar <= 13'h0000;
 			to_cpu <= 16'h0000;
-			prev_p_empty <= 1'b1;
-			prev_a_empty <= 1'b1;
+			//prev_p_empty <= 1'b1;
+			//prev_a_empty <= 1'b1;
+			prev_p_pop <= 1'b0;
+			prev_a_pop <= 1'b0;
 		end
 		else
 		begin
-			prev_p_empty <= p_empty;
-			prev_a_empty <= a_empty;
-			if(p_empty & ~prev_p_empty)
+			//prev_p_empty <= p_empty;
+			//prev_a_empty <= a_empty;
+			prev_p_pop <= p_pop;
+			prev_a_pop <= a_pop;
+			//if(p_empty & ~prev_p_empty)
+			if(prev_p_pop & ~p_pop & (&p_burst))
 			begin
 				par <= par + 12'h001;
 			end
-			if(a_empty & ~prev_a_empty)
+			//if(a_empty & ~prev_a_empty)
+			if(prev_a_pop & ~a_pop)
 			begin
 				aar <= aar + 13'h0004;
 			end

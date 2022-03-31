@@ -20,7 +20,7 @@ module PC(
 		input logic n, z, p,
 		output logic take_brx,
 		output logic jmp_rst,
-		//output logic PC_stall,
+		output logic decoder_flush_inhibit,
 		output logic[31:0] prg_address);
 // PC sources:
 	//PC + 1
@@ -50,6 +50,7 @@ assign stack_in = interrupt ? A_pipe0 : A_next_I;
 assign stack_en = ~prev_data_hazard | interrupt;	//???
 assign stack_push = (pc_call & ~branch_hazard) | interrupt;
 assign stack_pop = pc_ret & ~interrupt;
+assign decoder_flush_inhibit = p_miss;
 
 call_stack cstack0(.rst(rst), .clk(clk), .en(stack_en), .push(stack_push), .pop(stack_pop), .data_in(stack_in), .data_out(stack_out));
 
@@ -59,7 +60,6 @@ begin
 		A_next_I <= PC_reg;
 	prev_data_hazard <= data_hazard;
 	prev_branch_taken <= ((pc_jmp | pc_call) & ~branch_hazard) | take_brx | pc_ret;
-	//PC_stall <= (prev_branch_taken & p_miss) | (PC_stall & p_miss);	// ???
 	if(pc_jmp & (~branch_hazard) & (~interrupt))
 		last_callx_addr <= stack_in;
 end
@@ -82,15 +82,11 @@ begin
 	else
 	begin
 		pc_prev_hazard <= hazard;
-		p_miss_override <= (pc_prev_hazard & ~p_miss) | (p_miss_override & hazard);	//set if pc_prev_hazard before p_miss, cleared when no hazard
+		p_miss_override <= (hazard & pc_prev_hazard & ~p_miss) | (p_miss_override & hazard);	//set if pc_prev_hazard before p_miss, cleared when no hazard
 		p_miss <= p_cache_miss;
 		prev_p_miss <= p_miss;
 		if(~p_miss | prev_branch_taken)
 		begin
-			//if(~p_miss)
-			//	A_miss <= A_miss_next;
-			//else
-			//	A_miss <= PC_reg;
 			A_miss_next <= PC_reg;
 		end
 		if(~p_miss | (prev_branch_taken & ~prev_p_miss))	//check prev_p_miss to make sure the instruction after the branch has been fetched before changing address

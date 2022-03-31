@@ -52,9 +52,11 @@ logic hazard;
 logic branch_hazard;
 logic take_brx, take_brx1, take_brx_hold;
 logic jmp_rst;
-//logic PC_stall;
+logic decoder_flush_inhibit;	//indicates that the second instruction after a branch was not fetched
 
 logic decoder_rst;
+logic decoder_flush;
+logic extend_flush;	//causes flush to be treated like a full reset
 logic data_wren0, data_wren1, data_wren2;
 logic data_ren0;
 logic IO_wren0, IO_wren1, IO_wren2;
@@ -96,10 +98,6 @@ begin
 		regf_wren1 <= 1'b0;
 		regf_wren2 <= 1'b0;
 		alu_op1 <= 4'b0111;
-		
-		
-		
-		
 		data_wren1 <= 1'b0;
 		data_wren2 <= 1'b0;
 		IO_wren1 <= 1'b0;
@@ -118,10 +116,6 @@ begin
 		begin
 			regf_wren1 <= 1'b0;
 			alu_op1 <= 4'b0111;
-			
-			
-			
-			
 			data_wren1 <= 1'b0;
 			IO_wren1 <= 1'b0;
 			address_select1 <= 1'b0;
@@ -132,10 +126,6 @@ begin
 		begin
 			regf_wren1 <= regf_wren;
 			alu_op1 <= alu_op;
-			
-			
-			
-			
 			data_wren1 <= data_wren0;
 			IO_wren1 <= IO_wren0;
 			address_select1 <= address_select;
@@ -163,18 +153,20 @@ begin
 		pc_ret_hold <= 1'b0;
 		take_brx1 <= 1'b0;
 		take_brx_hold <= 1'b0;
+		extend_flush <= 1'b0;
 	end
 	else
 	begin
-		if(hazard | data_hazard)
+		extend_flush <= ~(pc_jmp_hold | pc_call_hold | pc_ret_hold | take_brx_hold);
+		if(hazard)
 		begin
-			pc_jmp_hold <= pc_jmp | pc_jmp_hold;
+			pc_jmp_hold <= (pc_jmp & ~decoder_flush_inhibit) | pc_jmp_hold;
 			pc_jmp1 <= 1'b0;
-			pc_call_hold <= pc_call | pc_call_hold;
+			pc_call_hold <= (pc_call & ~decoder_flush_inhibit) | pc_call_hold;
 			pc_call1 <= 1'b0;
-			pc_ret_hold <= pc_ret | pc_ret_hold;
+			pc_ret_hold <= (pc_ret & ~decoder_flush_inhibit) | pc_ret_hold;
 			pc_ret1 <= 1'b0;
-			take_brx_hold <= take_brx | take_brx_hold;
+			take_brx_hold <= (take_brx & ~decoder_flush_inhibit) | take_brx_hold;
 			take_brx1 <= 1'b0;
 		end
 		else
@@ -264,16 +256,16 @@ PC PC_inst(
 		.n(n), .z(z), .p(p),
 		.take_brx(take_brx),
 		.jmp_rst(jmp_rst),
-		//.PC_stall(PC_stall),
+		.decoder_flush_inhibit(decoder_flush_inhibit),
 		.prg_address(prg_address));
 
 //##### DECODER #####
 decode_unit decoder_inst(
 		.clk(clk),
-		//.rst(decoder_rst | PC_stall),
 		.rst(decoder_rst),
 		.jmp_rst(jmp_rst),
 		.brx_rst(take_brx),
+		.flush(decoder_flush),
 		.hazard(hazard),
 		.p_cache_miss(p_cache_miss),
 		.prg_data(prg_data),
@@ -310,6 +302,7 @@ hazard_unit hazard_inst(
 		.alu_op1(alu_op1),
 		.halt(halt),
 		.rst(reset),
+		.extend_flush(extend_flush),
 		.IO_select1(IO_select1), .IO_select2(IO_select2),
 		.address_select1(address_select1), .address_select2(address_select2),
 		.data_select1(data_select1), .data_select2(data_select2), 
@@ -323,5 +316,6 @@ hazard_unit hazard_inst(
 		.hazard(hazard),
 		//.data_hazard(data_hazard),
 		.branch_hazard(branch_hazard),
-		.decoder_rst(decoder_rst));
+		.decoder_rst(decoder_rst),
+		.decoder_flush(decoder_flush));
 endmodule : NeonFox

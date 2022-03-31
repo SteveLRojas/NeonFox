@@ -3,6 +3,7 @@ module decode_unit(
 		input logic rst,
 		input logic jmp_rst,
 		input logic brx_rst,
+		input logic flush,
 		input logic hazard,
 		input logic p_cache_miss,
 		input logic[15:0] prg_data,
@@ -372,7 +373,7 @@ begin
 			end
 		endcase
 	end
-	if(rst)
+	if(rst | flush)
 	begin
 		regf_wren <= 1'b0;
 		data_wren <= 1'b0;
@@ -382,16 +383,16 @@ begin
 		status_ren <= 1'b0;
 		alu_op <= 4'h0;
 	end
-	if(rst | jmp_rst)
+	if(rst | flush | jmp_rst)
 	begin
 		pc_jmp <= 1'b0;
 		pc_call <= 1'b0;
 	end
-	if(rst | brx_rst)
+	if(rst | flush | brx_rst)
 	begin
 		pc_brx <= 1'b0;
 	end
-	if(rst | pc_ret)
+	if(rst | flush | pc_ret)
 	begin
 		pc_ret <= 1'b0;
 	end

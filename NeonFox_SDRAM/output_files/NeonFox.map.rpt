@@ -1,5 +1,5 @@
 Analysis & Synthesis report for NeonFox
-Tue Mar 29 22:18:20 2022
+Wed Mar 30 23:07:45 2022
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -87,15 +87,15 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Tue Mar 29 22:18:20 2022       ;
+; Analysis & Synthesis Status        ; Successful - Wed Mar 30 23:07:44 2022       ;
 ; Quartus Prime Version              ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                      ; NeonFox                                     ;
 ; Top-level Entity Name              ; NeonFox_PVP                                 ;
 ; Family                             ; Cyclone 10 LP                               ;
-; Total logic elements               ; 5,937                                       ;
-;     Total combinational functions  ; 3,969                                       ;
-;     Dedicated logic registers      ; 3,290                                       ;
-; Total registers                    ; 3290                                        ;
+; Total logic elements               ; 5,943                                       ;
+;     Total combinational functions  ; 3,975                                       ;
+;     Dedicated logic registers      ; 3,289                                       ;
+; Total registers                    ; 3289                                        ;
 ; Total pins                         ; 69                                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 274,448                                     ;
@@ -282,20 +282,20 @@ refer to the applicable agreement for further details.
 +---------------------------------------------+-----------------------------------------------------------------------------------+
 ; Resource                                    ; Usage                                                                             ;
 +---------------------------------------------+-----------------------------------------------------------------------------------+
-; Estimated Total logic elements              ; 5,937                                                                             ;
+; Estimated Total logic elements              ; 5,943                                                                             ;
 ;                                             ;                                                                                   ;
-; Total combinational functions               ; 3969                                                                              ;
+; Total combinational functions               ; 3975                                                                              ;
 ; Logic element usage by number of LUT inputs ;                                                                                   ;
-;     -- 4 input functions                    ; 2466                                                                              ;
-;     -- 3 input functions                    ; 978                                                                               ;
-;     -- <=2 input functions                  ; 525                                                                               ;
+;     -- 4 input functions                    ; 2486                                                                              ;
+;     -- 3 input functions                    ; 979                                                                               ;
+;     -- <=2 input functions                  ; 510                                                                               ;
 ;                                             ;                                                                                   ;
 ; Logic elements by mode                      ;                                                                                   ;
-;     -- normal mode                          ; 3678                                                                              ;
+;     -- normal mode                          ; 3684                                                                              ;
 ;     -- arithmetic mode                      ; 291                                                                               ;
 ;                                             ;                                                                                   ;
-; Total registers                             ; 3290                                                                              ;
-;     -- Dedicated logic registers            ; 3290                                                                              ;
+; Total registers                             ; 3289                                                                              ;
+;     -- Dedicated logic registers            ; 3289                                                                              ;
 ;     -- I/O registers                        ; 0                                                                                 ;
 ;                                             ;                                                                                   ;
 ; I/O pins                                    ; 69                                                                                ;
@@ -307,8 +307,8 @@ refer to the applicable agreement for further details.
 ;     -- PLLs                                 ; 1                                                                                 ;
 ;                                             ;                                                                                   ;
 ; Maximum fan-out node                        ; PLL0:PLL_inst|altpll:altpll_component|PLL0_altpll:auto_generated|wire_pll1_clk[0] ;
-; Maximum fan-out                             ; 3528                                                                              ;
-; Total fan-out                               ; 29342                                                                             ;
+; Maximum fan-out                             ; 3527                                                                              ;
+; Total fan-out                               ; 29392                                                                             ;
 ; Average fan-out                             ; 3.84                                                                              ;
 +---------------------------------------------+-----------------------------------------------------------------------------------+
 
@@ -318,19 +318,19 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------------------------------------------------------------------------+---------------------------+--------------+
 ; Compilation Hierarchy Node                      ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                              ; Entity Name               ; Library Name ;
 +-------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------------------------------------------------------------------------+---------------------------+--------------+
-; |NeonFox_PVP                                    ; 3969 (21)           ; 3290 (23)                 ; 274448      ; 0            ; 0       ; 0         ; 69   ; 0            ; |NeonFox_PVP                                                                                                                     ; NeonFox_PVP               ; work         ;
+; |NeonFox_PVP                                    ; 3975 (21)           ; 3289 (23)                 ; 274448      ; 0            ; 0       ; 0         ; 69   ; 0            ; |NeonFox_PVP                                                                                                                     ; NeonFox_PVP               ; work         ;
 ;    |MSC:MSC_inst|                               ; 22 (22)             ; 23 (23)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|MSC:MSC_inst                                                                                                        ; MSC                       ; work         ;
 ;    |MULTIPLEXED_HEX_DRIVER_3D:multi_hex|        ; 63 (17)             ; 34 (15)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|MULTIPLEXED_HEX_DRIVER_3D:multi_hex                                                                                 ; MULTIPLEXED_HEX_DRIVER_3D ; work         ;
 ;       |frame_clk:frame_clk_inst|                ; 25 (25)             ; 19 (19)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|MULTIPLEXED_HEX_DRIVER_3D:multi_hex|frame_clk:frame_clk_inst                                                        ; frame_clk                 ; work         ;
 ;       |hexdriver:hex_inst_0|                    ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|MULTIPLEXED_HEX_DRIVER_3D:multi_hex|hexdriver:hex_inst_0                                                            ; hexdriver                 ; work         ;
 ;       |hexdriver:hex_inst_1|                    ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|MULTIPLEXED_HEX_DRIVER_3D:multi_hex|hexdriver:hex_inst_1                                                            ; hexdriver                 ; work         ;
 ;       |hexdriver:hex_inst_2|                    ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|MULTIPLEXED_HEX_DRIVER_3D:multi_hex|hexdriver:hex_inst_2                                                            ; hexdriver                 ; work         ;
-;    |NeonFox:CPU_inst|                           ; 1665 (84)           ; 1576 (62)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|NeonFox:CPU_inst                                                                                                    ; NeonFox                   ; work         ;
-;       |ALU:ALU_inst|                            ; 217 (217)           ; 28 (28)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|NeonFox:CPU_inst|ALU:ALU_inst                                                                                       ; ALU                       ; work         ;
-;       |PC:PC_inst|                              ; 803 (445)           ; 938 (357)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|NeonFox:CPU_inst|PC:PC_inst                                                                                         ; PC                        ; work         ;
+;    |NeonFox:CPU_inst|                           ; 1670 (82)           ; 1573 (63)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|NeonFox:CPU_inst                                                                                                    ; NeonFox                   ; work         ;
+;       |ALU:ALU_inst|                            ; 218 (218)           ; 24 (24)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|NeonFox:CPU_inst|ALU:ALU_inst                                                                                       ; ALU                       ; work         ;
+;       |PC:PC_inst|                              ; 802 (444)           ; 938 (357)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|NeonFox:CPU_inst|PC:PC_inst                                                                                         ; PC                        ; work         ;
 ;          |call_stack:cstack0|                   ; 358 (358)           ; 581 (581)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|NeonFox:CPU_inst|PC:PC_inst|call_stack:cstack0                                                                      ; call_stack                ; work         ;
-;       |decode_unit:decoder_inst|                ; 108 (108)           ; 69 (69)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|NeonFox:CPU_inst|decode_unit:decoder_inst                                                                           ; decode_unit               ; work         ;
-;       |hazard_unit:hazard_inst|                 ; 8 (8)               ; 1 (1)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|NeonFox:CPU_inst|hazard_unit:hazard_inst                                                                            ; hazard_unit               ; work         ;
+;       |decode_unit:decoder_inst|                ; 111 (111)           ; 69 (69)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|NeonFox:CPU_inst|decode_unit:decoder_inst                                                                           ; decode_unit               ; work         ;
+;       |hazard_unit:hazard_inst|                 ; 12 (12)             ; 1 (1)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|NeonFox:CPU_inst|hazard_unit:hazard_inst                                                                            ; hazard_unit               ; work         ;
 ;       |reg_file:reg_file_inst|                  ; 445 (445)           ; 478 (478)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|NeonFox:CPU_inst|reg_file:reg_file_inst                                                                             ; reg_file                  ; work         ;
 ;    |PLL0:PLL_inst|                              ; 0 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|PLL0:PLL_inst                                                                                                       ; PLL0                      ; work         ;
 ;       |altpll:altpll_component|                 ; 0 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|PLL0:PLL_inst|altpll:altpll_component                                                                               ; altpll                    ; work         ;
@@ -339,7 +339,7 @@ refer to the applicable agreement for further details.
 ;       |altsyncram:altsyncram_component|         ; 0 (0)               ; 0 (0)                     ; 65536       ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|PRG_ROM:PRG_inst|altsyncram:altsyncram_component                                                                    ; altsyncram                ; work         ;
 ;          |altsyncram_qna1:auto_generated|       ; 0 (0)               ; 0 (0)                     ; 65536       ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|PRG_ROM:PRG_inst|altsyncram:altsyncram_component|altsyncram_qna1:auto_generated                                     ; altsyncram_qna1           ; work         ;
 ;    |SDRAM_TP16_I:SDRAM_controller|              ; 432 (432)           ; 211 (211)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller                                                                                       ; SDRAM_TP16_I              ; work         ;
-;    |XenonGecko:XG_inst|                         ; 736 (81)            ; 655 (81)                  ; 22544       ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst                                                                                                  ; XenonGecko                ; work         ;
+;    |XenonGecko:XG_inst|                         ; 737 (81)            ; 657 (81)                  ; 22544       ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst                                                                                                  ; XenonGecko                ; work         ;
 ;       |XG_palette:palette|                      ; 0 (0)               ; 0 (0)                     ; 6144        ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|XG_palette:palette                                                                               ; XG_palette                ; work         ;
 ;          |altsyncram:altsyncram_component|      ; 0 (0)               ; 0 (0)                     ; 6144        ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|XG_palette:palette|altsyncram:altsyncram_component                                               ; altsyncram                ; work         ;
 ;             |altsyncram_32b1:auto_generated|    ; 0 (0)               ; 0 (0)                     ; 6144        ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|XG_palette:palette|altsyncram:altsyncram_component|altsyncram_32b1:auto_generated                ; altsyncram_32b1           ; work         ;
@@ -347,15 +347,15 @@ refer to the applicable agreement for further details.
 ;          |shift_taps_4mm:auto_generated|        ; 1 (0)               ; 1 (0)                     ; 16          ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|altshift_taps:bg_shift0_rtl_0|shift_taps_4mm:auto_generated                                      ; shift_taps_4mm            ; work         ;
 ;             |altsyncram_pa81:altsyncram2|       ; 0 (0)               ; 0 (0)                     ; 16          ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|altshift_taps:bg_shift0_rtl_0|shift_taps_4mm:auto_generated|altsyncram_pa81:altsyncram2          ; altsyncram_pa81           ; work         ;
 ;             |cntr_tof:cntr1|                    ; 1 (1)               ; 1 (1)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|altshift_taps:bg_shift0_rtl_0|shift_taps_4mm:auto_generated|cntr_tof:cntr1                       ; cntr_tof                  ; work         ;
-;       |vga_to_hdmi:vga_to_hdmi_inst|            ; 214 (41)            ; 86 (44)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|vga_to_hdmi:vga_to_hdmi_inst                                                                     ; vga_to_hdmi               ; work         ;
+;       |vga_to_hdmi:vga_to_hdmi_inst|            ; 211 (41)            ; 86 (44)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|vga_to_hdmi:vga_to_hdmi_inst                                                                     ; vga_to_hdmi               ; work         ;
 ;          |TMDS_encoder:encode_B|                ; 56 (56)             ; 14 (14)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|vga_to_hdmi:vga_to_hdmi_inst|TMDS_encoder:encode_B                                               ; TMDS_encoder              ; work         ;
 ;          |TMDS_encoder:encode_G|                ; 57 (57)             ; 14 (14)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|vga_to_hdmi:vga_to_hdmi_inst|TMDS_encoder:encode_G                                               ; TMDS_encoder              ; work         ;
-;          |TMDS_encoder:encode_R|                ; 60 (60)             ; 14 (14)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|vga_to_hdmi:vga_to_hdmi_inst|TMDS_encoder:encode_R                                               ; TMDS_encoder              ; work         ;
+;          |TMDS_encoder:encode_R|                ; 57 (57)             ; 14 (14)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|vga_to_hdmi:vga_to_hdmi_inst|TMDS_encoder:encode_R                                               ; TMDS_encoder              ; work         ;
 ;       |xgmm:xgmm_inst|                          ; 139 (139)           ; 75 (75)                   ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst                                                                                   ; xgmm                      ; work         ;
 ;          |XG_ram:XG_ram_inst|                   ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|XG_ram:XG_ram_inst                                                                ; XG_ram                    ; work         ;
 ;             |altsyncram:altsyncram_component|   ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|XG_ram:XG_ram_inst|altsyncram:altsyncram_component                                ; altsyncram                ; work         ;
 ;                |altsyncram_12i2:auto_generated| ; 0 (0)               ; 0 (0)                     ; 16384       ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|XG_ram:XG_ram_inst|altsyncram:altsyncram_component|altsyncram_12i2:auto_generated ; altsyncram_12i2           ; work         ;
-;       |xgri:xgri_inst|                          ; 301 (47)            ; 412 (40)                  ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst                                                                                   ; xgri                      ; work         ;
+;       |xgri:xgri_inst|                          ; 305 (51)            ; 414 (42)                  ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst                                                                                   ; xgri                      ; work         ;
 ;          |queue_16_16:p_fifo|                   ; 208 (208)           ; 284 (284)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|queue_16_16:p_fifo                                                                ; queue_16_16               ; work         ;
 ;          |queue_16_4:a_fifo|                    ; 46 (46)             ; 88 (88)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|queue_16_4:a_fifo                                                                 ; queue_16_4                ; work         ;
 ;    |cache_8K_2S_16:d_cache_inst|                ; 248 (248)           ; 138 (138)                 ; 93184       ; 0            ; 0       ; 0         ; 0    ; 0            ; |NeonFox_PVP|cache_8K_2S_16:d_cache_inst                                                                                         ; cache_8K_2S_16            ; work         ;
@@ -592,12 +592,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 3290  ;
+; Total registers                              ; 3289  ;
 ; Number of registers using Synchronous Clear  ; 378   ;
 ; Number of registers using Synchronous Load   ; 191   ;
-; Number of registers using Asynchronous Clear ; 404   ;
+; Number of registers using Asynchronous Clear ; 405   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 2734  ;
+; Number of registers using Clock Enable       ; 2732  ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -608,10 +608,10 @@ Encoding Type:  One-Hot
 ; Inverted Register                                              ; Fan out ;
 +----------------------------------------------------------------+---------+
 ; serial:serial_inst|queue_8_8:tx_queue|empty                    ; 10      ;
-; rst                                                            ; 754     ;
-; NeonFox:CPU_inst|alu_op1[1]                                    ; 10      ;
-; NeonFox:CPU_inst|alu_op1[0]                                    ; 27      ;
-; NeonFox:CPU_inst|alu_op1[2]                                    ; 14      ;
+; rst                                                            ; 756     ;
+; NeonFox:CPU_inst|alu_op1[1]                                    ; 11      ;
+; NeonFox:CPU_inst|alu_op1[0]                                    ; 26      ;
+; NeonFox:CPU_inst|alu_op1[2]                                    ; 16      ;
 ; keyboard:keyboard_inst|queue_8_8:tx_queue|empty                ; 6       ;
 ; MSC:MSC_inst|p2_reset_req                                      ; 3       ;
 ; MSC:MSC_inst|prev_p2_ready                                     ; 2       ;
@@ -619,12 +619,10 @@ Encoding Type:  One-Hot
 ; MSC:MSC_inst|prev_p1_ready                                     ; 2       ;
 ; XenonGecko:XG_inst|next_row_base[6]                            ; 2       ;
 ; XenonGecko:XG_inst|next_row_base[4]                            ; 3       ;
-; XenonGecko:XG_inst|xgri:xgri_inst|queue_16_4:a_fifo|empty      ; 4       ;
-; XenonGecko:XG_inst|xgri:xgri_inst|prev_a_empty                 ; 1       ;
-; XenonGecko:XG_inst|xgri:xgri_inst|queue_16_16:p_fifo|empty     ; 4       ;
-; XenonGecko:XG_inst|xgri:xgri_inst|prev_p_empty                 ; 1       ;
+; XenonGecko:XG_inst|xgri:xgri_inst|queue_16_4:a_fifo|empty      ; 2       ;
 ; keyboard:keyboard_inst|queue_8_8:rx_queue|empty                ; 2       ;
 ; serial:serial_inst|queue_8_8:rx_queue|empty                    ; 2       ;
+; XenonGecko:XG_inst|xgri:xgri_inst|queue_16_16:p_fifo|empty     ; 5       ;
 ; serial:serial_inst|UART:UART_inst|rx_frame[0]                  ; 3       ;
 ; serial:serial_inst|UART:UART_inst|rx_frame[1]                  ; 2       ;
 ; serial:serial_inst|UART:UART_inst|rx_s                         ; 2       ;
@@ -637,7 +635,7 @@ Encoding Type:  One-Hot
 ; serial:serial_inst|UART:UART_inst|rx_frame[3]                  ; 2       ;
 ; serial:serial_inst|UART:UART_inst|rx_frame[9]                  ; 1       ;
 ; keyboard:keyboard_inst|ps2_host:ps2_host_inst|rx_shift_reg[11] ; 2       ;
-; Total number of inverted registers = 30                        ;         ;
+; Total number of inverted registers = 28                        ;         ;
 +----------------------------------------------------------------+---------+
 
 
@@ -651,22 +649,18 @@ Encoding Type:  One-Hot
 ; MULTIPLEXED_HEX_DRIVER_3D:multi_hex|Mux2~1                                                 ; Deleted          ; Timing optimization ;
 ; MULTIPLEXED_HEX_DRIVER_3D:multi_hex|Mux2~1_wirecell                                        ; Modified         ; Timing optimization ;
 ; NeonFox:CPU_inst|ALU:ALU_inst|p                                                            ; Deleted          ; Timing optimization ;
-; NeonFox:CPU_inst|ALU:ALU_inst|p_OTERM237                                                   ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|ALU:ALU_inst|p_OTERM239                                                   ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|ALU:ALU_inst|p_OTERM241                                                   ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|ALU:ALU_inst|p_OTERM243                                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|ALU:ALU_inst|p_OTERM229                                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|ALU:ALU_inst|p_OTERM231                                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|ALU:ALU_inst|p_OTERM233                                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|ALU:ALU_inst|p_OTERM235                                                   ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|ALU:ALU_inst|z                                                            ; Deleted          ; Timing optimization ;
-; NeonFox:CPU_inst|ALU:ALU_inst|z_OTERM229                                                   ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|ALU:ALU_inst|z_OTERM231                                                   ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|ALU:ALU_inst|z_OTERM233                                                   ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|ALU:ALU_inst|z_OTERM235_OTERM365                                          ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|ALU:ALU_inst|z_OTERM235_OTERM367                                          ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|ALU:ALU_inst|z_OTERM235_OTERM369                                          ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|ALU:ALU_inst|z_OTERM237                                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|ALU:ALU_inst|z_OTERM239                                                   ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[0]                                                      ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[0]_OTERM189                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[0]_OTERM191                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[0]_OTERM193_OTERM359                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[0]_OTERM193_OTERM361                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[0]_OTERM193_OTERM355                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[0]_OTERM193_OTERM357                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[1]                                                      ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[1]_OTERM185                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[1]_OTERM187                                             ; Retimed Register ; Timing optimization ;
@@ -681,145 +675,145 @@ Encoding Type:  One-Hot
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[4]                                                      ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[4]_OTERM167                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[4]_OTERM169                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[4]_OTERM171_OTERM355                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[4]_OTERM171_OTERM357                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[4]_OTERM171_OTERM351                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[4]_OTERM171_OTERM353                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[5]                                                      ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[5]_OTERM161                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[5]_OTERM163                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[5]_OTERM165_OTERM351                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[5]_OTERM165_OTERM353                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[5]_OTERM165_OTERM347                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[5]_OTERM165_OTERM349                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[6]                                                      ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[6]_OTERM155                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[6]_OTERM157                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[6]_OTERM159_OTERM347                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[6]_OTERM159_OTERM349                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[6]_OTERM159_OTERM343                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[6]_OTERM159_OTERM345                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[7]                                                      ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[7]_OTERM149                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[7]_OTERM151                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[7]_OTERM153_OTERM343                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[7]_OTERM153_OTERM345                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[7]_OTERM153_OTERM339                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[7]_OTERM153_OTERM341                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[8]                                                      ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[8]_OTERM143                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[8]_OTERM145                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[8]_OTERM147_OTERM339                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[8]_OTERM147_OTERM341                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[8]_OTERM147_OTERM335                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[8]_OTERM147_OTERM337                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[9]                                                      ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[9]_OTERM137                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[9]_OTERM139                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[9]_OTERM141_OTERM335                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[9]_OTERM141_OTERM337                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[9]_OTERM141_OTERM331                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[9]_OTERM141_OTERM333                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[10]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[10]_OTERM131                                            ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[10]_OTERM133                                            ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[10]_OTERM135_OTERM331                                   ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[10]_OTERM135_OTERM333                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[10]_OTERM135_OTERM327                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[10]_OTERM135_OTERM329                                   ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[11]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[11]_OTERM125                                            ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[11]_OTERM127                                            ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[11]_OTERM129_OTERM327                                   ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[11]_OTERM129_OTERM329                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[11]_OTERM129_OTERM323                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[11]_OTERM129_OTERM325                                   ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[12]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[12]_OTERM119                                            ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[12]_OTERM121                                            ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[12]_OTERM123_OTERM323                                   ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[12]_OTERM123_OTERM325                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[12]_OTERM123_OTERM319                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[12]_OTERM123_OTERM321                                   ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[13]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[13]_OTERM113                                            ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[13]_OTERM115                                            ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[13]_OTERM117_OTERM319                                   ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[13]_OTERM117_OTERM321                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[13]_OTERM117_OTERM315                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[13]_OTERM117_OTERM317                                   ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[14]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[14]_OTERM107                                            ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[14]_OTERM109                                            ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[14]_OTERM111_OTERM315                                   ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[14]_OTERM111_OTERM317                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[14]_OTERM111_OTERM311                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[14]_OTERM111_OTERM313                                   ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[15]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[15]_OTERM101                                            ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[15]_OTERM103                                            ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[15]_OTERM105_OTERM311                                   ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[15]_OTERM105_OTERM313                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[15]_OTERM105_OTERM307                                   ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[15]_OTERM105_OTERM309                                   ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[16]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[16]_OTERM95                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[16]_OTERM97                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[16]_OTERM99_OTERM307                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[16]_OTERM99_OTERM309                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[16]_OTERM99_OTERM303                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[16]_OTERM99_OTERM305                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[17]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[17]_OTERM89                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[17]_OTERM91                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[17]_OTERM93_OTERM303                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[17]_OTERM93_OTERM305                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[17]_OTERM93_OTERM299                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[17]_OTERM93_OTERM301                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[18]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[18]_OTERM83                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[18]_OTERM85                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[18]_OTERM87_OTERM299                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[18]_OTERM87_OTERM301                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[18]_OTERM87_OTERM295                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[18]_OTERM87_OTERM297                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[19]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[19]_OTERM77                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[19]_OTERM79                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[19]_OTERM81_OTERM295                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[19]_OTERM81_OTERM297                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[19]_OTERM81_OTERM291                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[19]_OTERM81_OTERM293                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[20]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[20]_OTERM71                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[20]_OTERM73                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[20]_OTERM75_OTERM291                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[20]_OTERM75_OTERM293                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[20]_OTERM75_OTERM287                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[20]_OTERM75_OTERM289                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[21]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[21]_OTERM65                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[21]_OTERM67                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[21]_OTERM69_OTERM287                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[21]_OTERM69_OTERM289                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[21]_OTERM69_OTERM283                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[21]_OTERM69_OTERM285                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[22]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[22]_OTERM59                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[22]_OTERM61                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[22]_OTERM63_OTERM283                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[22]_OTERM63_OTERM285                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[22]_OTERM63_OTERM279                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[22]_OTERM63_OTERM281                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[23]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[23]_OTERM53                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[23]_OTERM55                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[23]_OTERM57_OTERM279                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[23]_OTERM57_OTERM281                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[23]_OTERM57_OTERM275                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[23]_OTERM57_OTERM277                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[24]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[24]_OTERM47                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[24]_OTERM49                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[24]_OTERM51_OTERM275                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[24]_OTERM51_OTERM277                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[24]_OTERM51_OTERM271                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[24]_OTERM51_OTERM273                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[25]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[25]_OTERM41                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[25]_OTERM43                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[25]_OTERM45_OTERM271                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[25]_OTERM45_OTERM273                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[25]_OTERM45_OTERM267                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[25]_OTERM45_OTERM269                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[26]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[26]_OTERM35                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[26]_OTERM37                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[26]_OTERM39_OTERM267                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[26]_OTERM39_OTERM269                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[26]_OTERM39_OTERM263                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[26]_OTERM39_OTERM265                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[27]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[27]_OTERM29                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[27]_OTERM31                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[27]_OTERM33_OTERM263                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[27]_OTERM33_OTERM265                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[27]_OTERM33_OTERM259                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[27]_OTERM33_OTERM261                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[28]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[28]_OTERM23                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[28]_OTERM25                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[28]_OTERM27_OTERM259                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[28]_OTERM27_OTERM261                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[28]_OTERM27_OTERM255                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[28]_OTERM27_OTERM257                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[29]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[29]_OTERM17                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[29]_OTERM19                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[29]_OTERM21_OTERM255                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[29]_OTERM21_OTERM257                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[29]_OTERM21_OTERM251                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[29]_OTERM21_OTERM253                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[30]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[30]_OTERM9                                              ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[30]_OTERM11                                             ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[30]_OTERM13                                             ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[30]_OTERM15_OTERM251                                    ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[30]_OTERM15_OTERM253                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[30]_OTERM15_OTERM247                                    ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[30]_OTERM15_OTERM249                                    ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[31]                                                     ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[31]_OTERM1                                              ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[31]_OTERM3                                              ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg[31]_OTERM5                                              ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[31]_OTERM7_OTERM247                                     ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg[31]_OTERM7_OTERM249                                     ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[31]_OTERM7_OTERM243                                     ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg[31]_OTERM7_OTERM245                                     ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~3                                                       ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~3_Duplicate_140                                         ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~3_Duplicate_142                                         ; Retimed Register ; Timing optimization ;
@@ -849,9 +843,9 @@ Encoding Type:  One-Hot
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~18_Duplicate_152                                        ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~18_Duplicate_154                                        ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~20                                                      ; Deleted          ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg~20_Duplicate_70                                         ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg~20_Duplicate_72                                         ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg~20_Duplicate_74                                         ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg~20_Duplicate_80                                         ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg~20_Duplicate_82                                         ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg~20_Duplicate_84                                         ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~22                                                      ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~22_Duplicate_160                                        ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~22_Duplicate_162                                        ; Retimed Register ; Timing optimization ;
@@ -877,9 +871,9 @@ Encoding Type:  One-Hot
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~32_Duplicate_112                                        ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~32_Duplicate_114                                        ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~34                                                      ; Deleted          ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg~34_Duplicate_80                                         ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg~34_Duplicate_82                                         ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg~34_Duplicate_84                                         ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg~34_Duplicate_70                                         ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg~34_Duplicate_72                                         ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg~34_Duplicate_74                                         ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~36                                                      ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~36_Duplicate_200                                        ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~36_Duplicate_202                                        ; Retimed Register ; Timing optimization ;
@@ -937,13 +931,13 @@ Encoding Type:  One-Hot
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~62_Duplicate_97                                         ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~62_Duplicate_99                                         ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~64                                                      ; Deleted          ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg~64_Duplicate_75                                         ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg~64_Duplicate_77                                         ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg~64_Duplicate_79                                         ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg~64_Duplicate_85                                         ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg~64_Duplicate_87                                         ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg~64_Duplicate_89                                         ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~66                                                      ; Deleted          ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg~66_Duplicate_85                                         ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg~66_Duplicate_87                                         ; Retimed Register ; Timing optimization ;
-; NeonFox:CPU_inst|PC:PC_inst|PC_reg~66_Duplicate_89                                         ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg~66_Duplicate_75                                         ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg~66_Duplicate_77                                         ; Retimed Register ; Timing optimization ;
+; NeonFox:CPU_inst|PC:PC_inst|PC_reg~66_Duplicate_79                                         ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~68                                                      ; Deleted          ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~68_Duplicate_205                                        ; Retimed Register ; Timing optimization ;
 ; NeonFox:CPU_inst|PC:PC_inst|PC_reg~68_Duplicate_207                                        ; Retimed Register ; Timing optimization ;
@@ -957,7 +951,7 @@ Encoding Type:  One-Hot
 ; SDRAM_TP16_I:SDRAM_controller|cmd_state.S_CMD_READ_P3                                      ; Deleted          ; Timing optimization ;
 ; SDRAM_TP16_I:SDRAM_controller|cmd_state.S_CMD_READ_P3_OTERM227                             ; Retimed Register ; Timing optimization ;
 ; SDRAM_TP16_I:SDRAM_controller|cmd_state.S_CMD_WRITE_P2_NOP                                 ; Deleted          ; Timing optimization ;
-; SDRAM_TP16_I:SDRAM_controller|cmd_state.S_CMD_WRITE_P2_NOP_OTERM245                        ; Retimed Register ; Timing optimization ;
+; SDRAM_TP16_I:SDRAM_controller|cmd_state.S_CMD_WRITE_P2_NOP_OTERM241                        ; Retimed Register ; Timing optimization ;
 ; SDRAM_TP16_I:SDRAM_controller|cmd_state.S_CMD_WRITE_P3_NOP                                 ; Deleted          ; Timing optimization ;
 ; SDRAM_TP16_I:SDRAM_controller|cmd_state.S_CMD_WRITE_P3_NOP_OTERM221                        ; Retimed Register ; Timing optimization ;
 ; SDRAM_TP16_I:SDRAM_controller|cmd_state.S_CMD_WRITE_P3_NOP_OTERM223                        ; Retimed Register ; Timing optimization ;
@@ -972,6 +966,10 @@ Encoding Type:  One-Hot
 ; XenonGecko:XG_inst|vga_to_hdmi:vga_to_hdmi_inst|TMDS_encoder:encode_G|Add16~3              ; Modified         ; Timing optimization ;
 ; XenonGecko:XG_inst|vga_to_hdmi:vga_to_hdmi_inst|TMDS_encoder:encode_G|balance_acc[3]~12    ; Modified         ; Timing optimization ;
 ; XenonGecko:XG_inst|vga_to_hdmi:vga_to_hdmi_inst|TMDS_encoder:encode_G|balance_acc_inc[0]~1 ; Modified         ; Timing optimization ;
+; XenonGecko:XG_inst|vga_to_hdmi:vga_to_hdmi_inst|TMDS_encoder:encode_R|Add16~0              ; Deleted          ; Timing optimization ;
+; XenonGecko:XG_inst|vga_to_hdmi:vga_to_hdmi_inst|TMDS_encoder:encode_R|Add16~3              ; Modified         ; Timing optimization ;
+; XenonGecko:XG_inst|vga_to_hdmi:vga_to_hdmi_inst|TMDS_encoder:encode_R|balance_acc[3]~12    ; Modified         ; Timing optimization ;
+; XenonGecko:XG_inst|vga_to_hdmi:vga_to_hdmi_inst|TMDS_encoder:encode_R|balance_acc_inc[0]~1 ; Modified         ; Timing optimization ;
 ; cache_8K_2S_16:d_cache_inst|state.S_FETCH_TRANSFER                                         ; Deleted          ; Timing optimization ;
 ; cache_8K_2S_16:d_cache_inst|state.S_FETCH_TRANSFER_OTERM211                                ; Retimed Register ; Timing optimization ;
 ; cache_8K_2S_16:d_cache_inst|state.S_FETCH_WAIT                                             ; Deleted          ; Timing optimization ;
@@ -979,17 +977,17 @@ Encoding Type:  One-Hot
 ; cache_8K_2S_16:d_cache_inst|state.S_FETCH_WAIT_OTERM205                                    ; Retimed Register ; Timing optimization ;
 ; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_TRANSFER                                     ; Deleted          ; Timing optimization ;
 ; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_TRANSFER_OTERM207                            ; Retimed Register ; Timing optimization ;
-; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_TRANSFER_OTERM209_OTERM371                   ; Retimed Register ; Timing optimization ;
-; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_TRANSFER_OTERM209_OTERM373                   ; Retimed Register ; Timing optimization ;
-; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_TRANSFER_OTERM209_OTERM375                   ; Retimed Register ; Timing optimization ;
-; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_TRANSFER_OTERM209_OTERM377                   ; Retimed Register ; Timing optimization ;
+; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_TRANSFER_OTERM209_OTERM361                   ; Retimed Register ; Timing optimization ;
+; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_TRANSFER_OTERM209_OTERM363                   ; Retimed Register ; Timing optimization ;
+; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_TRANSFER_OTERM209_OTERM365                   ; Retimed Register ; Timing optimization ;
+; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_TRANSFER_OTERM209_OTERM367                   ; Retimed Register ; Timing optimization ;
 ; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_WAIT                                         ; Deleted          ; Timing optimization ;
 ; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_WAIT_OTERM195                                ; Retimed Register ; Timing optimization ;
 ; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_WAIT_OTERM197                                ; Retimed Register ; Timing optimization ;
 ; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_WAIT_OTERM199                                ; Retimed Register ; Timing optimization ;
-; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_WAIT_OTERM201_OTERM363_OTERM379              ; Retimed Register ; Timing optimization ;
-; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_WAIT_OTERM201_OTERM363_OTERM381              ; Retimed Register ; Timing optimization ;
-; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_WAIT_OTERM201_OTERM363_OTERM383              ; Retimed Register ; Timing optimization ;
+; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_WAIT_OTERM201_OTERM359_OTERM369              ; Retimed Register ; Timing optimization ;
+; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_WAIT_OTERM201_OTERM359_OTERM371              ; Retimed Register ; Timing optimization ;
+; cache_8K_2S_16:d_cache_inst|state.S_WRITEBACK_WAIT_OTERM201_OTERM359_OTERM373              ; Retimed Register ; Timing optimization ;
 ; keyboard:keyboard_inst|ps2_host:ps2_host_inst|Add0~1                                       ; Modified         ; Timing optimization ;
 ; keyboard:keyboard_inst|ps2_host:ps2_host_inst|Add0~2                                       ; Modified         ; Timing optimization ;
 ; serial:serial_inst|UART:UART_inst|Add0~1                                                   ; Modified         ; Timing optimization ;
@@ -1021,101 +1019,102 @@ Encoding Type:  One-Hot
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                      ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------------+
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|init_offset[1]                       ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|init_base[2]                         ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |NeonFox_PVP|keyboard:keyboard_inst|ps2_host:ps2_host_inst|rx_data[1]           ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|init_base[1]                         ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |NeonFox_PVP|keyboard:keyboard_inst|ps2_host:ps2_host_inst|rx_data[5]           ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |NeonFox_PVP|cache_8K_2S_16:d_cache_inst|word_valid[2]                          ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |NeonFox_PVP|cache_8K_2S_16:p_cache_inst|word_valid[2]                          ;
-; 3:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|next_row_base[9]                                ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |NeonFox_PVP|cache_8K_2S_16:p_cache_inst|word_valid[0]                          ;
+; 3:1                ; 7 bits    ; 14 LEs        ; 7 LEs                ; 7 LEs                  ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|next_row_base[8]                                ;
 ; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|vesa_col[9]                                     ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|refresh_timer[6]                     ;
-; 3:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |NeonFox_PVP|keyboard:keyboard_inst|ps2_host:ps2_host_inst|tx_shift_reg[6]      ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|refresh_timer[9]                     ;
+; 3:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |NeonFox_PVP|keyboard:keyboard_inst|ps2_host:ps2_host_inst|tx_shift_reg[1]      ;
 ; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|queue_16_16:p_fifo|read_addr[2]  ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |NeonFox_PVP|timer:timer_inst|to_cpu[6]                                         ;
-; 4:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|timer:timer_inst|to_cpu[2]                                         ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|queue_16_16:p_fifo|write_addr[2] ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|queue_16_4:a_fifo|read_addr[0]   ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|queue_16_4:a_fifo|write_addr[1]  ;
-; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|aar[6]                           ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|MSC:MSC_inst|p2_prefetch_reg                                       ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |NeonFox_PVP|timer:timer_inst|to_cpu[7]                                         ;
+; 4:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|timer:timer_inst|to_cpu[1]                                         ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|queue_16_16:p_fifo|write_addr[0] ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|queue_16_4:a_fifo|read_addr[1]   ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|queue_16_4:a_fifo|write_addr[0]  ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|aar[2]                           ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|MSC:MSC_inst|p2_reset_reg                                          ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |NeonFox_PVP|MSC:MSC_inst|p1_reset_reg                                          ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|serial:serial_inst|queue_8_8:tx_queue|write_addr[1]                ;
-; 3:1                ; 12 bits   ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|par[11]                          ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|decode_unit:decoder_inst|I_alternate[5]           ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|keyboard:keyboard_inst|queue_8_8:tx_queue|write_addr[2]            ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |NeonFox_PVP|interrupt_controller:intcon_inst|control[4]                        ;
-; 3:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|interrupt_controller:intcon_inst|status[5]                         ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|bg_shift0[7]                                    ;
-; 3:1                ; 12 bits   ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|bg_shift0[4]                                    ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |NeonFox_PVP|serial:serial_inst|UART:UART_inst|rx_data[5]                       ;
-; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|PC:PC_inst|A_current_I_alternate[27]              ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|keyboard:keyboard_inst|queue_8_8:rx_queue|read_addr[2]             ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|serial:serial_inst|queue_8_8:rx_queue|read_addr[0]                 ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|serial:serial_inst|queue_8_8:tx_queue|write_addr[2]                ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|p_burst[0]                       ;
+; 3:1                ; 12 bits   ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|par[0]                           ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|decode_unit:decoder_inst|I_alternate[14]          ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|keyboard:keyboard_inst|queue_8_8:tx_queue|write_addr[0]            ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |NeonFox_PVP|interrupt_controller:intcon_inst|control[2]                        ;
+; 3:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|interrupt_controller:intcon_inst|status[6]                         ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|bg_shift1[7]                                    ;
+; 3:1                ; 12 bits   ; 24 LEs        ; 12 LEs               ; 12 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|bg_shift3[6]                                    ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |NeonFox_PVP|serial:serial_inst|UART:UART_inst|rx_data[2]                       ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|PC:PC_inst|A_current_I_alternate[8]               ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|keyboard:keyboard_inst|queue_8_8:rx_queue|read_addr[0]             ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|serial:serial_inst|queue_8_8:rx_queue|read_addr[2]                 ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|serial:serial_inst|queue_8_8:tx_queue|read_addr[0]                 ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|from_mem[7]                          ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 0 LEs                ; 32 LEs                 ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|from_mem[2]                          ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|decode_unit:decoder_inst|alu_op[0]                ;
-; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|PC:PC_inst|A_pipe0[2]                             ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|PC:PC_inst|A_pipe0[8]                             ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|keyboard:keyboard_inst|queue_8_8:tx_queue|read_addr[0]             ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|ALU:ALU_inst|p                                    ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 26 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|keyboard:keyboard_inst|ps2_host:ps2_host_inst|timer[12]            ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 26 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|keyboard:keyboard_inst|ps2_host:ps2_host_inst|timer[8]             ;
 ; 4:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |NeonFox_PVP|serial:serial_inst|UART:UART_inst|tx_timer[8]                      ;
-; 4:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |NeonFox_PVP|keyboard:keyboard_inst|ps2_host:ps2_host_inst|rx_shift_reg[0]      ;
-; 4:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|vesa_line[4]                                    ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|timer:timer_inst|counter[18]                                       ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|timer:timer_inst|counter[10]                                       ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|timer:timer_inst|counter[6]                                        ;
-; 4:1                ; 9 bits    ; 18 LEs        ; 18 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|serial:serial_inst|UART:UART_inst|rx_timer[0]                      ;
+; 4:1                ; 11 bits   ; 22 LEs        ; 11 LEs               ; 11 LEs                 ; Yes        ; |NeonFox_PVP|keyboard:keyboard_inst|ps2_host:ps2_host_inst|rx_shift_reg[1]      ;
+; 4:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|vesa_line[6]                                    ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|timer:timer_inst|counter[23]                                       ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|timer:timer_inst|counter[8]                                        ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|timer:timer_inst|counter[3]                                        ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 18 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|serial:serial_inst|UART:UART_inst|rx_timer[1]                      ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|decode_unit:decoder_inst|pc_jmp                   ;
-; 4:1                ; 7 bits    ; 14 LEs        ; 0 LEs                ; 14 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|prev_buff_attribute_index[1]     ;
-; 16:1               ; 3 bits    ; 30 LEs        ; 3 LEs                ; 27 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|decode_unit:decoder_inst|data_select              ;
-; 13:1               ; 3 bits    ; 24 LEs        ; 3 LEs                ; 21 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|decode_unit:decoder_inst|dest_waddr[3]            ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 0 LEs                ; 14 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|prev_buff_attribute_index[4]     ;
+; 16:1               ; 3 bits    ; 30 LEs        ; 3 LEs                ; 27 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|decode_unit:decoder_inst|address_select           ;
+; 13:1               ; 3 bits    ; 24 LEs        ; 3 LEs                ; 21 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|decode_unit:decoder_inst|dest_waddr[2]            ;
 ; 13:1               ; 2 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|decode_unit:decoder_inst|dest_waddr[1]            ;
-; 16:1               ; 8 bits    ; 80 LEs        ; 16 LEs               ; 64 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|to_cpu[10]                       ;
+; 16:1               ; 8 bits    ; 80 LEs        ; 16 LEs               ; 64 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|to_cpu[4]                        ;
 ; 16:1               ; 4 bits    ; 40 LEs        ; 8 LEs                ; 32 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgri:xgri_inst|to_cpu[3]                        ;
-; 5:1                ; 29 bits   ; 87 LEs        ; 87 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|PC:PC_inst|PC_reg[18]                             ;
-; 5:1                ; 3 bits    ; 9 LEs         ; 9 LEs                ; 0 LEs                  ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|PC:PC_inst|PC_reg[2]                              ;
-; 5:1                ; 16 bits   ; 48 LEs        ; 32 LEs               ; 16 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|decode_unit:decoder_inst|I_reg[14]                ;
+; 5:1                ; 29 bits   ; 87 LEs        ; 87 LEs               ; 0 LEs                  ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|PC:PC_inst|PC_reg[19]                             ;
+; 5:1                ; 3 bits    ; 9 LEs         ; 9 LEs                ; 0 LEs                  ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|PC:PC_inst|PC_reg[1]                              ;
+; 5:1                ; 16 bits   ; 48 LEs        ; 32 LEs               ; 16 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|decode_unit:decoder_inst|I_reg[4]                 ;
 ; 4:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|init_refresh_count[2]                ;
-; 5:1                ; 32 bits   ; 96 LEs        ; 64 LEs               ; 32 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|PC:PC_inst|A_current_I[6]                         ;
-; 5:1                ; 3 bits    ; 9 LEs         ; 6 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|mem_addr[14]                     ;
-; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|buff_attribute_index[0]          ;
-; 5:1                ; 5 bits    ; 15 LEs        ; 5 LEs                ; 10 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|attribute_offset[2]              ;
-; 6:1                ; 8 bits    ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |NeonFox_PVP|serial:serial_inst|UART:UART_inst|tx_frame[4]                      ;
-; 27:1               ; 16 bits   ; 288 LEs       ; 288 LEs              ; 0 LEs                  ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|reg_file:reg_file_inst|a_reg[3]                   ;
-; 6:1                ; 11 bits   ; 44 LEs        ; 33 LEs               ; 11 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|mem_addr[10]                     ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 2 LEs                ; 4 LEs                  ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|p3_offset[1]                         ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 64 LEs               ; 32 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|PC:PC_inst|A_current_I[1]                         ;
+; 5:1                ; 3 bits    ; 9 LEs         ; 6 LEs                ; 3 LEs                  ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|mem_addr[13]                     ;
+; 5:1                ; 7 bits    ; 21 LEs        ; 7 LEs                ; 14 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|buff_attribute_index[2]          ;
+; 5:1                ; 5 bits    ; 15 LEs        ; 5 LEs                ; 10 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|attribute_offset[4]              ;
+; 6:1                ; 8 bits    ; 32 LEs        ; 16 LEs               ; 16 LEs                 ; Yes        ; |NeonFox_PVP|serial:serial_inst|UART:UART_inst|tx_frame[7]                      ;
+; 27:1               ; 16 bits   ; 288 LEs       ; 288 LEs              ; 0 LEs                  ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|reg_file:reg_file_inst|a_reg[6]                   ;
+; 6:1                ; 11 bits   ; 44 LEs        ; 33 LEs               ; 11 LEs                 ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|mem_addr[2]                      ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 2 LEs                ; 4 LEs                  ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|p3_offset[0]                         ;
 ; 5:1                ; 2 bits    ; 6 LEs         ; 2 LEs                ; 4 LEs                  ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|p2_offset[1]                         ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|start_delay[0]                       ;
 ; 18:1               ; 2 bits    ; 24 LEs        ; 2 LEs                ; 22 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|decode_unit:decoder_inst|data_wren                ;
 ; 18:1               ; 3 bits    ; 36 LEs        ; 3 LEs                ; 33 LEs                 ; Yes        ; |NeonFox_PVP|NeonFox:CPU_inst|decode_unit:decoder_inst|data_ren                 ;
 ; 8:1                ; 2 bits    ; 10 LEs        ; 2 LEs                ; 8 LEs                  ; Yes        ; |NeonFox_PVP|cache_8K_2S_16:d_cache_inst|address_hold[1]                        ;
-; 8:1                ; 2 bits    ; 10 LEs        ; 2 LEs                ; 8 LEs                  ; Yes        ; |NeonFox_PVP|cache_8K_2S_16:p_cache_inst|address_hold[1]                        ;
+; 8:1                ; 2 bits    ; 10 LEs        ; 2 LEs                ; 8 LEs                  ; Yes        ; |NeonFox_PVP|cache_8K_2S_16:p_cache_inst|address_hold[0]                        ;
 ; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|sdram_ba[1]                          ;
-; 11:1               ; 2 bits    ; 14 LEs        ; 0 LEs                ; 14 LEs                 ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|precharge_bank[1]                    ;
-; 12:1               ; 30 bits   ; 240 LEs       ; 60 LEs               ; 180 LEs                ; Yes        ; |NeonFox_PVP|cache_8K_2S_16:d_cache_inst|address_hold[5]                        ;
-; 12:1               ; 30 bits   ; 240 LEs       ; 60 LEs               ; 180 LEs                ; Yes        ; |NeonFox_PVP|cache_8K_2S_16:p_cache_inst|address_hold[27]                       ;
-; 8:1                ; 2 bits    ; 10 LEs        ; 4 LEs                ; 6 LEs                  ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|precharge_timer[1]                   ;
-; 16:1               ; 3 bits    ; 30 LEs        ; 21 LEs               ; 9 LEs                  ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|sdram_a[11]                          ;
+; 11:1               ; 2 bits    ; 14 LEs        ; 0 LEs                ; 14 LEs                 ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|precharge_bank[0]                    ;
+; 12:1               ; 30 bits   ; 240 LEs       ; 60 LEs               ; 180 LEs                ; Yes        ; |NeonFox_PVP|cache_8K_2S_16:d_cache_inst|address_hold[6]                        ;
+; 12:1               ; 30 bits   ; 240 LEs       ; 60 LEs               ; 180 LEs                ; Yes        ; |NeonFox_PVP|cache_8K_2S_16:p_cache_inst|address_hold[31]                       ;
+; 8:1                ; 2 bits    ; 10 LEs        ; 4 LEs                ; 6 LEs                  ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|precharge_timer[0]                   ;
+; 16:1               ; 3 bits    ; 30 LEs        ; 21 LEs               ; 9 LEs                  ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|sdram_a[12]                          ;
 ; 23:1               ; 3 bits    ; 45 LEs        ; 33 LEs               ; 12 LEs                 ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|sdram_a[6]                           ;
 ; 23:1               ; 2 bits    ; 30 LEs        ; 22 LEs               ; 8 LEs                  ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|sdram_a[4]                           ;
-; 24:1               ; 2 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|sdram_a[5]                           ;
+; 24:1               ; 2 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|sdram_a[3]                           ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |NeonFox_PVP|XenonGecko:XG_inst|next_row_base[6]                                ;
 ; 4:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |NeonFox_PVP|serial:serial_inst|UART:UART_inst|rx_frame[2]                      ;
-; 8:1                ; 16 bits   ; 80 LEs        ; 64 LEs               ; 16 LEs                 ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|data_out[0]                          ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |NeonFox_PVP|MULTIPLEXED_HEX_DRIVER_3D:multi_hex|Mux7                           ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |NeonFox_PVP|cache_8K_2S_16:d_cache_inst|Selector144                            ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |NeonFox_PVP|NeonFox:CPU_inst|reg_file:reg_file_inst|a_data[7]                  ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |NeonFox_PVP|NeonFox:CPU_inst|reg_file:reg_file_inst|a_data[14]                 ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |NeonFox_PVP|cache_8K_2S_16:d_cache_inst|Selector139                            ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |NeonFox_PVP|cache_8K_2S_16:p_cache_inst|Selector136                            ;
+; 8:1                ; 16 bits   ; 80 LEs        ; 64 LEs               ; 16 LEs                 ; Yes        ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|data_out[3]                          ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |NeonFox_PVP|MULTIPLEXED_HEX_DRIVER_3D:multi_hex|Mux4                           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |NeonFox_PVP|cache_8K_2S_16:d_cache_inst|Selector143                            ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |NeonFox_PVP|NeonFox:CPU_inst|reg_file:reg_file_inst|a_data[2]                  ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |NeonFox_PVP|NeonFox:CPU_inst|reg_file:reg_file_inst|a_data[15]                 ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |NeonFox_PVP|cache_8K_2S_16:d_cache_inst|Selector141                            ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |NeonFox_PVP|cache_8K_2S_16:p_cache_inst|Selector135                            ;
 ; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; No         ; |NeonFox_PVP|cache_8K_2S_16:d_cache_inst|Selector83                             ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |NeonFox_PVP|cache_8K_2S_16:d_cache_inst|Selector148                            ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; No         ; |NeonFox_PVP|cache_8K_2S_16:p_cache_inst|Selector83                             ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |NeonFox_PVP|cache_8K_2S_16:d_cache_inst|Selector147                            ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; No         ; |NeonFox_PVP|cache_8K_2S_16:p_cache_inst|Selector82                             ;
 ; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |NeonFox_PVP|cache_8K_2S_16:p_cache_inst|Selector148                            ;
-; 10:1               ; 9 bits    ; 54 LEs        ; 54 LEs               ; 0 LEs                  ; No         ; |NeonFox_PVP|NeonFox:CPU_inst|ALU:ALU_inst|Mux15                                ;
-; 11:1               ; 7 bits    ; 49 LEs        ; 42 LEs               ; 7 LEs                  ; No         ; |NeonFox_PVP|NeonFox:CPU_inst|ALU:ALU_inst|Mux6                                 ;
+; 10:1               ; 9 bits    ; 54 LEs        ; 54 LEs               ; 0 LEs                  ; No         ; |NeonFox_PVP|NeonFox:CPU_inst|ALU:ALU_inst|Mux14                                ;
+; 11:1               ; 7 bits    ; 49 LEs        ; 42 LEs               ; 7 LEs                  ; No         ; |NeonFox_PVP|NeonFox:CPU_inst|ALU:ALU_inst|Mux2                                 ;
 ; 8:1                ; 2 bits    ; 10 LEs        ; 4 LEs                ; 6 LEs                  ; No         ; |NeonFox_PVP|cache_8K_2S_16:d_cache_inst|Selector146                            ;
-; 8:1                ; 2 bits    ; 10 LEs        ; 4 LEs                ; 6 LEs                  ; No         ; |NeonFox_PVP|cache_8K_2S_16:p_cache_inst|Selector146                            ;
-; 3:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; No         ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|Selector57                       ;
+; 8:1                ; 2 bits    ; 10 LEs        ; 4 LEs                ; 6 LEs                  ; No         ; |NeonFox_PVP|cache_8K_2S_16:p_cache_inst|Selector145                            ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; No         ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|Selector61                       ;
 ; 13:1               ; 5 bits    ; 40 LEs        ; 10 LEs               ; 30 LEs                 ; No         ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|io_state                             ;
 ; 12:1               ; 2 bits    ; 16 LEs        ; 6 LEs                ; 10 LEs                 ; No         ; |NeonFox_PVP|XenonGecko:XG_inst|xgmm:xgmm_inst|state                            ;
 ; 12:1               ; 3 bits    ; 24 LEs        ; 9 LEs                ; 15 LEs                 ; No         ; |NeonFox_PVP|SDRAM_TP16_I:SDRAM_controller|cmd_state                            ;
@@ -2393,9 +2392,9 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
 ; boundary_port         ; 69                          ;
-; cycloneiii_ff         ; 3290                        ;
-;     CLR               ; 57                          ;
-;     ENA               ; 2189                        ;
+; cycloneiii_ff         ; 3289                        ;
+;     CLR               ; 58                          ;
+;     ENA               ; 2187                        ;
 ;     ENA CLR           ; 170                         ;
 ;     ENA CLR SCLR      ; 118                         ;
 ;     ENA CLR SLD       ; 59                          ;
@@ -2406,21 +2405,21 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;     SLD               ; 28                          ;
 ;     plain             ; 368                         ;
 ; cycloneiii_io_obuf    ; 16                          ;
-; cycloneiii_lcell_comb ; 3971                        ;
+; cycloneiii_lcell_comb ; 3977                        ;
 ;     arith             ; 291                         ;
 ;         2 data inputs ; 217                         ;
 ;         3 data inputs ; 74                          ;
-;     normal            ; 3680                        ;
+;     normal            ; 3686                        ;
 ;         0 data inputs ; 6                           ;
 ;         1 data inputs ; 31                          ;
-;         2 data inputs ; 273                         ;
-;         3 data inputs ; 904                         ;
-;         4 data inputs ; 2466                        ;
+;         2 data inputs ; 258                         ;
+;         3 data inputs ; 905                         ;
+;         4 data inputs ; 2486                        ;
 ; cycloneiii_pll        ; 1                           ;
 ; cycloneiii_ram_block  ; 236                         ;
 ;                       ;                             ;
 ; Max LUT depth         ; 13.40                       ;
-; Average LUT depth     ; 4.02                        ;
+; Average LUT depth     ; 4.04                        ;
 +-----------------------+-----------------------------+
 
 
@@ -2439,7 +2438,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Tue Mar 29 22:17:33 2022
+    Info: Processing started: Wed Mar 30 23:06:58 2022
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off NeonFox_SDRAM -c NeonFox
 Info (16303): High Performance Effort optimization mode selected -- timing performance will be prioritized at the potential cost of increased compilation time
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
@@ -2448,7 +2447,7 @@ Info (12021): Found 1 design units, including 1 entities, in source file cpu/reg
     Info (12023): Found entity 1: reg_file File: E:/NeonFox_SDRAM/CPU/reg_file.sv Line: 1
 Info (12021): Found 2 design units, including 2 entities, in source file cpu/pc.sv
     Info (12023): Found entity 1: PC File: E:/NeonFox_SDRAM/CPU/PC.sv Line: 1
-    Info (12023): Found entity 2: call_stack File: E:/NeonFox_SDRAM/CPU/PC.sv Line: 194
+    Info (12023): Found entity 2: call_stack File: E:/NeonFox_SDRAM/CPU/PC.sv Line: 190
 Info (12021): Found 1 design units, including 1 entities, in source file cpu/neonfox.sv
     Info (12023): Found entity 1: NeonFox File: E:/NeonFox_SDRAM/CPU/NeonFox.sv Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file cpu/hazard_unit.sv
@@ -2679,9 +2678,9 @@ Info (12128): Elaborating entity "interrupt_controller" for hierarchy "interrupt
 Info (12128): Elaborating entity "MSC" for hierarchy "MSC:MSC_inst" File: E:/NeonFox_SDRAM/Toplevel.sv Line: 437
 Info (12128): Elaborating entity "XenonGecko" for hierarchy "XenonGecko:XG_inst" File: E:/NeonFox_SDRAM/Toplevel.sv Line: 475
 Info (12128): Elaborating entity "xgri" for hierarchy "XenonGecko:XG_inst|xgri:xgri_inst" File: E:/NeonFox_SDRAM/XenonGecko.sv Line: 206
-Info (10264): Verilog HDL Case Statement information at xgri.sv(56): all case item expressions in this case statement are onehot File: E:/NeonFox_SDRAM/xgri.sv Line: 56
-Info (12128): Elaborating entity "queue_16_16" for hierarchy "XenonGecko:XG_inst|xgri:xgri_inst|queue_16_16:p_fifo" File: E:/NeonFox_SDRAM/xgri.sv Line: 75
-Info (12128): Elaborating entity "queue_16_4" for hierarchy "XenonGecko:XG_inst|xgri:xgri_inst|queue_16_4:a_fifo" File: E:/NeonFox_SDRAM/xgri.sv Line: 76
+Info (10264): Verilog HDL Case Statement information at xgri.sv(73): all case item expressions in this case statement are onehot File: E:/NeonFox_SDRAM/xgri.sv Line: 73
+Info (12128): Elaborating entity "queue_16_16" for hierarchy "XenonGecko:XG_inst|xgri:xgri_inst|queue_16_16:p_fifo" File: E:/NeonFox_SDRAM/xgri.sv Line: 92
+Info (12128): Elaborating entity "queue_16_4" for hierarchy "XenonGecko:XG_inst|xgri:xgri_inst|queue_16_4:a_fifo" File: E:/NeonFox_SDRAM/xgri.sv Line: 93
 Info (12128): Elaborating entity "xgmm" for hierarchy "XenonGecko:XG_inst|xgmm:xgmm_inst" File: E:/NeonFox_SDRAM/XenonGecko.sv Line: 237
 Info (12128): Elaborating entity "XG_ram" for hierarchy "XenonGecko:XG_inst|xgmm:xgmm_inst|XG_ram:XG_ram_inst" File: E:/NeonFox_SDRAM/xgmm.sv Line: 349
 Info (12128): Elaborating entity "altsyncram" for hierarchy "XenonGecko:XG_inst|xgmm:xgmm_inst|XG_ram:XG_ram_inst|altsyncram:altsyncram_component" File: E:/NeonFox_SDRAM/XG_ram.v Line: 97
@@ -2740,16 +2739,16 @@ Info (12128): Elaborating entity "altsyncram_32b1" for hierarchy "XenonGecko:XG_
 Info (12128): Elaborating entity "vga_to_hdmi" for hierarchy "XenonGecko:XG_inst|vga_to_hdmi:vga_to_hdmi_inst" File: E:/NeonFox_SDRAM/XenonGecko.sv Line: 261
 Info (12128): Elaborating entity "TMDS_encoder" for hierarchy "XenonGecko:XG_inst|vga_to_hdmi:vga_to_hdmi_inst|TMDS_encoder:encode_R" File: E:/NeonFox_SDRAM/XenonGecko.sv Line: 314
 Info (12128): Elaborating entity "NeonFox" for hierarchy "NeonFox:CPU_inst" File: E:/NeonFox_SDRAM/Toplevel.sv Line: 532
-Info (12128): Elaborating entity "reg_file" for hierarchy "NeonFox:CPU_inst|reg_file:reg_file_inst" File: E:/NeonFox_SDRAM/CPU/NeonFox.sv Line: 229
-Info (12128): Elaborating entity "ALU" for hierarchy "NeonFox:CPU_inst|ALU:ALU_inst" File: E:/NeonFox_SDRAM/CPU/NeonFox.sv Line: 242
-Info (12128): Elaborating entity "PC" for hierarchy "NeonFox:CPU_inst|PC:PC_inst" File: E:/NeonFox_SDRAM/CPU/NeonFox.sv Line: 268
-Info (12128): Elaborating entity "call_stack" for hierarchy "NeonFox:CPU_inst|PC:PC_inst|call_stack:cstack0" File: E:/NeonFox_SDRAM/CPU/PC.sv Line: 54
-Info (12128): Elaborating entity "decode_unit" for hierarchy "NeonFox:CPU_inst|decode_unit:decoder_inst" File: E:/NeonFox_SDRAM/CPU/NeonFox.sv Line: 299
-Info (12128): Elaborating entity "hazard_unit" for hierarchy "NeonFox:CPU_inst|hazard_unit:hazard_inst" File: E:/NeonFox_SDRAM/CPU/NeonFox.sv Line: 326
+Info (12128): Elaborating entity "reg_file" for hierarchy "NeonFox:CPU_inst|reg_file:reg_file_inst" File: E:/NeonFox_SDRAM/CPU/NeonFox.sv Line: 221
+Info (12128): Elaborating entity "ALU" for hierarchy "NeonFox:CPU_inst|ALU:ALU_inst" File: E:/NeonFox_SDRAM/CPU/NeonFox.sv Line: 234
+Info (12128): Elaborating entity "PC" for hierarchy "NeonFox:CPU_inst|PC:PC_inst" File: E:/NeonFox_SDRAM/CPU/NeonFox.sv Line: 260
+Info (12128): Elaborating entity "call_stack" for hierarchy "NeonFox:CPU_inst|PC:PC_inst|call_stack:cstack0" File: E:/NeonFox_SDRAM/CPU/PC.sv Line: 55
+Info (12128): Elaborating entity "decode_unit" for hierarchy "NeonFox:CPU_inst|decode_unit:decoder_inst" File: E:/NeonFox_SDRAM/CPU/NeonFox.sv Line: 291
+Info (12128): Elaborating entity "hazard_unit" for hierarchy "NeonFox:CPU_inst|hazard_unit:hazard_inst" File: E:/NeonFox_SDRAM/CPU/NeonFox.sv Line: 320
 Info (276014): Found 8 instances of uninferred RAM logic
     Info (276004): RAM logic "serial:serial_inst|queue_8_8:tx_queue|queue_mem" is uninferred due to inappropriate RAM size File: E:/NeonFox_SDRAM/serial.sv Line: 85
     Info (276004): RAM logic "SDRAM_TP16_I:SDRAM_controller|init_data_hold" is uninferred due to inappropriate RAM size File: E:/NeonFox_SDRAM/SDRAM_TP16_I.sv Line: 124
-    Info (276006): RAM logic "NeonFox:CPU_inst|PC:PC_inst|call_stack:cstack0|stack_mem" is uninferred due to "logic" being set as ramstyle synthesis attribute File: E:/NeonFox_SDRAM/CPU/PC.sv Line: 199
+    Info (276006): RAM logic "NeonFox:CPU_inst|PC:PC_inst|call_stack:cstack0|stack_mem" is uninferred due to "logic" being set as ramstyle synthesis attribute File: E:/NeonFox_SDRAM/CPU/PC.sv Line: 195
     Info (276004): RAM logic "keyboard:keyboard_inst|queue_8_8:tx_queue|queue_mem" is uninferred due to inappropriate RAM size File: E:/NeonFox_SDRAM/serial.sv Line: 85
     Info (276004): RAM logic "XenonGecko:XG_inst|xgri:xgri_inst|queue_16_4:a_fifo|queue_mem" is uninferred due to inappropriate RAM size File: E:/NeonFox_SDRAM/fifo.sv Line: 64
     Info (276006): RAM logic "XenonGecko:XG_inst|xgri:xgri_inst|queue_16_16:p_fifo|queue_mem" is uninferred due to "logic" being set as ramstyle synthesis attribute File: E:/NeonFox_SDRAM/fifo.sv Line: 7
@@ -2771,7 +2770,7 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/alts
     Info (12023): Found entity 1: altsyncram_pa81 File: E:/NeonFox_SDRAM/db/altsyncram_pa81.tdf Line: 27
 Info (12021): Found 1 design units, including 1 entities, in source file db/cntr_tof.tdf
     Info (12023): Found entity 1: cntr_tof File: E:/NeonFox_SDRAM/db/cntr_tof.tdf Line: 25
-Info (13000): Registers with preset signals will power-up high File: E:/NeonFox_SDRAM/CPU/NeonFox.sv Line: 114
+Info (13000): Registers with preset signals will power-up high File: E:/NeonFox_SDRAM/CPU/NeonFox.sv Line: 112
 Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
 Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "sdram_cke" is stuck at VCC File: E:/NeonFox_SDRAM/Toplevel.sv Line: 46
@@ -2804,16 +2803,16 @@ Info (128003): Physical synthesis algorithm combinational resynthesis using bool
 Info (128001): Physical synthesis optimizations for speed complete: elapsed time is 00:00:05
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 1 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 6393 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 6397 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 6 input pins
     Info (21059): Implemented 47 output pins
     Info (21060): Implemented 16 bidirectional pins
-    Info (21061): Implemented 6087 logic cells
+    Info (21061): Implemented 6091 logic cells
     Info (21064): Implemented 236 RAM segments
     Info (21065): Implemented 1 PLLs
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 4 warnings
-    Info: Peak virtual memory: 770 megabytes
-    Info: Processing ended: Tue Mar 29 22:18:20 2022
+    Info: Peak virtual memory: 767 megabytes
+    Info: Processing ended: Wed Mar 30 23:07:45 2022
     Info: Elapsed time: 00:00:47
     Info: Total CPU time (on all processors): 00:01:19
 

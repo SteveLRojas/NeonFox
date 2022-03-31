@@ -68,3 +68,10 @@ Separated reset logic for each branch type in the decoder. This is needed to pre
 
 Revision 6:
 Added hold logic for branch signals in NeonFox. This is needed to ensure that the decoder is reset one cycle after a branch even if a hazard was present during the branch.
+Fixed bug in PC p_miss_override logic.
+Added flush input to decoder (needed to reset only the output stage of the decoder).
+Added decoder flush output to hazard unit.
+Created extend_flush signal in NeonFox (needed to reset the decoder when more than 2 instructions after a branch have been fetched).
+	I'm not 100% sure this logic is correct, maybe p_miss_override should be used instead (I have not found a case where using p_miss_override would have a different result). 
+Added decoder_flush_inhibit output to PC module (needed to prevent the decoder from being flushed when only one instruction after a branch is fetched).
+Fixed auto increment logic in XGRI module. The CPU no longer has to write data in bursts, data can be written whenever the buffers are not completely full.
