@@ -1,4 +1,4 @@
-module XenonGecko(
+module XenonGecko_gen2(
 		input logic clk_sys,		//ri and memory clock
 		input logic clk_25,		//VGA clock
 		input logic clk_250,		//HDMI clock
@@ -36,21 +36,21 @@ module XenonGecko(
 	logic active_rows;				//use only to generate active area
 	logic active_render_area;		//use for rendering
 	logic active_render_rows;		//use for rendering
-	logic[7:0] area_render_delay;
+	logic[11:0] area_render_delay;
 	//logic[7:0] rows_render_delay;
 	//logic active_draw_rows;
 	logic active_draw_area;
 	//logic hsync, vsync;	//active low
-	logic[7:0] vsync_render_delay;
-	logic[7:0] hsync_render_delay;
+	logic[11:0] vsync_render_delay;
+	logic[11:0] hsync_render_delay;
 	logic draw_vsync;
 	logic draw_hsync;
 	logic vde;
 
 
-	assign active_draw_area = area_render_delay[0];	//8 pixels behind render area
+	assign active_draw_area = area_render_delay[0];	//12 pixels behind render area
 	//assign active_draw_rows = rows_render_delay[0];
-	assign draw_vsync = vsync_render_delay[0];		//9 cycles behind render area
+	assign draw_vsync = vsync_render_delay[0];		//13 cycles behind render area
 	assign draw_hsync = hsync_render_delay[0];
 
 	always @(posedge clk_25)
@@ -89,10 +89,10 @@ module XenonGecko(
 			if(vesa_col == 10'd639)
 				active_render_area <= 1'b0;	//active area is in rows 0 to 479, columns 0 to 639
 		end
-		area_render_delay <= {active_render_area, area_render_delay[7:1]};
+		area_render_delay <= {active_render_area, area_render_delay[11:1]};
 		//rows_render_delay <= {active_render_rows, rows_render_delay[7:1]};
-		vsync_render_delay <= {vsync, vsync_render_delay[7:1]};
-		hsync_render_delay <= {hsync, hsync_render_delay[7:1]};
+		vsync_render_delay <= {vsync, vsync_render_delay[11:1]};
+		hsync_render_delay <= {hsync, hsync_render_delay[11:1]};
 		vde <= active_draw_area;
 		// HSYNC and VSYNC logic
 		if(vesa_col < 10'd752 && vesa_col >= 10'd656)	//hsync starts at 656 and lasts 96 cycles
@@ -106,16 +106,19 @@ module XenonGecko(
 	end
 
 	//### Background rendering logic
-	logic[4:0] bg_shift7;
-	logic[4:0] bg_shift6;
-	logic[4:0] bg_shift5;
-	logic[4:0] bg_shift4;
-	reg[7:0] bg_shift3;     //shift register for bit 3 of background palette index
-	reg[7:0] bg_shift2;     //shift register for bit 2 of background palette index
-	reg[7:0] bg_shift1;    //shift register for bit 1 of background palette index
-	reg[7:0] bg_shift0;    //shift_register for bit 0 of background palette index
+	logic[9:0] scrolled_line;	//vesa line + fine V scroll
+	logic pattern_prefetch;
+	logic attribute_prefetch;
+	logic[8:0] bg_shift7;
+	logic[8:0] bg_shift6;
+	logic[8:0] bg_shift5;
+	logic[8:0] bg_shift4;
+	reg[11:0] bg_shift3;     //shift register for bit 3 of background palette index
+	reg[11:0] bg_shift2;     //shift register for bit 2 of background palette index
+	reg[11:0] bg_shift1;    //shift register for bit 1 of background palette index
+	reg[11:0] bg_shift0;    //shift_register for bit 0 of background palette index
 
-	logic[12:0] next_row_base;
+	logic[14:0] next_row_base;
 	logic swap_pattern;
 	logic swap_attribute;
 	logic update_attribute;
@@ -123,50 +126,65 @@ module XenonGecko(
 	logic[7:0] pattern_address;
 	logic[15:0] pattern_data;
 	logic[3:0] attribute_data;
-
-	assign next_line_pair = vesa_line[2:1] + 2'h1;
+	
+	logic[2:0] ri_h_fine;	//fine H scrolling
+	logic[7:0] ri_h_coarse;
+	logic[6:0] ri_v_coarse;
+	logic[2:0] ri_v_fine;
+	logic[14:0] row_base_offset;	//ri_v_scroll * 160
+	
+	assign row_base_offset = {{ri_v_coarse, 2'b00} + ri_v_coarse, 5'h00};	//(ri_v_scroll * 4 + ri_v_scroll) * 32
+	assign scrolled_line = vesa_line + ri_v_fine;
+	//assign pattern_prefetch = (vesa_line >= 10'd521);
+	//assign attribute_prefetch = (vesa_line >= 10'd509);
+	assign attribute_prefetch = (vesa_line >= 10'd504) && (vesa_line < 10'd520);
+	assign pattern_prefetch = (vesa_line == 10'd517) | (vesa_line == 10'd519);
+	
+	assign next_line_pair = scrolled_line[2:1] + 2'h1;
 	assign pattern_address = vesa_col[9:2];
 	assign update_attribute = (vesa_col[2:0] == 3'h1);
 
 	initial
 	begin
-		next_row_base = 13'd80;
+		next_row_base = 15'd160;
 	end
 	
 	always @(posedge clk_25)
 	begin
-		swap_pattern <= active_render_rows & (vesa_col == 10'd799) & vesa_line[0];
-		swap_attribute <= active_render_rows & (&vesa_line[2:0]) && (vesa_col == 10'd799);
-		if(active_render_rows && (vesa_col == 10'd799))
+		swap_pattern <= (active_render_rows | pattern_prefetch) & scrolled_line[0] & (vesa_col == 10'd799);
+		swap_attribute <= (active_render_rows | attribute_prefetch) & (&scrolled_line[2:0]) & (vesa_col == 10'd799);
+		if((active_render_rows | attribute_prefetch) && (vesa_col == 10'd799))
 		begin
-			if(vesa_line == 10'd471)
-				next_row_base <= 13'h0000;
-			else if(&vesa_line[2:0])
-				next_row_base <= next_row_base + 13'd80;
+			if(scrolled_line == 10'd511)
+				next_row_base <= row_base_offset;
+			else if(&scrolled_line[2:0])
+				next_row_base <= next_row_base + 15'd160;
+			if(next_row_base == 15'd19040)
+				next_row_base <= 15'd0;
 		end
 
 		if(active_render_area || active_draw_area)
 		begin
-			bg_shift0 <= {1'b0, bg_shift0[7:1]};
-			bg_shift1 <= {1'b0, bg_shift1[7:1]};
-			bg_shift2 <= {1'b0, bg_shift2[7:1]};
-			bg_shift3 <= {1'b0, bg_shift3[7:1]};
-			bg_shift4 <= {bg_shift4[4], bg_shift4[4:1]};
-			bg_shift5 <= {bg_shift5[4], bg_shift5[4:1]};
-			bg_shift6 <= {bg_shift6[4], bg_shift6[4:1]};
-			bg_shift7 <= {bg_shift7[4], bg_shift7[4:1]};
+			bg_shift0 <= {1'b0, bg_shift0[11:1]};
+			bg_shift1 <= {1'b0, bg_shift1[11:1]};
+			bg_shift2 <= {1'b0, bg_shift2[11:1]};
+			bg_shift3 <= {1'b0, bg_shift3[11:1]};
+			bg_shift4 <= {bg_shift4[8], bg_shift4[8:1]};
+			bg_shift5 <= {bg_shift5[8], bg_shift5[8:1]};
+			bg_shift6 <= {bg_shift6[8], bg_shift6[8:1]};
+			bg_shift7 <= {bg_shift7[8], bg_shift7[8:1]};
 		end
 
 		if((&vesa_col[1:0]) && active_render_area)
 		begin
-			bg_shift0[7:4] <= {pattern_data[0], pattern_data[4], pattern_data[8], pattern_data[12]};
-			bg_shift1[7:4] <= {pattern_data[1], pattern_data[5], pattern_data[9], pattern_data[13]};
-			bg_shift2[7:4] <= {pattern_data[2], pattern_data[6], pattern_data[10], pattern_data[14]};
-			bg_shift3[7:4] <= {pattern_data[3], pattern_data[7], pattern_data[11], pattern_data[15]};
-			bg_shift4[4] <= attribute_data[0];
-			bg_shift5[4] <= attribute_data[1];
-			bg_shift6[4] <= attribute_data[2];
-			bg_shift7[4] <= attribute_data[3];
+			bg_shift0[11:8] <= {pattern_data[0], pattern_data[4], pattern_data[8], pattern_data[12]};
+			bg_shift1[11:8] <= {pattern_data[1], pattern_data[5], pattern_data[9], pattern_data[13]};
+			bg_shift2[11:8] <= {pattern_data[2], pattern_data[6], pattern_data[10], pattern_data[14]};
+			bg_shift3[11:8] <= {pattern_data[3], pattern_data[7], pattern_data[11], pattern_data[15]};
+			bg_shift4[8] <= attribute_data[0];
+			bg_shift5[8] <= attribute_data[1];
+			bg_shift6[8] <= attribute_data[2];
+			bg_shift7[8] <= attribute_data[3];
 		end
 	end
 
@@ -174,7 +192,10 @@ module XenonGecko(
 	logic[7:0] vga_r;
 	logic[7:0] vga_g;
 	logic[7:0] vga_b;
-	assign bg_palette_index = {bg_shift7[0], bg_shift6[0], bg_shift5[0], bg_shift4[0], bg_shift3[0], bg_shift2[0], bg_shift1[0], bg_shift0[0]};
+	
+	logic[3:0] idx_h_fine;
+	assign idx_h_fine = {1'b0, ri_h_fine};
+	assign bg_palette_index = {bg_shift7[idx_h_fine], bg_shift6[idx_h_fine], bg_shift5[idx_h_fine], bg_shift4[idx_h_fine], bg_shift3[idx_h_fine], bg_shift2[idx_h_fine], bg_shift1[idx_h_fine], bg_shift0[idx_h_fine]};
 		
 	logic p_full;
 	logic a_full;
@@ -185,9 +206,11 @@ module XenonGecko(
 	logic[11:0] par;
 	logic[12:0] aar;
 		
-	xgri xgri_inst(
+	xgri_gen2 xgri_inst(
 		.clk_sys(clk_sys),
 		.rst(rst),
+		.ri_h_scroll({ri_h_coarse, ri_h_fine}),
+		.ri_v_scroll({ri_v_coarse, ri_v_fine}),
 		// CPU interface
 		.ri_en(ri_en),
 		.ri_wren(ri_wren),
@@ -205,7 +228,7 @@ module XenonGecko(
 		.par(par),
 		.aar(aar));
 	
-	xgmm xgmm_inst(
+	xgmm_gen2 xgmm_inst(
 		.clk_sys(clk_sys),
 		.rst(rst),
 		// XG interface
@@ -215,7 +238,8 @@ module XenonGecko(
 		.next_row_base(next_row_base),
 		.next_line_pair(next_line_pair),
 		.pattern_address(pattern_address),
-		.odd_line(vesa_line[0]),
+		.odd_line(scrolled_line[0]),
+		.ri_h_coarse(ri_h_coarse),
 		.pattern_data(pattern_data),
 		.attribute_data(attribute_data),
 		// XGRI interface

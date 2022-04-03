@@ -1,14 +1,14 @@
-Analysis & Synthesis Status : Successful - Wed Mar 30 23:07:44 2022
+Analysis & Synthesis Status : Successful - Sat Apr 02 19:13:00 2022
 Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 Revision Name : NeonFox
 Top-level Entity Name : NeonFox_PVP
 Family : Cyclone 10 LP
-Total logic elements : 5,943
-    Total combinational functions : 3,975
-    Dedicated logic registers : 3,289
-Total registers : 3289
+Total logic elements : 6,096
+    Total combinational functions : 4,034
+    Dedicated logic registers : 3,344
+Total registers : 3344
 Total pins : 69
 Total virtual pins : 0
-Total memory bits : 274,448
+Total memory bits : 274,462
 Embedded Multiplier 9-bit elements : 0
 Total PLLs : 1

@@ -75,3 +75,10 @@ Created extend_flush signal in NeonFox (needed to reset the decoder when more th
 	I'm not 100% sure this logic is correct, maybe p_miss_override should be used instead (I have not found a case where using p_miss_override would have a different result). 
 Added decoder_flush_inhibit output to PC module (needed to prevent the decoder from being flushed when only one instruction after a branch is fetched).
 Fixed auto increment logic in XGRI module. The CPU no longer has to write data in bursts, data can be written whenever the buffers are not completely full.
+Created XenonGecko_gen2.
+Created xgmm_gen2.
+Created xgri_gen2.
+Implemented horizontal fine scrolling (in XenonGecko_gen2).
+Implemented horizontal coarse scrolling.
+Implemented vertical fine scrolling.
+Implemented vertical coarse scrolling.

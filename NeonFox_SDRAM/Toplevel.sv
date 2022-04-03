@@ -442,7 +442,7 @@ wire XG_En;
 wire[15:0] from_XG;
 assign XG_En = (&IO_address[15:5]) & ~IO_address[4];
 
-XenonGecko XG_inst(
+XenonGecko_gen2 XG_inst(
 		.clk_sys(clk_sys),		//ri and memory clock
 		.clk_25(clk_25),		//VGA clock
 		.clk_250(clk_250),		//HDMI clock
