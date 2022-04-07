@@ -1,5 +1,5 @@
 Flow report for NeonFox
-Sat Apr 02 19:15:02 2022
+Wed Apr 06 23:24:14 2022
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,20 +40,20 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Sat Apr 02 19:15:02 2022       ;
+; Flow Status                        ; Successful - Wed Apr 06 23:24:14 2022       ;
 ; Quartus Prime Version              ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                      ; NeonFox                                     ;
 ; Top-level Entity Name              ; NeonFox_PVP                                 ;
 ; Family                             ; Cyclone 10 LP                               ;
 ; Device                             ; 10CL016YU484C8G                             ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 5,045 / 15,408 ( 33 % )                     ;
-;     Total combinational functions  ; 4,034 / 15,408 ( 26 % )                     ;
-;     Dedicated logic registers      ; 3,344 / 15,408 ( 22 % )                     ;
-; Total registers                    ; 3344                                        ;
+; Total logic elements               ; 5,034 / 15,408 ( 33 % )                     ;
+;     Total combinational functions  ; 4,040 / 15,408 ( 26 % )                     ;
+;     Dedicated logic registers      ; 3,342 / 15,408 ( 22 % )                     ;
+; Total registers                    ; 3342                                        ;
 ; Total pins                         ; 69 / 341 ( 20 % )                           ;
 ; Total virtual pins                 ; 0                                           ;
-; Total memory bits                  ; 274,462 / 516,096 ( 53 % )                  ;
+; Total memory bits                  ; 274,432 / 516,096 ( 53 % )                  ;
 ; Embedded Multiplier 9-bit elements ; 0 / 112 ( 0 % )                             ;
 ; Total PLLs                         ; 1 / 4 ( 25 % )                              ;
 +------------------------------------+---------------------------------------------+
@@ -64,7 +64,7 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 04/02/2022 19:12:08 ;
+; Start date & time ; 04/06/2022 23:21:41 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; NeonFox             ;
 +-------------------+---------------------+
@@ -75,7 +75,7 @@ refer to the applicable agreement for further details.
 +--------------------------------------+----------------------------------------+---------------+-------------+----------------+
 ; Assignment Name                      ; Value                                  ; Default Value ; Entity Name ; Section Id     ;
 +--------------------------------------+----------------------------------------+---------------+-------------+----------------+
-; COMPILER_SIGNATURE_ID                ; 113780617491.164894832800360           ; --            ; --          ; --             ;
+; COMPILER_SIGNATURE_ID                ; 113780617491.164930890103972           ; --            ; --          ; --             ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --            ; --          ; Testbench      ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST      ; On                                     ; --            ; --          ; eda_simulation ;
 ; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; Testbench                              ; --            ; --          ; eda_simulation ;
@@ -156,12 +156,12 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:51     ; 1.1                     ; 767 MB              ; 00:01:27                           ;
-; Fitter               ; 00:01:38     ; 1.7                     ; 1608 MB             ; 00:03:59                           ;
-; Assembler            ; 00:00:03     ; 1.0                     ; 557 MB              ; 00:00:03                           ;
-; Timing Analyzer      ; 00:00:09     ; 1.9                     ; 738 MB              ; 00:00:13                           ;
-; EDA Netlist Writer   ; 00:00:03     ; 1.0                     ; 526 MB              ; 00:00:03                           ;
-; Total                ; 00:02:44     ; --                      ; --                  ; 00:05:45                           ;
+; Analysis & Synthesis ; 00:00:44     ; 1.1                     ; 768 MB              ; 00:01:13                           ;
+; Fitter               ; 00:01:27     ; 1.7                     ; 1614 MB             ; 00:03:42                           ;
+; Assembler            ; 00:00:02     ; 1.0                     ; 556 MB              ; 00:00:02                           ;
+; Timing Analyzer      ; 00:00:07     ; 1.9                     ; 741 MB              ; 00:00:13                           ;
+; EDA Netlist Writer   ; 00:00:03     ; 1.0                     ; 528 MB              ; 00:00:03                           ;
+; Total                ; 00:02:23     ; --                      ; --                  ; 00:05:13                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

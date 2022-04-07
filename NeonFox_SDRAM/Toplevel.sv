@@ -281,19 +281,19 @@ SDRAM_TP16_I SDRAM_controller(
 		.rst(rst),
 		.from_mem(from_mem),
 		
-		.p1_address(p1_address[23:0]),
+		.p1_address(p1_address[23:0]),		//	Program cache
 		.p1_req(p1_req),
 		.p1_ready(p1_ready),
 		.p1_offset(p1_offset),
 		
-		.p2_address(p2_address[23:0]),
+		.p2_address(p2_address[23:0]),		// Data cache
 		.p2_to_mem(p2_to_mem),
 		.p2_req(p2_req),
 		.p2_wren(p2_wren),
 		.p2_ready(p2_ready),
 		.p2_offset(p2_offset),
 		
-		.p3_address({7'h01, p3_address}),
+		.p3_address({7'h01, p3_address}),	// XenonGecko
 		.p3_to_mem(p3_to_mem),
 		.p3_req(p3_req),
 		.p3_wren(p3_wren),

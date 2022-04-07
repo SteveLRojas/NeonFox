@@ -21,7 +21,7 @@ module xgmm_gen2(
 		input logic[15:0] p_data,
 		input logic[15:0] a_data,
 		input logic[11:0] par,
-		input logic[12:0] aar,
+		input logic[14:0] aar,
 		// memory interface
 		output logic mem_req,
 		output logic mem_wren,
@@ -253,7 +253,7 @@ module xgmm_gen2(
 				begin
 					mem_req <= 1'b1;
 					mem_wren <= 1'b1;
-					mem_addr <= {1'b1, 3'b000, aar};
+					mem_addr <= {1'b1, 1'b0, aar};
 					if(mem_ready)
 						state <= S_RI_ATTRIBUTE_WRITE_TRANSFER;
 				end

@@ -18,7 +18,7 @@ module xgri_gen2(
 		output logic[15:0] p_data,
 		output logic[15:0] a_data,
 		output logic[11:0] par,
-		output logic[12:0] aar);
+		output logic[14:0] aar);
 	
 	logic p_empty;
 	logic p_push;
@@ -44,7 +44,7 @@ module xgri_gen2(
 		if(rst)
 		begin
 			par <= 12'h000;
-			aar <= 13'h0000;
+			aar <= 15'h0000;
 			ri_h_scroll <= 11'h000;
 			ri_v_scroll <= 10'h000;
 			to_cpu <= 16'h0000;
@@ -62,14 +62,14 @@ module xgri_gen2(
 			end
 			if(prev_a_pop & ~a_pop)
 			begin
-				aar <= aar + 13'h0004;
+				aar <= aar + 15'h0004;
 			end
 		
 			if(ri_en & ri_wren)
 			begin
 				case(ri_addr)
 					4'h1: par  <= from_cpu[11:0];
-					4'h2: aar  <= from_cpu[12:0];
+					4'h2: aar  <= from_cpu[14:0];
 					4'h5: ri_h_scroll <= from_cpu[10:0];
 					4'h6: ri_v_scroll <= from_cpu[9:0];
 					default: ;

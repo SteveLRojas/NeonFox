@@ -29,7 +29,7 @@ module PC(
 	//int, A_miss_next
 reg decoder_prev_hazard;
 reg pc_prev_hazard;
-reg p_miss_override;
+reg p_miss_override;	//during P miss, forces PC increment when hazard is cleared
 reg p_miss;
 reg prev_p_miss;
 logic prev_branch_taken;
@@ -43,6 +43,7 @@ wire[31:0] stack_in;
 logic stack_en;
 logic stack_push;
 logic stack_pop;
+logic delay_p_miss;	//used to determine if the instruction in the branch delay slot resulted in a miss
 
 assign take_brx = pc_brx & (pc_brxt ^ |({p, z, n, 1'b0} & (1 << {H_en, L_en}))) & ~branch_hazard;
 assign jmp_rst = (pc_jmp | pc_call) & ~branch_hazard;
@@ -58,6 +59,8 @@ always @(posedge clk)
 begin
 	if(~hazard)
 		A_next_I <= PC_reg;
+	if(~pc_prev_hazard)
+		delay_p_miss <= p_miss;
 	prev_data_hazard <= data_hazard;
 	prev_branch_taken <= ((pc_jmp | pc_call) & ~branch_hazard) | take_brx | pc_ret;
 	if(pc_jmp & (~branch_hazard) & (~interrupt))
@@ -89,7 +92,7 @@ begin
 		begin
 			A_miss_next <= PC_reg;
 		end
-		if(~p_miss | (prev_branch_taken & ~prev_p_miss))	//check prev_p_miss to make sure the instruction after the branch has been fetched before changing address
+		if(~p_miss | (prev_branch_taken & ~delay_p_miss))	//check delay_p_miss to make sure the instruction after the branch has been fetched before changing address
 		begin
 			if(~p_miss)
 				A_miss <= A_miss_next;

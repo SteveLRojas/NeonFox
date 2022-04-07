@@ -36,22 +36,19 @@ module XenonGecko_gen2(
 	logic active_rows;				//use only to generate active area
 	logic active_render_area;		//use for rendering
 	logic active_render_rows;		//use for rendering
-	logic[11:0] area_render_delay;
-	//logic[7:0] rows_render_delay;
-	//logic active_draw_rows;
+	//logic[11:0] area_render_delay;
 	logic active_draw_area;
-	//logic hsync, vsync;	//active low
-	logic[11:0] vsync_render_delay;
-	logic[11:0] hsync_render_delay;
+	//logic[11:0] vsync_render_delay;
+	//logic[11:0] hsync_render_delay;
 	logic draw_vsync;
 	logic draw_hsync;
 	logic vde;
 
-
-	assign active_draw_area = area_render_delay[0];	//12 pixels behind render area
-	//assign active_draw_rows = rows_render_delay[0];
-	assign draw_vsync = vsync_render_delay[0];		//13 cycles behind render area
-	assign draw_hsync = hsync_render_delay[0];
+	//assign active_draw_area = area_render_delay[0];	//12 pixels behind render area
+	//assign draw_vsync = vsync_render_delay[0];		//13 cycles behind render area
+	//assign draw_hsync = hsync_render_delay[0];
+	assign hsync = active_render_area;	//hsync and vsync outputs are for interrupt use only
+	assign vsync = active_render_rows;
 
 	always @(posedge clk_25)
 	begin
@@ -76,6 +73,7 @@ module XenonGecko_gen2(
 			end
 			else
 				vesa_col <= vesa_col + 10'h01;
+			
 			// active area logic
 			if(vesa_line == 10'd524)
 				active_rows <= 1'b1;	//low at first cycle of 524, high at last cycle of 524
@@ -88,21 +86,44 @@ module XenonGecko_gen2(
 				active_render_area <= 1'b1;
 			if(vesa_col == 10'd639)
 				active_render_area <= 1'b0;	//active area is in rows 0 to 479, columns 0 to 639
+				
+			if(active_render_rows && vesa_col == 10'd11)
+				active_draw_area <= 1'b1;
+			if(vesa_col == 10'd651)
+				active_draw_area <= 1'b0;	//active draw area in rows 0 to 479, columns 12 to 651
 		end
-		area_render_delay <= {active_render_area, area_render_delay[11:1]};
-		//rows_render_delay <= {active_render_rows, rows_render_delay[7:1]};
-		vsync_render_delay <= {vsync, vsync_render_delay[11:1]};
-		hsync_render_delay <= {hsync, hsync_render_delay[11:1]};
+		//area_render_delay <= {active_render_area, area_render_delay[11:1]};
+		//vsync_render_delay <= {vsync, vsync_render_delay[11:1]};
+		//hsync_render_delay <= {hsync, hsync_render_delay[11:1]};
 		vde <= active_draw_area;
 		// HSYNC and VSYNC logic
-		if(vesa_col < 10'd752 && vesa_col >= 10'd656)	//hsync starts at 656 and lasts 96 cycles
-			hsync <= 1'b0;	//hsync is delayed by one cycle
-		else
-			hsync <= 1'b1;
-		if((vesa_line == 10'd490) || (vesa_line == 10'd491))	//vsync starts at line 490 and lasts 2 lines
-			vsync <= 1'b0;	//vsync is delayed by one cycle
-		else
-			vsync <= 1'b1;
+		//if(vesa_col < 10'd752 && vesa_col >= 10'd656)	//hsync starts at 656 and lasts 96 cycles
+		//	hsync <= 1'b0;	//hsync is delayed by one cycle
+		//else
+		//	hsync <= 1'b1;
+			
+		//if(vesa_col == 10'd656)	//hsync starts at 656 and lasts 96 cycles
+		//	hsync <= 1'b0;	//hsync is delayed by one cycle
+		//if(vesa_col == 10'd752)
+		//	hsync <= 1'b1;
+			
+		if(vesa_col == 10'd668)
+			draw_hsync <= 1'b0;	//draw_hsync is delayed by 13 cycles
+		if(vesa_col == 10'd764)
+			draw_hsync <= 1'b1;
+		
+		//if((vesa_line == 10'd490) || (vesa_line == 10'd491))	//vsync starts at line 490 and lasts 2 lines
+		//	vsync <= 1'b0;	//vsync is delayed by one cycle
+		//else
+		//	vsync <= 1'b1;
+			
+		if(vesa_col == 10'd12)
+		begin
+			if((vesa_line == 10'd490) || (vesa_line == 10'd491))	//vsync starts at line 490 and lasts 2 lines
+				draw_vsync <= 1'b0;	//draw_vsync is delayed by 13 cycles
+			else
+				draw_vsync <= 1'b1;
+		end
 	end
 
 	//### Background rendering logic
@@ -204,7 +225,7 @@ module XenonGecko_gen2(
 	logic[15:0] p_data;
 	logic[15:0] a_data;
 	logic[11:0] par;
-	logic[12:0] aar;
+	logic[14:0] aar;
 		
 	xgri_gen2 xgri_inst(
 		.clk_sys(clk_sys),

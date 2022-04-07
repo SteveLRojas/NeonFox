@@ -82,3 +82,7 @@ Implemented horizontal fine scrolling (in XenonGecko_gen2).
 Implemented horizontal coarse scrolling.
 Implemented vertical fine scrolling.
 Implemented vertical coarse scrolling.
+
+Revision 7:
+Optimized vesa line and col logic in XenonGecko.
+Fixed bug in PC module (created delay_p_miss to correctly determine if the instruction after the last branch was fetched).
