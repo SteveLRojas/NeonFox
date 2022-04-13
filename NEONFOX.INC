@@ -65,6 +65,8 @@
 ;		bit 3: RX ready
 ;		bit 4: TX queue empty
 ;		bit 5: RX queue full
+;		bit 6: reserved
+;		bit 7: busy flag
 
 ; keyboard module address map
 ; 0 data register
@@ -98,10 +100,16 @@
 ;		bit 1: a_full (attribute buffer is completely full) This triggers hardware to empty the buffer and clear the flag automatically.
 ;		bit 2: p_empty (pattern buffer is completely empty)
 ;		bit 3: p_full (pattern buffer is completely full) This triggers hardware to empty the buffer and clear the flag automatically.
+;		bit 4: reserved
+;		bit 5: reserved
+;		bit 6: reserved
+;		bit 7: busy flag
 ; 1 PAR (pattern address register) This register is automatically incremented as pattern entries are written to main memory.
 ; 2 AAR (attribute address register) This register is automatically incremented (by 4) as pattern entries are written to main memory.
 ; 3 PDR (pattern data register) This register is used to write pattern entries bypassing the data cache.
 ; 4 ADR (attribute data register) This register is used to write attribute entries bypassing the data cache.
+; 5 HSCROLL	Horizontal scroll register
+; 6 VSCROLL	Vertical scroll register
 
 ;Things worthy of note:
 ; Writes to pattern data through XGRI are buffered by a 16 word FIFO.
@@ -111,7 +119,7 @@
 ; Attribute entries should be updated in groups of 4, and the value written to AAR should be a multiple of 4.
 ; Writing other values to AAR will expose the interleaved access pattern of the main memory.
 ; The physical address range of the pattern table is 0x020000 to 0x02FFFF
-; The physical address range of the attribute table is 0x030000 to 0x0312BF
+; The physical address range of the attribute table is 0x030000 to 0x034AFF
 
 ; Address map for data space:
 ; 0x00000000 to 0xFFFFFFFF	active data memory page (cached)
@@ -174,3 +182,5 @@ XGRI_PAR EQU $FFE1
 XGRI_AAR EQU $FFE2
 XGRI_PDR EQU $FFE3
 XGRI_ADR EQU $FFE4
+XGRI_HSCROLL	EQU $FFE5
+XGRI_VSCROLL	EQU $FFE6
