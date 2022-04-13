@@ -152,6 +152,7 @@ wire H_en;
 wire hex_en;
 
 reg button_s;
+logic rst_s;
 reg rst;
 reg[14:0] hex_indicators;
 
@@ -159,6 +160,7 @@ assign hex_en = (&IO_address[15:2]) & ~IO_address[1];
 
 initial
 begin
+	rst_s = 1'b1;
 	rst = 1'b1;
 	button_s = 1'b0;
 	hex_indicators = 15'h0000;
@@ -167,7 +169,8 @@ end
 always @(posedge clk_25)
 begin
 	button_s <= ~button;
-	rst <= ~reset;
+	rst_s <= ~reset;
+	rst <= rst_s;
 end
 
 always @(posedge clk_sys)

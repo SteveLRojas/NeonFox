@@ -265,6 +265,7 @@ module xgmm_gen2(
 						state <= S_IDLE;
 					end
 				end
+				default: ;
 			endcase // state
 		end
 	end
@@ -342,6 +343,7 @@ module xgmm_gen2(
 				p_pop = 1'b0;
 				a_pop = mem_ready;
 			end
+			default: ;
 		endcase
 	end
 	

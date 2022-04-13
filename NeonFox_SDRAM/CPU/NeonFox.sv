@@ -55,7 +55,9 @@ logic jmp_rst;
 logic decoder_flush_inhibit;	//indicates that the second instruction after a branch was not fetched
 
 logic decoder_rst;
-logic decoder_flush;
+logic reset_hold;
+logic decoder_input_flush;
+logic decoder_output_flush;
 logic extend_flush;	//causes flush to be treated like a full reset
 logic data_wren0, data_wren1, data_wren2;
 logic data_ren0;
@@ -74,11 +76,12 @@ assign data_out = alu_out;
 assign H_en = H_en2 | ~L_en2;	//both H_en and L_en low from the decoder indicate high and low bytes are swapped (both enabled).
 assign L_en = L_en2 | ~H_en2;
 assign data_hazard = d_cache_write_miss;
+assign decoder_rst = reset | reset_hold;
 
 always @(posedge clk)
 begin
 	DIO_in <= ({16{data_ren}} & data_in) | ({16{IO_ren}} & IO_in);
-	
+	reset_hold <= reset;
 	if(reset)
 	begin
 		interrupt <= 1'b0;
@@ -86,8 +89,8 @@ begin
 	end
 	else
 	begin
-		prev_int_rq <= int_rq & (~decoder_rst | prev_int_rq);	//set when int_rq & ~decoder_rst, clear when ~int_rq
-		interrupt <= int_rq & ~prev_int_rq & ~decoder_rst;
+		prev_int_rq <= int_rq & (~decoder_output_flush | prev_int_rq);	//set when int_rq & ~decoder_output_flush, clear when ~int_rq
+		interrupt <= int_rq & ~prev_int_rq & ~decoder_output_flush;
 	end
 end
 
@@ -265,7 +268,8 @@ decode_unit decoder_inst(
 		.rst(decoder_rst),
 		.jmp_rst(jmp_rst),
 		.brx_rst(take_brx),
-		.flush(decoder_flush),
+		.input_flush(decoder_input_flush),
+		.output_flush(decoder_output_flush),
 		.hazard(hazard),
 		.p_cache_miss(p_cache_miss),
 		.prg_data(prg_data),
@@ -292,7 +296,7 @@ decode_unit decoder_inst(
 
 //##### HAZARD UNIT #####
 hazard_unit hazard_inst(
-		.clk(clk),
+		//.clk(clk),
 		.pc_jmp(pc_jmp), .pc_jmp1(pc_jmp1),
 		.pc_brx(pc_brx),
 		.pc_call(pc_call), .pc_call1(pc_call1),
@@ -301,7 +305,7 @@ hazard_unit hazard_inst(
 		.take_brx1(take_brx1),
 		.alu_op1(alu_op1),
 		.halt(halt),
-		.rst(reset),
+		//.rst(reset),
 		.extend_flush(extend_flush),
 		.IO_select1(IO_select1), .IO_select2(IO_select2),
 		.address_select1(address_select1), .address_select2(address_select2),
@@ -314,8 +318,7 @@ hazard_unit hazard_inst(
 		.d_cache_read_miss(d_cache_read_miss),
 		.d_cache_write_miss(d_cache_write_miss),
 		.hazard(hazard),
-		//.data_hazard(data_hazard),
 		.branch_hazard(branch_hazard),
-		.decoder_rst(decoder_rst),
-		.decoder_flush(decoder_flush));
+		.decoder_input_flush(decoder_input_flush),
+		.decoder_output_flush(decoder_output_flush));
 endmodule : NeonFox

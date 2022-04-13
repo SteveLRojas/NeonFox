@@ -28,7 +28,8 @@ module PC(
 	//jmp, ret
 	//int, A_miss_next
 reg decoder_prev_hazard;
-reg pc_prev_hazard;
+reg pc_hazard1;
+reg pc_hazard2;
 reg p_miss_override;	//during P miss, forces PC increment when hazard is cleared
 reg p_miss;
 reg prev_p_miss;
@@ -38,33 +39,41 @@ reg[31:0] A_miss, A_miss_next;
 reg[31:0] A_next_I;
 reg[31:0] PC_reg;
 reg[31:0] A_current_I, A_current_I_alternate, A_pipe0;
+logic[31:0] A_return;
 wire[31:0] stack_out;
 wire[31:0] stack_in;
 logic stack_en;
 logic stack_push;
 logic stack_pop;
 logic delay_p_miss;	//used to determine if the instruction in the branch delay slot resulted in a miss
+logic single_hazard;	//indicates that prev hazard was a single cycle hazard
+logic branch_taken;
+logic backtrack_enable;	//causes PC to be restored to A_miss_next on first cycle of p_miss
 
 assign take_brx = pc_brx & (pc_brxt ^ |({p, z, n, 1'b0} & (1 << {H_en, L_en}))) & ~branch_hazard;
 assign jmp_rst = (pc_jmp | pc_call) & ~branch_hazard;
-assign stack_in = interrupt ? A_pipe0 : A_next_I;
+assign stack_in = interrupt ? A_pipe0 : A_return;
 assign stack_en = ~prev_data_hazard | interrupt;	//???
 assign stack_push = (pc_call & ~branch_hazard) | interrupt;
 assign stack_pop = pc_ret & ~interrupt;
 assign decoder_flush_inhibit = p_miss;
+assign single_hazard = ~hazard & pc_hazard1 & ~pc_hazard2;
+assign branch_taken = ((pc_jmp | pc_call) & ~branch_hazard) | take_brx | pc_ret;
 
 call_stack cstack0(.rst(rst), .clk(clk), .en(stack_en), .push(stack_push), .pop(stack_pop), .data_in(stack_in), .data_out(stack_out));
 
 always @(posedge clk)
 begin
 	if(~hazard)
-		A_next_I <= PC_reg;
-	if(~pc_prev_hazard)
+		A_return <= PC_reg;
+	A_next_I <= prg_address;
+	if(~pc_hazard1)
 		delay_p_miss <= p_miss;
 	prev_data_hazard <= data_hazard;
-	prev_branch_taken <= ((pc_jmp | pc_call) & ~branch_hazard) | take_brx | pc_ret;
+	prev_branch_taken <= branch_taken;
 	if(pc_jmp & (~branch_hazard) & (~interrupt))
 		last_callx_addr <= stack_in;
+	backtrack_enable <= ~branch_taken & ~single_hazard;	//p_miss_override will not trigger on single cycle hazards, so we don't want to backtrack in that case
 end
 
 always @(posedge clk or posedge rst)	//reset needs not be asynchronous, but doing this eliminates a mux and improves timing.
@@ -72,7 +81,8 @@ begin
 	if(rst)
 	begin
 		decoder_prev_hazard <= 1'b0;
-		pc_prev_hazard <= 1'b0;
+		pc_hazard1 <= 1'b0;
+		pc_hazard2 <= 1'b0;
 		p_miss_override <= 1'b0;
 		p_miss <= 1'b0;
 		prev_p_miss <= 1'b0;
@@ -84,20 +94,30 @@ begin
 	end
 	else
 	begin
-		pc_prev_hazard <= hazard;
-		p_miss_override <= (hazard & pc_prev_hazard & ~p_miss) | (p_miss_override & hazard);	//set if pc_prev_hazard before p_miss, cleared when no hazard
+		pc_hazard1 <= hazard;
+		pc_hazard2 <= pc_hazard1;
+		//p_miss override will not trigger on single cycle hazards because that would prevent backtracking and effectively do a double increment
+		p_miss_override <= (hazard & pc_hazard1 & ~p_miss) | (p_miss_override & hazard);	//set if pc_hazard1 before p_miss, cleared when no hazard
+		//p_miss_override <= (prev_branch_taken & ~delay_p_miss) | (hazard & pc_hazard1 & ~p_miss) | (p_miss_override & hazard);	//set if pc_hazard1 before p_miss, cleared when no hazard
 		p_miss <= p_cache_miss;
 		prev_p_miss <= p_miss;
 		if(~p_miss | prev_branch_taken)
 		begin
 			A_miss_next <= PC_reg;
 		end
+		//if(~p_miss | (prev_branch_taken & ~delay_p_miss))	//check delay_p_miss to make sure the instruction after the branch has been fetched before changing address
+		//begin
+		//	if(~p_miss)
+		//		A_miss <= A_miss_next;
+		//	else
+		//		A_miss <= PC_reg;
+		//end
 		if(~p_miss | (prev_branch_taken & ~delay_p_miss))	//check delay_p_miss to make sure the instruction after the branch has been fetched before changing address
 		begin
-			if(~p_miss)
-				A_miss <= A_miss_next;
-			else
+			if(prev_branch_taken & ~delay_p_miss)
 				A_miss <= PC_reg;
+			else
+				A_miss <= A_miss_next;
 		end
 
 		if(~p_cache_miss)
@@ -110,7 +130,8 @@ begin
 		begin
 			if(decoder_prev_hazard)
 				A_current_I <= A_current_I_alternate;
-			else if(~(p_miss | prev_p_miss))
+			//else if(~(p_miss | prev_p_miss))
+			else
 				A_current_I <= A_next_I;
 			A_pipe0 <= A_current_I;
 		end
@@ -130,7 +151,7 @@ end
 // 2: pc_ret
 // 3: take_brx
 // 4: (~hazard & ~(p_miss & ~p_miss_override))
-// 5: ((p_miss & ~p_miss_override) & ~prev_p_miss & ~prev_branch_taken)
+// 5: ((p_miss & ~p_miss_override) & ~prev_p_miss & backtrack_enable)
 //Note that 4 and 5 above are mutually exclusive.
 // Alternative mux priority:
 // 0: interrupt
@@ -138,7 +159,7 @@ end
 // 2: pc_ret
 // 3: take_brx
 // 4: (~hazard & ~(p_miss & ~p_miss_override))
-// 5: (p_miss & ~prev_p_miss & ~prev_branch_taken)
+// 5: (p_miss & ~prev_p_miss & backtrack_enable)
 //Note that mutual exclusivity between 4 and 5 is sacrificed to obtain a simpler expression for 5
 always @(posedge clk or posedge rst)
 begin
@@ -146,7 +167,7 @@ begin
 	begin
 		PC_reg <= 16'h0000;
 	end
-	else if(interrupt | (p_miss & ~prev_p_miss & ~prev_branch_taken) | ((pc_jmp | pc_call) & ~branch_hazard) | pc_ret | take_brx | (~hazard & ~(p_miss & ~p_miss_override)))
+	else if(interrupt | (p_miss & ~prev_p_miss & backtrack_enable) | ((pc_jmp | pc_call) & ~branch_hazard) | pc_ret | take_brx | (~hazard & ~(p_miss & ~p_miss_override)))
 	begin
 		if(interrupt | ((pc_jmp | pc_call) & ~branch_hazard) | pc_ret | ~(take_brx | (~hazard & ~(p_miss & ~p_miss_override))))
 		begin
@@ -156,7 +177,7 @@ begin
 				begin
 					PC_reg <= {27'h0000000, int_addr, 1'b0};
 				end
-				else	//p_miss & ~prev_p_miss & ~prev_branch_taken
+				else	//p_miss & ~prev_p_miss & backtrack_enable
 				begin
 					PC_reg <= A_miss_next;
 				end

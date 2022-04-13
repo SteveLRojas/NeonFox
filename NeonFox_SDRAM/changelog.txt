@@ -86,3 +86,17 @@ Implemented vertical coarse scrolling.
 Revision 7:
 Optimized vesa line and col logic in XenonGecko.
 Fixed bug in PC module (created delay_p_miss to correctly determine if the instruction after the last branch was fetched).
+Added busy flag to XGRI status register.
+Added busy flag to serial module status register.
+Fixed bug in PC module (added backtrack_enable to catch single cycle hazard edge cases).
+Fixed bug in XenonGecko_gen2 (shift registers should be enabled by active_draw_area).
+Fixed bug in PC module (A_next_I should be driven by prg_address).
+Fixed bug in PC module (separated logic for return address from A_next_I).
+Fixed bug in NeonFox (restructured decoder reset and flush logic, added separate input and output flush controls).
+Fixed bug in decoder (address_select, data_select, and IO_select signals are now reset by output_flush).
+	Not resetting these signals can cause forwarding logic to forward invalid data.
+Fixed bug in PC module (changed priority for A_miss logic).
+Restructured decoder into multiple block with separate reset logic.
+Fixed bug in decode_unit (prev_hazard should also depend on prev_p_cache miss and should be cleared on the falling edge of hazard).
+	This signal should be renamed, prev_hazard is misleading.
+Removed unnecessary logic for A_current_I from PC module. This logic had been present since the first revision of NeonFox but was not present in RIPTIDE-III.

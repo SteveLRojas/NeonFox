@@ -196,7 +196,7 @@ module XenonGecko_gen2(
 			bg_shift7 <= {bg_shift7[8], bg_shift7[8:1]};
 		end
 
-		if((&vesa_col[1:0]) && active_render_area)
+		if((&vesa_col[1:0]) && (active_render_area || active_draw_area))
 		begin
 			bg_shift0[11:8] <= {pattern_data[0], pattern_data[4], pattern_data[8], pattern_data[12]};
 			bg_shift1[11:8] <= {pattern_data[1], pattern_data[5], pattern_data[9], pattern_data[13]};

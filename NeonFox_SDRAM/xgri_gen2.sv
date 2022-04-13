@@ -27,6 +27,7 @@ module xgri_gen2(
 	logic prev_p_pop;
 	logic prev_a_pop;
 	logic[1:0] p_burst;
+	logic busy;
 	
 	assign p_push = ri_en & ri_wren & (ri_addr == 4'h3);
 	assign a_push = ri_en & ri_wren & (ri_addr == 4'h4);
@@ -37,6 +38,7 @@ module xgri_gen2(
 			p_burst <= 2'b00;
 		else if(prev_p_pop & ~p_pop)
 			p_burst <= p_burst + 2'b01;
+		busy <= p_push | a_push;
 	end
 	
 	always_ff @(posedge clk_sys or posedge rst)
@@ -79,7 +81,7 @@ module xgri_gen2(
 			if(ri_en)
 			begin
 				case(ri_addr)
-					4'h0: to_cpu <= {12'h000, p_full, p_empty, a_full, a_empty};
+					4'h0: to_cpu <= {8'h00, busy, 3'b000, (p_full | busy), (p_empty & ~busy), (a_full | busy), (a_empty & ~busy)};
 					4'h1: to_cpu <= par;
 					4'h2: to_cpu <= aar;
 					default: ;
