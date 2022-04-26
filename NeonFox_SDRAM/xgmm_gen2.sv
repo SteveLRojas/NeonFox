@@ -10,7 +10,7 @@ module xgmm_gen2(
 		input logic[7:0] pattern_address,
 		input logic odd_line,
 		input logic[7:0] ri_h_coarse,
-		//TODO: add scroll inputs
+		input logic force_next_buff,
 		output logic[15:0] pattern_data,
 		output logic[3:0] attribute_data,
 		// XGRI interface
@@ -68,14 +68,14 @@ module xgmm_gen2(
 	logic[5:0] attribute_offset;	//offset of tile attribute in main memory
 	logic[14:0] mem_attribute_index;	//address of attribute entry in main memory
 	logic[11:0] pattern_index;	//index into main memory pattern table
-	logic force_next_buff;	//hack to use the correct attribute buffer when rendering the first line pair of the next attribute row
+	//logic force_next_buff;	//hack to use the correct attribute buffer when rendering the first line pair of the next attribute row
 	logic[1:0] ri_pattern_offset;	//line pair counter used for writing patterns from ri
 	logic[6:0] update_attribute_addr;
 
 	assign mem_attribute_index = next_row_base + {attribute_offset, 2'b00};
 	assign buff_attribute_index = buff_attribute_count + ri_h_coarse[1:0];
 	assign update_attribute_addr = pattern_address[7:1] + ri_h_coarse[1:0];
-	assign force_next_buff = ~|next_line_pair;
+	//assign force_next_buff = ~|next_line_pair;
 
 	assign to_xgr_a = from_mem;
 

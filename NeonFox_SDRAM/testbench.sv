@@ -412,6 +412,8 @@ button = 1'b1;
 RXD = 1'b1;
 
 #20 n_reset = 1'b1;	//release reset
+#40707 button <= 1'b0;
+#4 button <= 1'b1;
 //#177134 n_reset = 1'b0;
 //#20 n_reset = 1'b1;
 end

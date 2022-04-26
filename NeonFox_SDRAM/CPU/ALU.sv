@@ -8,10 +8,10 @@ module ALU(
 		input logic[7:0] I_field,
 		input logic[3:0] alu_op,
 		output logic[15:0] alu_out,
-		output logic n, z, p);
+		output logic n, z, p, c);
 logic[16:0] add_result;
 logic[15:0] alu_result;
-logic c;
+//logic c;
 logic swap;
 logic[15:0] bit_sel;
 logic[7:0] immediate_high;

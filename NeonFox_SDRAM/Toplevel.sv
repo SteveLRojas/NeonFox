@@ -77,7 +77,7 @@ module NeonFox_PVP(
 // 0xFFF4 to 0xFFF5	keyboard module (read write)
 // 0xFFF6 to 0xFFF7	unused
 // 0xFFF8 to 0xFFFB	memory subsystem control registers	(write only)
-// 0xFFFC to 0xFFFD	hex display
+// 0xFFFC to 0xFFFD	hex display (write only)
 // 0xFFFE to 0xFFFF	RS-232 module	(read write)
 
 //Address map for data space:

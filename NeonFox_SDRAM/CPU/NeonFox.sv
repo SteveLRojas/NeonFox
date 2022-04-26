@@ -23,6 +23,8 @@ module NeonFox(
 		);
 logic prev_int_rq;
 logic interrupt;
+logic prev_interrupt;
+//logic interrupt_rst;
 logic[15:0] DIO_in;
 
 logic data_hazard;
@@ -36,18 +38,21 @@ logic[15:0] a_data;
 logic[15:0] b_data;
 logic[31:0] last_callx_addr;
 logic[31:0] next_callx_addr;
+logic update_last_callx;
 
 logic set_cc;
 logic[9:0] I_field;
 logic[7:0] I_field1;
 logic[3:0] alu_op, alu_op1;
-logic n, z, p;
+logic n, z, p, c;
 
 logic pc_jmp, pc_jmp1, pc_jmp_hold;
 logic pc_brx;
 logic pc_brxt;
 logic pc_call, pc_call1, pc_call_hold;
 logic pc_ret, pc_ret1, pc_ret_hold;
+//logic branch_request;
+logic interrupt_inhibit;
 logic hazard;
 logic branch_hazard;
 logic take_brx, take_brx1, take_brx_hold;
@@ -76,7 +81,9 @@ assign data_out = alu_out;
 assign H_en = H_en2 | ~L_en2;	//both H_en and L_en low from the decoder indicate high and low bytes are swapped (both enabled).
 assign L_en = L_en2 | ~H_en2;
 assign data_hazard = d_cache_write_miss;
-assign decoder_rst = reset | reset_hold;
+assign decoder_rst = reset | reset_hold | interrupt;
+//assign interrupt_rst = interrupt | prev_interrupt;
+//assign branch_request = pc_jmp | pc_brx | pc_call | pc_ret;
 
 always @(posedge clk)
 begin
@@ -86,11 +93,13 @@ begin
 	begin
 		interrupt <= 1'b0;
 		prev_int_rq <= 1'b1;
+		prev_interrupt <= 1'b0;
 	end
 	else
 	begin
-		prev_int_rq <= int_rq & (~decoder_output_flush | prev_int_rq);	//set when int_rq & ~decoder_output_flush, clear when ~int_rq
-		interrupt <= int_rq & ~prev_int_rq & ~decoder_output_flush;
+		prev_int_rq <= int_rq & (~interrupt_inhibit | prev_int_rq);	//set when int_rq & ~interrupt_inhibit, clear when ~int_rq
+		interrupt <= int_rq & ~prev_int_rq & ~interrupt_inhibit;
+		prev_interrupt <= interrupt;
 	end
 end
 
@@ -115,7 +124,7 @@ begin
 	else if(~data_hazard)
 	begin
 		//take_brx1 <= take_brx;
-		if(hazard)
+		if(hazard | interrupt)
 		begin
 			regf_wren1 <= 1'b0;
 			alu_op1 <= 4'b0111;
@@ -220,6 +229,8 @@ reg_file reg_file_inst(
 		.DIO_in(DIO_in),
 		.last_callx_addr(last_callx_addr),
 		.next_callx_addr(next_callx_addr),
+		.update_last_callx(update_last_callx),
+		.n(n), .z(z), .p(p), .c(c),
 		.data_address(data_address),
 		.IO_address(IO_address));
 
@@ -234,7 +245,7 @@ ALU ALU_inst(
 		.I_field(I_field1),
 		.alu_op(alu_op1),
 		.alu_out(alu_out),
-		.n(n), .z(z), .p(p));
+		.n(n), .z(z), .p(p), .c(c));
 
 //##### PC #####
 PC PC_inst(
@@ -250,16 +261,18 @@ PC PC_inst(
 		.interrupt(interrupt),
 		.int_addr(int_addr),
 		.hazard(hazard),
-		.data_hazard(data_hazard),
+		//.data_hazard(data_hazard),
 		.branch_hazard(branch_hazard),
 		.p_cache_miss(p_cache_miss),
 		.next_callx_addr(next_callx_addr),
 		.last_callx_addr(last_callx_addr),
+		.update_last_callx(update_last_callx),
 		.I_field(I_field),
 		.n(n), .z(z), .p(p),
 		.take_brx(take_brx),
 		.jmp_rst(jmp_rst),
 		.decoder_flush_inhibit(decoder_flush_inhibit),
+		.interrupt_inhibit(interrupt_inhibit),
 		.prg_address(prg_address));
 
 //##### DECODER #####
@@ -301,7 +314,7 @@ hazard_unit hazard_inst(
 		.pc_brx(pc_brx),
 		.pc_call(pc_call), .pc_call1(pc_call1),
 		.pc_ret1(pc_ret1),
-		.interrupt(interrupt),
+		.interrupt(prev_interrupt),
 		.take_brx1(take_brx1),
 		.alu_op1(alu_op1),
 		.halt(halt),

@@ -164,3 +164,35 @@ Example entry:
 5 |  0  0  0  7  0  0  0  7
 6 |  0  0  0  7  0  0  0  7
 7 |  0  0  0  0  7  7  7  0
+
+Register interface:
+Registers:
+	0x00:	STATUS	(status and control)
+	0x01:	PAR (pattern address register)
+	0x02:	AAR (attribute address register)
+	0x03:	PDR	(pattern data register)
+	0x04:	ADR (attribute data register)
+	0x05:	HSCROLL	(horizontal scroll register)
+	0x06:	VSCROLL (vertical scroll register)
+
+
+
+Notes on XenonGecko Gen2:
+
+XenonGecko gen2 supports background scrolling, in order to do so in a way that is convenient for the software 4 attribute tables are used.
+
+19200 words of attribute memory.
+65536 words of pattern memory.
+
+Buffer memory layout
+
+bank 0: 512 words available
+	324 words of pattern data.	0x000 to 0x143
+	84 words of attribute data.	0x180 to 0x1D3
+bank 1: 512 words available
+	324 words of pattern data.	0x200 to 0x343
+	84 words of attribute data.	0x380 to 0x3D3
+
+Main memory layout	(word address)
+	0x000000 to 0x00FFFF	pattern memory
+	0x010000 to 0x014AFF	attribute memory

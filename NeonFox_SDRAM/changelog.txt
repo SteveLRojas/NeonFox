@@ -100,3 +100,12 @@ Restructured decoder into multiple block with separate reset logic.
 Fixed bug in decode_unit (prev_hazard should also depend on prev_p_cache miss and should be cleared on the falling edge of hazard).
 	This signal should be renamed, prev_hazard is misleading.
 Removed unnecessary logic for A_current_I from PC module. This logic had been present since the first revision of NeonFox but was not present in RIPTIDE-III.
+
+Revision 8:
+Fixed bug in XenonGecko (next_row_base should only be updated when scrolled_line % 8 = 7).
+Fixed bug in XenonGecko (setting next_row_base at line 511 should have priority over wraparound).
+Fixed bug in XenonGecko (changed timing of pattern and attribute prefetch, moved force_next_buff logic out of xgmm and added logic to handle prefetch edge cases).
+Made changes in NeonFox to fully support interrupts.
+Initial interrupt testing and debugging.
+Fixed bug in PC module (interrupt overrides p cache miss).
+Fixed bug in PC module (interrupt prevents PC backtracking).

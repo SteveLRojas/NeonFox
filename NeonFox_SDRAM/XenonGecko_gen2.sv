@@ -36,17 +36,11 @@ module XenonGecko_gen2(
 	logic active_rows;				//use only to generate active area
 	logic active_render_area;		//use for rendering
 	logic active_render_rows;		//use for rendering
-	//logic[11:0] area_render_delay;
 	logic active_draw_area;
-	//logic[11:0] vsync_render_delay;
-	//logic[11:0] hsync_render_delay;
 	logic draw_vsync;
 	logic draw_hsync;
 	logic vde;
 
-	//assign active_draw_area = area_render_delay[0];	//12 pixels behind render area
-	//assign draw_vsync = vsync_render_delay[0];		//13 cycles behind render area
-	//assign draw_hsync = hsync_render_delay[0];
 	assign hsync = active_render_area;	//hsync and vsync outputs are for interrupt use only
 	assign vsync = active_render_rows;
 
@@ -92,30 +86,13 @@ module XenonGecko_gen2(
 			if(vesa_col == 10'd651)
 				active_draw_area <= 1'b0;	//active draw area in rows 0 to 479, columns 12 to 651
 		end
-		//area_render_delay <= {active_render_area, area_render_delay[11:1]};
-		//vsync_render_delay <= {vsync, vsync_render_delay[11:1]};
-		//hsync_render_delay <= {hsync, hsync_render_delay[11:1]};
+
 		vde <= active_draw_area;
-		// HSYNC and VSYNC logic
-		//if(vesa_col < 10'd752 && vesa_col >= 10'd656)	//hsync starts at 656 and lasts 96 cycles
-		//	hsync <= 1'b0;	//hsync is delayed by one cycle
-		//else
-		//	hsync <= 1'b1;
-			
-		//if(vesa_col == 10'd656)	//hsync starts at 656 and lasts 96 cycles
-		//	hsync <= 1'b0;	//hsync is delayed by one cycle
-		//if(vesa_col == 10'd752)
-		//	hsync <= 1'b1;
 			
 		if(vesa_col == 10'd668)
 			draw_hsync <= 1'b0;	//draw_hsync is delayed by 13 cycles
 		if(vesa_col == 10'd764)
 			draw_hsync <= 1'b1;
-		
-		//if((vesa_line == 10'd490) || (vesa_line == 10'd491))	//vsync starts at line 490 and lasts 2 lines
-		//	vsync <= 1'b0;	//vsync is delayed by one cycle
-		//else
-		//	vsync <= 1'b1;
 			
 		if(vesa_col == 10'd12)
 		begin
@@ -134,8 +111,8 @@ module XenonGecko_gen2(
 	logic[8:0] bg_shift6;
 	logic[8:0] bg_shift5;
 	logic[8:0] bg_shift4;
-	reg[11:0] bg_shift3;     //shift register for bit 3 of background palette index
-	reg[11:0] bg_shift2;     //shift register for bit 2 of background palette index
+	reg[11:0] bg_shift3;		//shift register for bit 3 of background palette index
+	reg[11:0] bg_shift2;		//shift register for bit 2 of background palette index
 	reg[11:0] bg_shift1;    //shift register for bit 1 of background palette index
 	reg[11:0] bg_shift0;    //shift_register for bit 0 of background palette index
 
@@ -147,6 +124,7 @@ module XenonGecko_gen2(
 	logic[7:0] pattern_address;
 	logic[15:0] pattern_data;
 	logic[3:0] attribute_data;
+	logic force_next_buff;	//hack to use the correct attribute buffer when rendering the first line pair of the next attribute row
 	
 	logic[2:0] ri_h_fine;	//fine H scrolling
 	logic[7:0] ri_h_coarse;
@@ -156,14 +134,14 @@ module XenonGecko_gen2(
 	
 	assign row_base_offset = {{ri_v_coarse, 2'b00} + ri_v_coarse, 5'h00};	//(ri_v_scroll * 4 + ri_v_scroll) * 32
 	assign scrolled_line = vesa_line + ri_v_fine;
-	//assign pattern_prefetch = (vesa_line >= 10'd521);
-	//assign attribute_prefetch = (vesa_line >= 10'd509);
-	assign attribute_prefetch = (vesa_line >= 10'd504) && (vesa_line < 10'd520);
+	
+	assign attribute_prefetch = (vesa_line == 10'd511) | (vesa_line == 10'd513);
 	assign pattern_prefetch = (vesa_line == 10'd517) | (vesa_line == 10'd519);
 	
 	assign next_line_pair = scrolled_line[2:1] + 2'h1;
 	assign pattern_address = vesa_col[9:2];
 	assign update_attribute = (vesa_col[2:0] == 3'h1);
+	assign force_next_buff = active_render_rows ? (next_line_pair == 2'b00) : (~vesa_line[1] & (&ri_v_fine[2:1]));
 
 	initial
 	begin
@@ -172,16 +150,16 @@ module XenonGecko_gen2(
 	
 	always @(posedge clk_25)
 	begin
-		swap_pattern <= (active_render_rows | pattern_prefetch) & scrolled_line[0] & (vesa_col == 10'd799);
-		swap_attribute <= (active_render_rows | attribute_prefetch) & (&scrolled_line[2:0]) & (vesa_col == 10'd799);
-		if((active_render_rows | attribute_prefetch) && (vesa_col == 10'd799))
+		swap_pattern <= ((active_render_rows & scrolled_line[0]) | pattern_prefetch) & (vesa_col == 10'd799);
+		swap_attribute <= ((active_render_rows & (&scrolled_line[2:0])) | attribute_prefetch) & (vesa_col == 10'd799);
+		if(((active_render_rows & (&scrolled_line[2:0])) | attribute_prefetch) & (vesa_col == 10'd799))
 		begin
-			if(scrolled_line == 10'd511)
+			if(vesa_line == 10'd511)
 				next_row_base <= row_base_offset;
-			else if(&scrolled_line[2:0])
-				next_row_base <= next_row_base + 15'd160;
-			if(next_row_base == 15'd19040)
+			else if(next_row_base == 15'd19040)
 				next_row_base <= 15'd0;
+			else 
+				next_row_base <= next_row_base + 15'd160;
 		end
 
 		if(active_render_area || active_draw_area)
@@ -261,6 +239,7 @@ module XenonGecko_gen2(
 		.pattern_address(pattern_address),
 		.odd_line(scrolled_line[0]),
 		.ri_h_coarse(ri_h_coarse),
+		.force_next_buff(force_next_buff),
 		.pattern_data(pattern_data),
 		.attribute_data(attribute_data),
 		// XGRI interface

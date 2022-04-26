@@ -49,6 +49,7 @@ module xgri_gen2(
 			aar <= 15'h0000;
 			ri_h_scroll <= 11'h000;
 			ri_v_scroll <= 10'h000;
+			//ri_v_scroll <= 10'h1d4;	//test
 			to_cpu <= 16'h0000;
 			prev_p_pop <= 1'b0;
 			prev_a_pop <= 1'b0;

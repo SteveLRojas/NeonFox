@@ -39,7 +39,7 @@ assign status_hazard = (alu_op1 != 4'b0111) & status_ren;
 assign branch_hazard_nzp = (alu_op1 != 4'b0111) & pc_brx;	//recent write to nzp and brx
 assign branch_hazard_ca = (address_select1 | address_select2) & (pc_call | pc_jmp);	//call or jump after writing call address
 assign branch_hazard = branch_hazard_ca | branch_hazard_nzp;
-assign decoder_output_flush = take_brx1 | pc_jmp1 | pc_call1 | pc_ret1;
+assign decoder_output_flush = take_brx1 | pc_jmp1 | pc_call1 | pc_ret1 | interrupt;
 //always_ff @(posedge clk) rst_hold <= rst;
 //assign decoder_rst = rst | rst_hold | (decoder_flush & extend_flush) | interrupt;
 assign decoder_input_flush = (decoder_output_flush & extend_flush) | interrupt;

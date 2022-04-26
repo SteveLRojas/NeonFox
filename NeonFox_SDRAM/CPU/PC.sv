@@ -11,16 +11,18 @@ module PC(
 		input logic interrupt,
 		input logic[3:0] int_addr,
 		input logic hazard,
-		input logic data_hazard,
+		//input logic data_hazard,
 		input logic branch_hazard,
 		input logic p_cache_miss,
 		input logic[31:0] next_callx_addr,
 		output logic[31:0] last_callx_addr,
+		output logic update_last_callx,
 		input logic[9:0] I_field,
 		input logic n, z, p,
 		output logic take_brx,
 		output logic jmp_rst,
 		output logic decoder_flush_inhibit,
+		output logic interrupt_inhibit,
 		output logic[31:0] prg_address);
 // PC sources:
 	//PC + 1
@@ -34,11 +36,11 @@ reg p_miss_override;	//during P miss, forces PC increment when hazard is cleared
 reg p_miss;
 reg prev_p_miss;
 logic prev_branch_taken;
-logic prev_data_hazard;
+//logic prev_data_hazard;
 reg[31:0] A_miss, A_miss_next;
 reg[31:0] A_next_I;
 reg[31:0] PC_reg;
-reg[31:0] A_current_I, A_current_I_alternate, A_pipe0;
+reg[31:0] A_current_I, A_current_I_alternate, A_pipe0;//, A_pipe1;
 logic[31:0] A_return;
 wire[31:0] stack_out;
 wire[31:0] stack_in;
@@ -46,19 +48,29 @@ logic stack_en;
 logic stack_push;
 logic stack_pop;
 logic delay_p_miss;	//used to determine if the instruction in the branch delay slot resulted in a miss
+logic prev_delay_p_miss;
 logic single_hazard;	//indicates that prev hazard was a single cycle hazard
 logic branch_taken;
+//logic branch_request;
 logic backtrack_enable;	//causes PC to be restored to A_miss_next on first cycle of p_miss
+reg prev_interrupt;
 
 assign take_brx = pc_brx & (pc_brxt ^ |({p, z, n, 1'b0} & (1 << {H_en, L_en}))) & ~branch_hazard;
 assign jmp_rst = (pc_jmp | pc_call) & ~branch_hazard;
+//assign stack_in = interrupt ? (branch_request ? A_pipe1 : A_pipe0) : A_return;	//branch instructions are effectively flushed out of the pipeline when an interrupt happens
 assign stack_in = interrupt ? A_pipe0 : A_return;
-assign stack_en = ~prev_data_hazard | interrupt;	//???
+//assign stack_en = ~prev_data_hazard | interrupt;	//???
+assign stack_en = 1'b1;
 assign stack_push = (pc_call & ~branch_hazard) | interrupt;
 assign stack_pop = pc_ret & ~interrupt;
 assign decoder_flush_inhibit = p_miss;
 assign single_hazard = ~hazard & pc_hazard1 & ~pc_hazard2;
 assign branch_taken = ((pc_jmp | pc_call) & ~branch_hazard) | take_brx | pc_ret;
+//assign branch_request = pc_jmp | pc_brx | pc_call | pc_ret;
+assign interrupt_inhibit = prev_delay_p_miss | pc_jmp | pc_brx | pc_call | pc_ret;
+
+assign last_callx_addr = stack_in;
+assign update_last_callx = pc_jmp & (~branch_hazard) & (~interrupt);
 
 call_stack cstack0(.rst(rst), .clk(clk), .en(stack_en), .push(stack_push), .pop(stack_pop), .data_in(stack_in), .data_out(stack_out));
 
@@ -68,12 +80,16 @@ begin
 		A_return <= PC_reg;
 	A_next_I <= prg_address;
 	if(~pc_hazard1)
+	begin
 		delay_p_miss <= p_miss;
-	prev_data_hazard <= data_hazard;
+		prev_delay_p_miss <= delay_p_miss;
+	end
+	//prev_data_hazard <= data_hazard;
 	prev_branch_taken <= branch_taken;
-	if(pc_jmp & (~branch_hazard) & (~interrupt))
-		last_callx_addr <= stack_in;
-	backtrack_enable <= ~branch_taken & ~single_hazard;	//p_miss_override will not trigger on single cycle hazards, so we don't want to backtrack in that case
+	//if(pc_jmp & (~branch_hazard) & (~interrupt))
+	//	last_callx_addr <= stack_in;
+	backtrack_enable <= ~branch_taken & ~single_hazard & ~interrupt;	//p_miss_override will not trigger on single cycle hazards, so we don't want to backtrack in that case
+	prev_interrupt <= interrupt;
 end
 
 always @(posedge clk or posedge rst)	//reset needs not be asynchronous, but doing this eliminates a mux and improves timing.
@@ -91,6 +107,7 @@ begin
 		A_current_I_alternate <= 32'h0000;
 		A_current_I <= 32'h0000;
 		A_pipe0 <= 32'h0000;
+		//A_pipe1 <= 32'h0000;
 	end
 	else
 	begin
@@ -112,9 +129,9 @@ begin
 		//	else
 		//		A_miss <= PC_reg;
 		//end
-		if(~p_miss | (prev_branch_taken & ~delay_p_miss))	//check delay_p_miss to make sure the instruction after the branch has been fetched before changing address
+		if(~p_miss | (prev_branch_taken & ~delay_p_miss) | prev_interrupt)	//check delay_p_miss to make sure the instruction after the branch has been fetched before changing address
 		begin
-			if(prev_branch_taken & ~delay_p_miss)
+			if((prev_branch_taken & ~delay_p_miss) | prev_interrupt)
 				A_miss <= PC_reg;
 			else
 				A_miss <= A_miss_next;
@@ -136,6 +153,9 @@ begin
 			A_pipe0 <= A_current_I;
 		end
 		
+		//if(~data_hazard)
+		//	A_pipe1 <= A_pipe0;
+		
 		if(prev_branch_taken)	//assign new address to flushed instructions in case of interrupt.
 		begin
 			A_current_I_alternate <= PC_reg;
@@ -146,14 +166,6 @@ begin
 end
 
 //mux priority:
-// 0: interrupt
-// 1: ((pc_jmp | pc_call) & ~branch_hazard)
-// 2: pc_ret
-// 3: take_brx
-// 4: (~hazard & ~(p_miss & ~p_miss_override))
-// 5: ((p_miss & ~p_miss_override) & ~prev_p_miss & backtrack_enable)
-//Note that 4 and 5 above are mutually exclusive.
-// Alternative mux priority:
 // 0: interrupt
 // 1: ((pc_jmp | pc_call) & ~branch_hazard)
 // 2: pc_ret

@@ -17,6 +17,8 @@ module reg_file(
 		input logic[15:0] DIO_in,
 		input logic[31:0] last_callx_addr,
 		output logic[31:0] next_callx_addr,
+		input logic update_last_callx,
+		input logic n, z, p, c,
 		output logic[31:0] data_address,
 		output logic[15:0] IO_address);
 reg[4:0] prev_w_address;
@@ -33,9 +35,10 @@ reg[15:0] r8, r9, r10, r11;
 reg[15:0] r12, r13, r14, r15;
 reg[15:0] aux0, aux1, aux2, aux3;
 reg[15:0] dal, dah, ial;
-//reg[15:0] dd, id;
 reg[15:0] cal, cah;
-reg[15:0] status, control;
+reg[15:0] ral, rah;
+//reg[15:0] status;
+//reg[15:0] control;
 
 logic high_enable;
 logic low_enable;
@@ -86,7 +89,7 @@ begin
 		dio_read <= IO_ren | data_ren;
 		if(wren & high_enable)
 		begin
-			case(w_address)
+			unique case(w_address)
 				5'h00: r0[15:8] <= w_data[15:8];
 				5'h01: r1[15:8] <= w_data[15:8];
 				5'h02: r2[15:8] <= w_data[15:8];
@@ -111,19 +114,19 @@ begin
 				5'h15: dah[15:8] <= w_data[15:8];
 				5'h16: ial[15:8] <= w_data[15:8];
 				5'h17: ;	//reserved
-				5'h18: ;	//dd[15:8] <= w_data[15:8];
-				5'h19: ;	//id[15:8] <= w_data[15:8];
+				5'h18: ;	//dd
+				5'h19: ;	//id
 				5'h1A: cal[15:8] <= w_data[15:8];	//cal
 				5'h1B: cah[15:8] <= w_data[15:8];	//cah
-				5'h1C: ;	//mull
-				5'h1D: ;	//mulh
-				5'h1E: status[15:8] <= w_data[15:8];	//status
-				5'h1F: control[15:8] <= w_data[15:8];	//control
+				5'h1C: ral[15:8] <= w_data[15:8];
+				5'h1D: rah[15:8] <= w_data[15:8];
+				5'h1E: ;	//status
+				5'h1F: ;	//control
 			endcase
 		end
 		if(wren & low_enable)
 		begin
-			case(w_address)
+			unique case(w_address)
 				5'h00: r0[7:0] <= w_data[7:0];
 				5'h01: r1[7:0] <= w_data[7:0];
 				5'h02: r2[7:0] <= w_data[7:0];
@@ -148,18 +151,18 @@ begin
 				5'h15: dah[7:0] <= w_data[7:0];
 				5'h16: ial[7:0] <= w_data[7:0];
 				5'h17: ;	//reserved
-				5'h18: ; //dd[7:0] <= w_data[7:0];
-				5'h19: ; //id[7:0] <= w_data[7:0];
-				5'h1A: cal[7:0] <= w_data[7:0];	//cal
-				5'h1B: cah[7:0] <= w_data[7:0];	//cah
-				5'h1C: ;	//mull
-				5'h1D: ;	//mulh
-				5'h1E: status[7:0] <= w_data[7:0];	//status
-				5'h1F: control[7:0] <= w_data[7:0];	//control
+				5'h18: ; //dd
+				5'h19: ; //id
+				5'h1A: cal[7:0] <= w_data[7:0];
+				5'h1B: cah[7:0] <= w_data[7:0];
+				5'h1C: ral[7:0] <= w_data[7:0];
+				5'h1D: rah[7:0] <= w_data[7:0];
+				5'h1E: ;	//status
+				5'h1F: ;	//control
 			endcase
 		end
 		//read logic
-		case(a_address)
+		unique case(a_address)
 			5'h00: a_reg <= r0;
 			5'h01: a_reg <= r1;
 			5'h02: a_reg <= r2;
@@ -186,13 +189,18 @@ begin
 			5'h17: a_reg <= 16'hxxxx;	//reserved
 			5'h18: a_reg <= 16'hxxxx;	//dd
 			5'h19: a_reg <= 16'hxxxx;	//id
-			5'h1A: a_reg <= last_callx_addr[15:0];
-			5'h1B: a_reg <= last_callx_addr[31:16];
-			5'h1C: a_reg <= 16'hxxxx;
-			5'h1D: a_reg <= 16'hxxxx;
-			5'h1E: a_reg <= status;
-			5'h1F: a_reg <= control;
+			5'h1A: a_reg <= cal;
+			5'h1B: a_reg <= cah;
+			5'h1C: a_reg <= ral;
+			5'h1D: a_reg <= rah;
+			5'h1E: a_reg <= {12'h000, c, p, z, n};
+			5'h1F: a_reg <= 16'h0000;	//zero
 		endcase
+	end
+	if(update_last_callx)
+	begin
+		ral <= last_callx_addr[15:0];
+		rah <= last_callx_addr[31:16];
 	end
 end
 
